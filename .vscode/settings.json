@@ -1,7 +1,53 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
+    "source.fixAll.eslint": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "gitmoji.addCustomEmoji": [
+    {
+      "emoji": "✨ feat:",
+      "code": ":feat",
+      "description": "새로운 기능 추가"
+    },
+    {
+      "emoji": "🔥 remove:",
+      "code": ":remove",
+      "description": "기능 삭제"
+    },
+    {
+      "emoji": "📝 docs:",
+      "code": ":docs",
+      "description": "문서 수정"
+    },
+    {
+      "emoji": "🐛 fix:",
+      "code": ":fix",
+      "description": "버그 픽스"
+    },
+    {
+      "emoji": "🎨 style:",
+      "code": ":style",
+      "description": "코드 포매팅, 세미콜론 누락 등 코드 변경이 없는 경우"
+    },
+    {
+      "emoji": "♻ refactor:",
+      "code": ":refactor",
+      "description": "리팩토링"
+    },
+    {
+      "emoji": "🎉 init:",
+      "code": ":init",
+      "description": "초기설정"
+    },
+    {
+      "emoji": "🚀 deploy:",
+      "code": ":deploy",
+      "description": "배포"
+    }
+  ],
+
+  "gitmoji.onlyUseCustomEmoji": true,
+  "gitmoji.outputType": "emoji",
+  "gitmoji.showEmojiCode": false
 }
