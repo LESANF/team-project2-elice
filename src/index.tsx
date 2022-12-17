@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { basicTheme } from './theme';
@@ -17,10 +17,13 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-ReactDOM.render(
-	<ThemeProvider theme={basicTheme}>
-		<GlobalStyles />
-		<App />
-	</ThemeProvider>,
-	document.getElementById('root')
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
+
+root.render(
+  <ThemeProvider theme={basicTheme}>
+    <GlobalStyles />
+    <App />
+  </ThemeProvider>,
 );
