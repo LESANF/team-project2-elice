@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  Ref,
+  ReactElement,
+} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,12 +14,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 
-const Transition = React.forwardRef(
+const Transition = forwardRef(
   (
     props: TransitionProps & {
-      children: React.ReactElement<any, any>;
+      children: ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: Ref<unknown>,
   ) => <Slide direction="up" ref={ref} {...props} />,
 );
 
@@ -30,7 +36,7 @@ interface IDialogProps {
 
 const DialogTest = (props: IDialogProps) => {
   const { title, content, agreeFn, disAgreeFn, openFlag } = props;
-  const [open, setOpen] = useState(false);
+  const setOpen = useState<boolean>(false)[1];
   const [dialogSize, setDialogSize] = useState<{
     sizeW: string | undefined;
     sizeH: string | undefined;
