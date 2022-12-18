@@ -34,8 +34,15 @@ const DialogTest = (props: IDialogProps) => {
   };
 
   const handleClose = () => {
-    closeFunction();
+    // closeFunction();
     setOpen(false);
+  };
+
+  const dialogStyle = {
+    sx: {
+      width: '230px',
+      height: '160px',
+    },
   };
 
   return (
@@ -47,6 +54,7 @@ const DialogTest = (props: IDialogProps) => {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
+        PaperProps={dialogStyle}
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
