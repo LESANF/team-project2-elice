@@ -39,7 +39,11 @@
     "react/jsx-props-no-spreading": "off",
     "react/no-unescaped-entities": 0,
     "@typescript-eslint/no-explicit-any": "off",
-    "react/no-unused-prop-types": "off"
+    "react/no-unused-prop-types": "off",
+    "react/require-default-props": "off",
+    "react/destructuring-assignment": "off",
+    "no-console": "off",
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "react": {

@@ -10,12 +10,12 @@ const Wrapper = styled.div`
 `;
 
 const TestBtn = styled.button`
-  background-color: skyblue;
+  background-color: peru;
   width: 100px;
   height: 50px;
 `;
 
-const Home = () => {
+const Test = () => {
   const [flag, setFlag] = useState(false);
 
   const agreeFn = () => {
@@ -32,17 +32,19 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <TestBtn onClick={() => setFlag(true)}>HomeBtn</TestBtn>
+      <TestBtn onClick={() => setFlag(true)}>TestBtn</TestBtn>
       <DialogTest
         openFlag={flag}
         CustomBtn={TestBtn}
-        title="Dialog Home"
-        content="Home Screen"
+        title="Dialog Test"
+        content="Test Screen"
         agreeFn={agreeFn}
         disAgreeFn={disAgreeFn}
+        sizeW="700px"
+        sizeH="800px"
       />
     </Wrapper>
   );
 };
 
-export default Home;
+export default Test;

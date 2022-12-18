@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -18,41 +18,53 @@ const Transition = React.forwardRef(
 );
 
 interface IDialogProps {
+  openFlag: boolean;
+  CustomBtn: object;
   title: string;
   content: string;
-  openFunction(): void;
-  closeFunction(): void;
+  agreeFn(): boolean;
+  disAgreeFn(): boolean;
+  sizeW?: string | undefined;
+  sizeH?: string | undefined;
 }
 
 const DialogTest = (props: IDialogProps) => {
-  const { title, content, openFunction, closeFunction } = props;
+  const { title, content, agreeFn, disAgreeFn, openFlag } = props;
   const [open, setOpen] = useState(false);
+  const [dialogSize, setDialogSize] = useState<{
+    sizeW: string | undefined;
+    sizeH: string | undefined;
+  }>({
+    sizeW: '230px',
+    sizeH: '160px',
+  });
 
-  const handleClickOpen = () => {
-    openFunction();
-    setOpen(true);
-  };
+  useEffect(() => {
+    if (props.sizeW && props.sizeH)
+      setDialogSize((prev) => {
+        let prevObj = { ...prev };
+        prevObj = { ...prevObj, sizeW: props.sizeW, sizeH: props.sizeH };
+        return prevObj;
+      });
+  }, []);
 
-  const handleClose = () => {
-    // closeFunction();
-    setOpen(false);
+  const handleClose = (flag: boolean) => {
+    setOpen(flag);
   };
 
   const dialogStyle = {
     sx: {
-      width: '230px',
-      height: '160px',
+      width: dialogSize.sizeW,
+      height: dialogSize.sizeH,
     },
   };
 
   return (
     <div>
-      <button onClick={handleClickOpen}>Slide in alert dialog</button>
       <Dialog
-        open={open}
+        open={openFlag}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
         PaperProps={dialogStyle}
       >
@@ -66,8 +78,8 @@ const DialogTest = (props: IDialogProps) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>취소</Button>
-          <Button onClick={handleClose}>확인</Button>
+          <Button onClick={() => handleClose(disAgreeFn())}>취소</Button>
+          <Button onClick={() => handleClose(agreeFn())}>확인</Button>
         </DialogActions>
       </Dialog>
     </div>
