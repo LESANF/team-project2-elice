@@ -42,7 +42,7 @@ const DialogTest = (props: IDialogProps) => {
     sizeH: string | undefined;
   }>({
     sizeW: '230px',
-    sizeH: '160px',
+    sizeH: '170px',
   });
 
   useEffect(() => {
