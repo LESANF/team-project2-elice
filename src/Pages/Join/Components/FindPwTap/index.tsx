@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as S from './styled';
 
 const FindPwTap = () => {
-  const [state, setState] = useState('NORMAL');
+  const [state, setState] = useState<string>('NORMAL');
   return (
     <>
       <S.InfoTop>가입되어 있는 이메일 주소를 입력해주세요</S.InfoTop>

@@ -4,25 +4,25 @@ import EditProfileTap from '../Components/EditProfileTap';
 import EditPwTap from '../Components/EditPwTap';
 import MyProfileTap from '../Components/MyProfileTap';
 
-interface State {
+interface IState {
   MYPROFILE: string;
   EDITPROFILE: string;
   EDITPW: string;
 }
-const state: State = {
+const state: IState = {
   MYPROFILE: 'MYPROFILE',
   EDITPROFILE: 'EDITPROFILE',
   EDITPW: 'EDITPW',
 };
 
-interface StateTap {
+interface IStateTap {
   [index: string]: JSX.Element;
   MYPROFILE: JSX.Element;
   EDITPROFILE: JSX.Element;
   EDITPW: JSX.Element;
 }
 
-const stateTap: StateTap = {
+const stateTap: IStateTap = {
   MYPROFILE: <MyProfileTap />,
   EDITPROFILE: <EditProfileTap />,
   EDITPW: <EditPwTap />,

@@ -18,14 +18,14 @@ import {
 const LoginTap = () => {
   const navigate = useNavigate();
   const setAuthenticated = useSetRecoilState(authenticatedState);
-  const [emailstate, setEmailState] = useState(state.NORMAL);
-  const [pwstate, setPwState] = useState(state.NORMAL);
-  const [loginstate, setLoginState] = useState(state.NORMAL);
+  const [emailstate, setEmailState] = useState<string>(state.NORMAL);
+  const [pwstate, setPwState] = useState<string>(state.NORMAL);
+  const [loginstate, setLoginState] = useState<string>(state.NORMAL);
 
-  const [email, setEmail] = useState('');
-  const [pw, setpw] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [pw, setpw] = useState<string>('');
 
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState<boolean>(false);
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailInput = e.target.value;
