@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box, OrbitControls } from '@react-three/drei';
+import styled from 'styled-components';
 import { styled as styledMui } from '@mui/material/styles';
 import { Button as ButtonMui } from '@mui/material';
 
@@ -16,10 +17,23 @@ interface INavigateButton {
   hoverBackgroundColor: string;
 }
 
+interface IStyledP {
+  lineClamp: string;
+}
+
+const StyledP = styled.p<IStyledP>`
+  font-size: calc(2.3px + 1.2vmin);
+  width: 8vw;
+  display: -webkit-box;
+  -webkit-line-clamp: ${(props) => props.lineClamp};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 const NavigateButton = styledMui(ButtonMui)<INavigateButton>`
   width:fit-content;
   height:fit-content;
-  padding: 1vh 1.2vw;
+  padding: 1vh 1vw;
   font-family: 'Segoe UI';
   font-style: normal;
   font-weight: 600;
@@ -159,58 +173,77 @@ const CubeContainer: React.FC = () => {
           }}
           style={{
             position: 'absolute',
-            left: '70vw',
+            left: '66vw',
             width: 'fit-content',
             height: 'fit-content',
             background: '#ffffff',
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            opacity: '1',
             borderRadius: '12px',
             padding: '3vmin',
-            boxShadow: '-2px 3px 6px rgb(0 0 0 / 30%)',
+            gap: '3vmin',
+            boxShadow: 'rgb(0 0 0 / 10%) -3px 7px 12px',
           }}
         >
+          <img
+            style={{ borderRadius: '0.8vmin', width: '21vmin' }}
+            src={objectURL ? objectURL[index] : ''}
+            alt=""
+          />
           <div
             style={{
               width: 'fit-content',
               height: 'fit-content',
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              opacity: '1',
-              marginBottom: '3vmin',
               gap: '3vmin',
             }}
           >
-            <img
-              style={{ borderRadius: '0.8vmin', width: '20vmin' }}
-              src={objectURL ? objectURL[index] : ''}
-              alt=""
-            />
-            <pre
+            <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '2vh',
-                whiteSpace: 'normal',
               }}
             >
-              <p style={{ fontSize: 'calc(4px + 2vmin)' }}>게시글 제목</p>
-              <p style={{ fontSize: 'calc(2.7px + 1.4vmin)' }}>
-                게시글 내용...
+              <p
+                style={{
+                  fontSize: 'calc(3.2px + 1.6vmin)',
+                  width: '9vw',
+                  fontWeight: '600',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                게시글 제목이 들어갈 자리
               </p>
-              <p style={{ fontSize: 'calc(2.7px + 1.4vmin)' }}>작성자</p>
-            </pre>
+              <StyledP lineClamp="3">
+                게시글 내용이 들어갈 자리 게시글 내용이 들어갈 자리 게시글
+                내용이 들어갈 자리 게시글 내용이 들어갈 자리
+              </StyledP>
+              <p
+                style={{
+                  fontSize: 'calc(2.1px + 1.1vmin)',
+                  width: '9vw',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                작성자
+              </p>
+            </div>
+            <NavigateButton
+              backgroundColor="#07b8b8"
+              hoverBackgroundColor="#00a8a7"
+            >
+              게시글 보러가기
+            </NavigateButton>
           </div>
-          <NavigateButton
-            backgroundColor="#07b8b8"
-            hoverBackgroundColor="#00a8a7"
-          >
-            게시글보러가기
-          </NavigateButton>
         </div>
       )}
     </>
