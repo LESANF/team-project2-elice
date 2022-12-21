@@ -196,7 +196,6 @@ const SearchBar = ({ hashtag, setHashtag }: IHashTagProps) => {
     e.preventDefault();
     setHashtag(`${searchBarInput}`);
     setSearchBarInput('');
-    console.log('커밋용 임시 코드');
   };
 
   return (
@@ -233,7 +232,8 @@ const Maps = () => {
         style={{
           // 지도의 크기
           width: '100%',
-          height: '450px',
+          height: '640px',
+          borderRadius: '10px',
         }}
         level={3} // 지도의 확대 레벨
       >
