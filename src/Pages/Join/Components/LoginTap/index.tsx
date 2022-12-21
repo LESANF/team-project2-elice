@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import axios from 'axios';
 
-import { authenticatedState } from '../../Atoms';
+import { authenticatedState, userState } from '../../Atoms';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
@@ -18,6 +18,7 @@ import {
 const LoginTap = () => {
   const navigate = useNavigate();
   const setAuthenticated = useSetRecoilState(authenticatedState);
+  const [user, setUser] = useRecoilState(userState);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
   const [loginstate, setLoginState] = useState<string>(state.NORMAL);
@@ -58,6 +59,7 @@ const LoginTap = () => {
           email,
           password: pw,
         });
+
         //  토큰
         if (result.data.accessToken) {
           console.log('토큰', result.data.accessToken);
@@ -65,6 +67,7 @@ const LoginTap = () => {
           localStorage.setItem('login-token', result.data.accessToken);
         }
         console.log(result);
+        setUser(result.data.user);
         setLoginState(state.SUCCESS);
         setFlag(true);
       } else {
@@ -93,7 +96,10 @@ const LoginTap = () => {
     let title = '';
     let content = '';
     if (loginstate === state.SUCCESS) {
-      [title, content] = [`로그인 완료`, `로그인이 정상적으로 이루어졌습니다`];
+      [title, content] = [
+        `${user.nickname}님, 안녕하세요!`,
+        `로그인이 정상적으로 이루어졌습니다`,
+      ];
     } else {
       //  일단 이렇게 해둠
       [title, content] = [`로그인 오류`, `일치하는 회원정보가 없습니다`];

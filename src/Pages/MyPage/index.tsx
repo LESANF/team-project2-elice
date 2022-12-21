@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useRecoilState } from 'recoil';
+import { userState } from '../Join/Atoms';
 import * as S from './styled';
 import LoginTap from '../Join/Components/LoginTap';
 import JoinTap from '../Join/Components/JoinTap';
@@ -25,6 +26,8 @@ const stateTap: StateTap = {
   MYLIKE: <JoinTap />,
 };
 const MyPage = () => {
+  const [user, setUser] = useRecoilState(userState);
+
   const [Image, setImage] = useState<string>(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
   );
@@ -37,9 +40,9 @@ const MyPage = () => {
       <S.MyPage>
         <img className="profileImg" alt="프로필 사진" src={Image} />
         <div className="profileBody">
-          <span className="nickname">kch7892003</span>
+          <span className="nickname">{user.nickname}</span>
           <br />
-          <span className="email">kch7892003@naver.com</span>
+          <span className="email">{user.email}</span>
           <S.Tap mode={mode}>
             <span
               onClick={clickHandler}
