@@ -195,6 +195,7 @@ const SearchBar = ({ hashtag, setHashtag }: IHashTagProps) => {
     e.preventDefault();
     setHashtag(`${searchBarInput}`);
     setSearchBarInput('');
+    console.log('커밋용 임시 코드');
   };
 
   return (
