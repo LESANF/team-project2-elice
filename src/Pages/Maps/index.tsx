@@ -1,9 +1,9 @@
-import Kakao from '../Components/KaKao';
+import KakaoMap from './Components/KakaoMap';
 
 const Map = () => (
   <>
     <h1>Map</h1>
-    <Kakao />
+    <KakaoMap />
   </>
 );
 

@@ -5,11 +5,11 @@ import * as S from './styled';
 import LoginTap from '../Join/Components/LoginTap';
 import JoinTap from '../Join/Components/JoinTap';
 
-interface State {
+interface IState {
   MYPOST: string;
   MYLIKE: string;
 }
-const state: State = {
+const state: IState = {
   MYPOST: 'MYPOST',
   MYLIKE: 'MYLIKE',
 };
@@ -25,7 +25,7 @@ const stateTap: StateTap = {
   MYLIKE: <JoinTap />,
 };
 const MyPage = () => {
-  const [Image, setImage] = useState(
+  const [Image, setImage] = useState<string>(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
   );
   const [mode, setMode] = useState<string>(state.MYPOST);

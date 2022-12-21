@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-interface State {
+interface IState {
   NORMAL: string; // 입력 전
   SUCCESS: string; //  성공
   STRERROR: string; // 길이 문법 오류
@@ -8,7 +8,7 @@ interface State {
   NONEXISTERROR: string; // 중복오류
   ERROR: string;
 }
-const state: State = {
+export const state: IState = {
   NORMAL: 'NORMAL', // 입력 전
   SUCCESS: 'SUCCESS',
   STRERROR: 'STRERROR',
