@@ -5,7 +5,7 @@ import Test from './Pages/Test';
 import Menu from './Pages/Menu';
 import Spinner from './Pages/Spinner';
 import Intro from './Pages/Intro';
-import Map from './Pages/Map';
+import Maps from './Pages/Maps';
 import Join from './Pages/Join/Page';
 import Edit from './Pages/Edit/Page';
 import MyPage from './Pages/MyPage';
@@ -22,7 +22,7 @@ const Router = () => (
         }
       />
       <Route path="/menu" element={<Menu />} />
-      <Route path="/map" element={<Map />} />
+      <Route path="/maps" element={<Maps />} />
       <Route path="/join" element={<Join />} />
       <Route path="/edit" element={<Edit />} />
       <Route path="/mypage" element={<MyPage />} />
