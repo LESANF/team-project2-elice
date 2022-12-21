@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
+
+import { authenticatedState } from '../../Atoms';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
@@ -15,6 +17,7 @@ import {
 
 const LoginTap = () => {
   const navigate = useNavigate();
+  const setAuthenticated = useSetRecoilState(authenticatedState);
   const [emailstate, setEmailState] = useState(state.NORMAL);
   const [pwstate, setPwState] = useState(state.NORMAL);
   const [loginstate, setLoginState] = useState(state.NORMAL);
@@ -55,7 +58,12 @@ const LoginTap = () => {
           email,
           password: pw,
         });
-        console.log('토큰', result.data.accessToken);
+        //  토큰
+        if (result.data.accessToken) {
+          console.log('토큰', result.data.accessToken);
+          setAuthenticated(true);
+          localStorage.setItem('login-token', result.data.accessToken);
+        }
         console.log(result);
         setLoginState(state.SUCCESS);
         setFlag(true);
