@@ -11,34 +11,21 @@ import {
   warningNickname,
   warningEmail,
   warningPw,
+  state,
 } from '../../Utils';
 
-interface State {
-  NORMAL: string; // 입력 전
-  SUCCESS: string; //  성공
-  STRERROR: string; // 길이 문법 오류
-  EXISTERROR: string; // 중복오류
-  ERROR: string;
-}
-const state: State = {
-  NORMAL: 'NORMAL', // 입력 전
-  SUCCESS: 'SUCCESS',
-  STRERROR: 'STRERROR',
-  EXISTERROR: 'EXISTERROR',
-  ERROR: 'ERROR',
-};
 const JoinTap = () => {
   const navigate = useNavigate();
-  const [nicknamestate, setNicknameState] = useState(state.NORMAL);
-  const [emailstate, setEmailState] = useState(state.NORMAL);
-  const [pwstate, setPwState] = useState(state.NORMAL);
-  const [joinstate, setJoinState] = useState(state.NORMAL);
+  const [nicknamestate, setNicknameState] = useState<string>(state.NORMAL);
+  const [emailstate, setEmailState] = useState<string>(state.NORMAL);
+  const [pwstate, setPwState] = useState<string>(state.NORMAL);
+  const [joinstate, setJoinState] = useState<string>(state.NORMAL);
 
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [pw, setpw] = useState('');
+  const [nickname, setNickname] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [pw, setpw] = useState<string>('');
 
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState<boolean>(false);
 
   useEffect(() => {
     axios
