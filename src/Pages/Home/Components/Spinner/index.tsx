@@ -1,4 +1,4 @@
-import Spin from './spin.gif';
+import Spin from '../../assets/spin.gif';
 
 const Spinner = () => (
   <div
