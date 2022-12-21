@@ -26,9 +26,9 @@ function wrapPromise(promise: any) {
     },
   };
 }
-const fetcher = async (url: string) => {
+const fetcher = async (url: string, num: number) => {
   const promiseList: any = [];
-  for (let i = 0; i < 6; i += 1) {
+  for (let i = 0; i < num; i += 1) {
     promiseList.push(
       fetch(url)
         .then((res) => res.blob())
@@ -38,10 +38,10 @@ const fetcher = async (url: string) => {
   const res = await Promise.all(promiseList);
   return res;
 };
-export const useGetData = (url: string) => {
-  const [resource, setResource] = useState(null as any);
+export const useGetData = (url: string, num: number) => {
+  const [resource, setResource] = useState<any>(null);
   useEffect(() => {
-    const res = wrapPromise(fetcher(url));
+    const res = wrapPromise(fetcher(url, num));
     setResource(res);
   }, [url]);
   return resource?.read();

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as S from './styled';
 import { useGetData } from '../hooks/useGetData';
 import { disableScroll, debounceResizeEvent } from '../Utils';
@@ -11,7 +11,7 @@ import CubeContainer from '../Components/Cube';
 
 const Intro = () => {
   disableScroll();
-  const objectURL = useGetData('https://picsum.photos/238/349');
+  const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
     hover: {

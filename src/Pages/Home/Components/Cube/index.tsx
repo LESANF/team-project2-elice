@@ -13,7 +13,7 @@ interface ICubeProps {
 
 const Cube = ({ objectURL, handler, setIndex }: ICubeProps) => {
   const cube = useRef<THREE.Mesh>();
-  const [isRotating, setIsRotationg] = useState(true);
+  const [isRotating, setIsRotationg] = useState<boolean>(true);
   useFrame((state) => {
     if (isRotating) {
       cube.current!.rotation.x += 0.01;
@@ -63,9 +63,9 @@ const Scene = ({ objectURL, handler, setIndex }: ICubeProps) => (
 );
 
 const CubeContainer: React.FC = () => {
-  const objectURL = useGetData('https://picsum.photos/200/200');
-  const [isPopupOn, setIsPopupOn] = useState(false);
-  const [index, setIndex] = useState(0);
+  const objectURL = useGetData('https://picsum.photos/200/200', 6);
+  const [isPopupOn, setIsPopupOn] = useState<boolean>(false);
+  const [index, setIndex] = useState<number>(0);
   return (
     <>
       <Canvas
