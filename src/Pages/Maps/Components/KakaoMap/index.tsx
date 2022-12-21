@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import * as S from './styled';
 
@@ -124,30 +124,30 @@ const pictures = [
   },
 ];
 
-interface LatLng {
+interface ILatLng {
   lat: number;
   lng: number;
 }
 
-interface CustomOverlayContainerProps {
-  latlng: LatLng;
+interface ICustomOverlayContainerProps {
+  latlng: ILatLng;
   image: string;
   title: string;
 }
 
-interface ImageProps {
+interface IImageProps {
   src: string;
   alt: string;
   title: string;
 }
 
-interface HashTagProps {
+interface IHashTagProps {
   hashtag: string;
   setHashtag: Dispatch<SetStateAction<string>>;
 }
 
 // [2022-12-19] 추후 실제 게시물페이지와 연동할 때 여기 이벤트를 수정해주면 된다.
-const Image = ({ src, alt, title }: ImageProps) => {
+const Image = ({ src, alt, title }: IImageProps) => {
   const handleImage = () => {
     console.log('🚀 ~ file: index.tsx:51 ~ handleImage ~ title', title);
   };
@@ -163,7 +163,7 @@ const Image = ({ src, alt, title }: ImageProps) => {
   );
 };
 
-const HashTag = ({ hashtag, setHashtag }: HashTagProps) => (
+const HashTag = ({ hashtag, setHashtag }: IHashTagProps) => (
   <span onClick={(e) => setHashtag('')} role="presentation">
     {hashtag}
   </span>
@@ -173,7 +173,7 @@ const CustomOverlayContainer = ({
   latlng,
   image,
   title,
-}: CustomOverlayContainerProps) => (
+}: ICustomOverlayContainerProps) => (
   <CustomOverlayMap
     position={{
       lat: latlng.lat,
@@ -188,13 +188,14 @@ const CustomOverlayContainer = ({
 );
 
 // 임시 SearchBar 컴포넌트입니다. 추후 헤더에 있는 input으로 대체할 것입니다.
-const SearchBar = ({ hashtag, setHashtag }: HashTagProps) => {
-  const [searchBarInput, setSearchBarInput] = useState('');
+const SearchBar = ({ hashtag, setHashtag }: IHashTagProps) => {
+  const [searchBarInput, setSearchBarInput] = useState<string>('');
 
   const handleSearchBarButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setHashtag(`${searchBarInput}`);
     setSearchBarInput('');
+    console.log('커밋용 임시 코드');
   };
 
   return (
@@ -217,7 +218,7 @@ const SearchBar = ({ hashtag, setHashtag }: HashTagProps) => {
 };
 
 const Kakao = () => {
-  const [hashtag, setHashtag] = useState('');
+  const [hashtag, setHashtag] = useState<string>('');
 
   return (
     <>
