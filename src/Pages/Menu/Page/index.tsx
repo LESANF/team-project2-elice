@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import * as S from './styled';
 
+// 추가할 타입 없으면 나중에 string으로 변경
 interface IMenuTtype {
   menuType: string;
 }
