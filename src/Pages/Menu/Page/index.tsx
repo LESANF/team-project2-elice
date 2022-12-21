@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import Maps from '../../Maps';
 import * as S from './styled';
 
 // 추가할 타입 없으면 나중에 string으로 변경
@@ -44,7 +45,7 @@ const Menu = ({ menuType }: IMenuTtype) => {
             </S.MenuItems>
           </S.MenuHeader>
           <S.ContentsFrame>
-            {menuType === 'photo' ? <h1>PHOTO</h1> : <h1>MAP</h1>}
+            {menuType === 'photo' ? <h1>PHOTO</h1> : <Maps />}
           </S.ContentsFrame>
         </S.Wrapper>
       </S.Container>
