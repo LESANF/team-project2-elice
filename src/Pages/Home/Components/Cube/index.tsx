@@ -1,100 +1,17 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box, OrbitControls } from '@react-three/drei';
-import styled from 'styled-components';
-import { styled as styledMui } from '@mui/material/styles';
-import { Button as ButtonMui } from '@mui/material';
+import * as S from './styled';
+import { useGetData } from '../../hooks/useGetData';
 
-interface CubeProps {
+interface ICubeProps {
   objectURL?: string[];
   handler?: any;
   setIndex?: any;
 }
 
-interface INavigateButton {
-  backgroundColor: string;
-  hoverBackgroundColor: string;
-}
-
-interface IStyledP {
-  lineClamp: string;
-}
-
-const StyledP = styled.p<IStyledP>`
-  font-size: calc(2.3px + 1.2vmin);
-  width: 8vw;
-  display: -webkit-box;
-  -webkit-line-clamp: ${(props) => props.lineClamp};
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-const NavigateButton = styledMui(ButtonMui)<INavigateButton>`
-  width:fit-content;
-  height:fit-content;
-  padding: 1vh 1vw;
-  font-family: 'Segoe UI';
-  font-style: normal;
-  font-weight: 600;
-  font-size:calc(2.7px + 1.4vmin);
-  font-family: 'Segoe UI';
-  line-height: 140%;
-  color: #FFFFFF;
-  background-color: ${(props) => props.backgroundColor};
-  :hover{
-    background-color: ${(props) => props.hoverBackgroundColor};
-  }
-`;
-
-function wrapPromise(promise: any) {
-  let status = 'pending';
-  let result: any;
-  const suspender = promise.then(
-    (r: any) => {
-      status = 'success';
-      result = r;
-    },
-    (e: any) => {
-      status = 'error';
-      result = e;
-    },
-  );
-  return {
-    read() {
-      if (status === 'pending') {
-        throw suspender;
-      } else if (status === 'error') {
-        throw result;
-      } else if (status === 'success') {
-        return result;
-      }
-      return undefined;
-    },
-  };
-}
-const fetcher = async (url: string) => {
-  const promiseList: any = [];
-  for (let i = 0; i < 6; i += 1) {
-    promiseList.push(
-      fetch(url)
-        .then((res) => res.blob())
-        .then(URL.createObjectURL),
-    );
-  }
-  const res = await Promise.all(promiseList);
-  return res;
-};
-const useGetData = (url: string) => {
-  const [resource, setResource] = useState(null as any);
-  useEffect(() => {
-    const res = wrapPromise(fetcher(url));
-    setResource(res);
-  }, [url]);
-  return resource?.read();
-};
-
-const Cube = ({ objectURL, handler, setIndex }: CubeProps) => {
+const Cube = ({ objectURL, handler, setIndex }: ICubeProps) => {
   const cube = useRef<THREE.Mesh>();
   const [isRotating, setIsRotationg] = useState(true);
   useFrame((state) => {
@@ -138,7 +55,7 @@ const Cube = ({ objectURL, handler, setIndex }: CubeProps) => {
   );
 };
 
-const Scene = ({ objectURL, handler, setIndex }: CubeProps) => (
+const Scene = ({ objectURL, handler, setIndex }: ICubeProps) => (
   <>
     <pointLight intensity={0.93} position={[1, 1, 5]} />
     <Cube objectURL={objectURL} handler={handler} setIndex={setIndex} />
@@ -222,10 +139,10 @@ const CubeContainer: React.FC = () => {
               >
                 게시글 제목이 들어갈 자리
               </p>
-              <StyledP lineClamp="3">
+              <S.StyledP lineClamp="3">
                 게시글 내용이 들어갈 자리 게시글 내용이 들어갈 자리 게시글
                 내용이 들어갈 자리 게시글 내용이 들어갈 자리
-              </StyledP>
+              </S.StyledP>
               <p
                 style={{
                   fontSize: 'calc(2.1px + 1.1vmin)',
@@ -237,12 +154,12 @@ const CubeContainer: React.FC = () => {
                 작성자
               </p>
             </div>
-            <NavigateButton
+            <S.NavigateButton
               backgroundColor="#07b8b8"
               hoverBackgroundColor="#00a8a7"
             >
               게시글 보러가기
-            </NavigateButton>
+            </S.NavigateButton>
           </div>
         </div>
       )}
