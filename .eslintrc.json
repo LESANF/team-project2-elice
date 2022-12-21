@@ -43,7 +43,8 @@
     "react/require-default-props": "off",
     "react/destructuring-assignment": "off",
     "no-console": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unknown-property": "off"
   },
   "settings": {
     "react": {

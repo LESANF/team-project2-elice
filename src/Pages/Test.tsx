@@ -35,7 +35,6 @@ const Test = () => {
       <TestBtn onClick={() => setFlag(true)}>TestBtn</TestBtn>
       <DialogTest
         openFlag={flag}
-        CustomBtn={TestBtn}
         title="Dialog Test"
         content="Test Screen"
         agreeFn={agreeFn}

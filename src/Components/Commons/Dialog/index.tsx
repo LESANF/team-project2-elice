@@ -25,7 +25,6 @@ const Transition = forwardRef(
 
 interface IDialogProps {
   openFlag: boolean;
-  CustomBtn: object;
   title: string;
   content: string;
   agreeFn(): boolean;
