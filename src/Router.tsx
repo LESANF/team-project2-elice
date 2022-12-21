@@ -2,13 +2,14 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import Test from './Pages/Test';
-import Menu from './Pages/Menu';
-import Spinner from './Pages/Spinner';
-import Intro from './Pages/Intro';
-import Map from './Pages/Map';
+import Menu from './Pages/Menu/Page';
+import Spinner from './Pages/Home/Components/Spinner';
+import Intro from './Pages/Home/Page';
+import Maps from './Pages/Maps';
 import Join from './Pages/Join/Page';
 import Edit from './Pages/Edit/Page';
 import MyPage from './Pages/MyPage';
+import ErrorPage from './Components/Commons/ErrorPage';
 
 const Router = () => (
   <BrowserRouter>
@@ -21,12 +22,13 @@ const Router = () => (
           </Suspense>
         }
       />
-      <Route path="/menu" element={<Menu />} />
-      <Route path="/map" element={<Map />} />
+      <Route path="/menu/maps" element={<Menu menuType="map" />} />
+      <Route path="/menu/photolists" element={<Menu menuType="photo" />} />
       <Route path="/join" element={<Join />} />
       <Route path="/edit" element={<Edit />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/test" element={<Test />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   </BrowserRouter>
 );

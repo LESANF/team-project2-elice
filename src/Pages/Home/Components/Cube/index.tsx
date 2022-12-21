@@ -1,88 +1,19 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box, OrbitControls } from '@react-three/drei';
-import { styled as styledMui } from '@mui/material/styles';
-import { Button as ButtonMui } from '@mui/material';
+import * as S from './styled';
+import { useGetData } from '../../hooks/useGetData';
 
-interface CubeProps {
+interface ICubeProps {
   objectURL?: string[];
   handler?: any;
   setIndex?: any;
 }
 
-interface INavigateButton {
-  backgroundColor: string;
-  hoverBackgroundColor: string;
-}
-
-const NavigateButton = styledMui(ButtonMui)<INavigateButton>`
-  width:fit-content;
-  height:fit-content;
-  padding: 1vh 1.2vw;
-  font-family: 'Segoe UI';
-  font-style: normal;
-  font-weight: 600;
-  font-size:calc(2.7px + 1.4vmin);
-  font-family: 'Segoe UI';
-  line-height: 140%;
-  color: #FFFFFF;
-  background-color: ${(props) => props.backgroundColor};
-  :hover{
-    background-color: ${(props) => props.hoverBackgroundColor};
-  }
-`;
-
-function wrapPromise(promise: any) {
-  let status = 'pending';
-  let result: any;
-  const suspender = promise.then(
-    (r: any) => {
-      status = 'success';
-      result = r;
-    },
-    (e: any) => {
-      status = 'error';
-      result = e;
-    },
-  );
-  return {
-    read() {
-      if (status === 'pending') {
-        throw suspender;
-      } else if (status === 'error') {
-        throw result;
-      } else if (status === 'success') {
-        return result;
-      }
-      return undefined;
-    },
-  };
-}
-const fetcher = async (url: string) => {
-  const promiseList: any = [];
-  for (let i = 0; i < 6; i += 1) {
-    promiseList.push(
-      fetch(url)
-        .then((res) => res.blob())
-        .then(URL.createObjectURL),
-    );
-  }
-  const res = await Promise.all(promiseList);
-  return res;
-};
-const useGetData = (url: string) => {
-  const [resource, setResource] = useState(null as any);
-  useEffect(() => {
-    const res = wrapPromise(fetcher(url));
-    setResource(res);
-  }, [url]);
-  return resource?.read();
-};
-
-const Cube = ({ objectURL, handler, setIndex }: CubeProps) => {
+const Cube = ({ objectURL, handler, setIndex }: ICubeProps) => {
   const cube = useRef<THREE.Mesh>();
-  const [isRotating, setIsRotationg] = useState(true);
+  const [isRotating, setIsRotationg] = useState<boolean>(true);
   useFrame((state) => {
     if (isRotating) {
       cube.current!.rotation.x += 0.01;
@@ -124,7 +55,7 @@ const Cube = ({ objectURL, handler, setIndex }: CubeProps) => {
   );
 };
 
-const Scene = ({ objectURL, handler, setIndex }: CubeProps) => (
+const Scene = ({ objectURL, handler, setIndex }: ICubeProps) => (
   <>
     <pointLight intensity={0.93} position={[1, 1, 5]} />
     <Cube objectURL={objectURL} handler={handler} setIndex={setIndex} />
@@ -132,9 +63,9 @@ const Scene = ({ objectURL, handler, setIndex }: CubeProps) => (
 );
 
 const CubeContainer: React.FC = () => {
-  const objectURL = useGetData('https://picsum.photos/200/200');
-  const [isPopupOn, setIsPopupOn] = useState(false);
-  const [index, setIndex] = useState(0);
+  const objectURL = useGetData('https://picsum.photos/200/200', 6);
+  const [isPopupOn, setIsPopupOn] = useState<boolean>(false);
+  const [index, setIndex] = useState<number>(0);
   return (
     <>
       <Canvas
@@ -159,58 +90,77 @@ const CubeContainer: React.FC = () => {
           }}
           style={{
             position: 'absolute',
-            left: '70vw',
+            left: '66vw',
             width: 'fit-content',
             height: 'fit-content',
             background: '#ffffff',
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            opacity: '1',
             borderRadius: '12px',
             padding: '3vmin',
-            boxShadow: '-2px 3px 6px rgb(0 0 0 / 30%)',
+            gap: '3vmin',
+            boxShadow: 'rgb(0 0 0 / 10%) -3px 7px 12px',
           }}
         >
+          <img
+            style={{ borderRadius: '0.8vmin', width: '21vmin' }}
+            src={objectURL ? objectURL[index] : ''}
+            alt=""
+          />
           <div
             style={{
               width: 'fit-content',
               height: 'fit-content',
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              opacity: '1',
-              marginBottom: '3vmin',
               gap: '3vmin',
             }}
           >
-            <img
-              style={{ borderRadius: '0.8vmin', width: '20vmin' }}
-              src={objectURL ? objectURL[index] : ''}
-              alt=""
-            />
-            <pre
+            <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '2vh',
-                whiteSpace: 'normal',
               }}
             >
-              <p style={{ fontSize: 'calc(4px + 2vmin)' }}>게시글 제목</p>
-              <p style={{ fontSize: 'calc(2.7px + 1.4vmin)' }}>
-                게시글 내용...
+              <p
+                style={{
+                  fontSize: 'calc(3.2px + 1.6vmin)',
+                  width: '9vw',
+                  fontWeight: '600',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                게시글 제목이 들어갈 자리
               </p>
-              <p style={{ fontSize: 'calc(2.7px + 1.4vmin)' }}>작성자</p>
-            </pre>
+              <S.StyledP lineClamp="3">
+                게시글 내용이 들어갈 자리 게시글 내용이 들어갈 자리 게시글
+                내용이 들어갈 자리 게시글 내용이 들어갈 자리
+              </S.StyledP>
+              <p
+                style={{
+                  fontSize: 'calc(2.1px + 1.1vmin)',
+                  width: '9vw',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                작성자
+              </p>
+            </div>
+            <S.NavigateButton
+              backgroundColor="#07b8b8"
+              hoverBackgroundColor="#00a8a7"
+            >
+              게시글 보러가기
+            </S.NavigateButton>
           </div>
-          <NavigateButton
-            backgroundColor="#07b8b8"
-            hoverBackgroundColor="#00a8a7"
-          >
-            게시글보러가기
-          </NavigateButton>
         </div>
       )}
     </>

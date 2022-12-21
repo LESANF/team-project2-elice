@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
+
+import { authenticatedState } from '../../Atoms';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
@@ -10,33 +12,20 @@ import {
   IsExist,
   warningEmail,
   warningPw,
+  state,
 } from '../../Utils';
-
-interface State {
-  NORMAL: string; // 입력 전
-  SUCCESS: string; //  성공
-  STRERROR: string; // 길이 문법 오류
-  NONEXISTERROR: string; // 중복오류
-  ERROR: string;
-}
-const state: State = {
-  NORMAL: 'NORMAL', // 입력 전
-  SUCCESS: 'SUCCESS',
-  STRERROR: 'STRERROR',
-  NONEXISTERROR: 'NONEXISTERROR',
-  ERROR: 'ERROR',
-};
 
 const LoginTap = () => {
   const navigate = useNavigate();
-  const [emailstate, setEmailState] = useState(state.NORMAL);
-  const [pwstate, setPwState] = useState(state.NORMAL);
-  const [loginstate, setLoginState] = useState(state.NORMAL);
+  const setAuthenticated = useSetRecoilState(authenticatedState);
+  const [emailstate, setEmailState] = useState<string>(state.NORMAL);
+  const [pwstate, setPwState] = useState<string>(state.NORMAL);
+  const [loginstate, setLoginState] = useState<string>(state.NORMAL);
 
-  const [email, setEmail] = useState('');
-  const [pw, setpw] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [pw, setpw] = useState<string>('');
 
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState<boolean>(false);
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailInput = e.target.value;
@@ -69,7 +58,12 @@ const LoginTap = () => {
           email,
           password: pw,
         });
-        console.log('토큰', result.data.accessToken);
+        //  토큰
+        if (result.data.accessToken) {
+          console.log('토큰', result.data.accessToken);
+          setAuthenticated(true);
+          localStorage.setItem('login-token', result.data.accessToken);
+        }
         console.log(result);
         setLoginState(state.SUCCESS);
         setFlag(true);

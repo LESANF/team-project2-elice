@@ -4,25 +4,25 @@ import LoginTap from '../Components/LoginTap';
 import JoinTap from '../Components/JoinTap';
 import FindPwTap from '../Components/FindPwTap';
 
-interface State {
+interface IState {
   LOGIN: string;
   JOIN: string;
   FINDPW: string;
 }
-const state: State = {
+const state: IState = {
   LOGIN: 'LOGIN',
   JOIN: 'JOIN',
   FINDPW: 'FINDPW',
 };
 
-interface StateTap {
+interface IStateTap {
   [index: string]: JSX.Element;
   LOGIN: JSX.Element;
   JOIN: JSX.Element;
   FINDPW: JSX.Element;
 }
 
-const stateTap: StateTap = {
+const stateTap: IStateTap = {
   LOGIN: <LoginTap />,
   JOIN: <JoinTap />,
   FINDPW: <FindPwTap />,
