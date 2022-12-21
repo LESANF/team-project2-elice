@@ -10,22 +10,8 @@ import {
   IsExist,
   warningEmail,
   warningPw,
+  state,
 } from '../../Utils';
-
-interface State {
-  NORMAL: string; // 입력 전
-  SUCCESS: string; //  성공
-  STRERROR: string; // 길이 문법 오류
-  NONEXISTERROR: string; // 중복오류
-  ERROR: string;
-}
-const state: State = {
-  NORMAL: 'NORMAL', // 입력 전
-  SUCCESS: 'SUCCESS',
-  STRERROR: 'STRERROR',
-  NONEXISTERROR: 'NONEXISTERROR',
-  ERROR: 'ERROR',
-};
 
 const LoginTap = () => {
   const navigate = useNavigate();

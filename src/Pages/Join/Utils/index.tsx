@@ -8,7 +8,7 @@ interface State {
   NONEXISTERROR: string; // 중복오류
   ERROR: string;
 }
-const state: State = {
+export const state: State = {
   NORMAL: 'NORMAL', // 입력 전
   SUCCESS: 'SUCCESS',
   STRERROR: 'STRERROR',

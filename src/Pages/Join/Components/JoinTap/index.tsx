@@ -11,22 +11,9 @@ import {
   warningNickname,
   warningEmail,
   warningPw,
+  state,
 } from '../../Utils';
 
-interface State {
-  NORMAL: string; // 입력 전
-  SUCCESS: string; //  성공
-  STRERROR: string; // 길이 문법 오류
-  EXISTERROR: string; // 중복오류
-  ERROR: string;
-}
-const state: State = {
-  NORMAL: 'NORMAL', // 입력 전
-  SUCCESS: 'SUCCESS',
-  STRERROR: 'STRERROR',
-  EXISTERROR: 'EXISTERROR',
-  ERROR: 'ERROR',
-};
 const JoinTap = () => {
   const navigate = useNavigate();
   const [nicknamestate, setNicknameState] = useState(state.NORMAL);
