@@ -149,8 +149,8 @@ interface IHashTagProps {
 }
 
 interface IBoundaryLocation {
-  sw: string;
-  ne: string;
+  sw: ILatLng;
+  ne: ILatLng;
 }
 
 // [2022-12-19] 추후 실제 게시물페이지와 연동할 때 여기 이벤트를 수정해주면 된다.
@@ -229,7 +229,16 @@ const Maps = () => {
     lat: 33.450701,
     lng: 126.570667,
   });
-  const [boundaryLocation, setBoundaryLocation] = useState<IBoundaryLocation>();
+  const [boundaryLocation, setBoundaryLocation] = useState<IBoundaryLocation>({
+    sw: {
+      lat: 37.48970512,
+      lng: 126.72134047,
+    },
+    ne: {
+      lat: 37.49551104,
+      lng: 126.73862053,
+    },
+  });
 
   useEffect(() => {
     try {
@@ -273,22 +282,38 @@ const Maps = () => {
           borderRadius: '10px',
         }}
         level={3} // 지도의 확대 레벨
-        onBoundsChanged={(map) =>
+        onTileLoaded={(map) =>
           setBoundaryLocation({
-            sw: map.getBounds().getSouthWest().toString(),
-            ne: map.getBounds().getNorthEast().toString(),
+            sw: {
+              lat: map.getBounds().getSouthWest().getLat(),
+              lng: map.getBounds().getSouthWest().getLng(),
+            },
+            ne: {
+              lat: map.getBounds().getNorthEast().getLat(),
+              lng: map.getBounds().getNorthEast().getLng(),
+            },
           })
         }
       >
         {hashtag === ''
-          ? pictures.map((picture) => (
-              <CustomOverlayContainer
-                key={`${picture.title}-${picture.latlng}`}
-                latlng={picture.latlng}
-                image={picture.image}
-                title={picture.title}
-              />
-            ))
+          ? pictures.map((picture) => {
+              if (
+                picture.latlng.lat > boundaryLocation?.sw.lat &&
+                picture.latlng.lng > boundaryLocation?.sw.lng &&
+                picture.latlng.lat < boundaryLocation?.ne.lat &&
+                picture.latlng.lat < boundaryLocation?.ne.lng
+              ) {
+                return (
+                  <CustomOverlayContainer
+                    key={`${picture.title}-${picture.latlng}`}
+                    latlng={picture.latlng}
+                    image={picture.image}
+                    title={picture.title}
+                  />
+                );
+              }
+              return null;
+            })
           : pictures.map((picture) => {
               if (picture.hashtags.includes(hashtag)) {
                 return (
@@ -303,13 +328,6 @@ const Maps = () => {
               return null;
             })}
       </Map>
-      {!!boundaryLocation && (
-        <p>
-          {`남서쪽 위도, 경도는  ${boundaryLocation.sw} 이고 <->`}
-          <br />
-          {`북동쪽 위도, 경도는  ${boundaryLocation.ne}입니다`}
-        </p>
-      )}
     </>
   );
 };
