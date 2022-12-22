@@ -148,6 +148,11 @@ interface IHashTagProps {
   setHashtag: Dispatch<SetStateAction<string>>;
 }
 
+interface IBoundaryLocation {
+  sw: string;
+  ne: string;
+}
+
 // [2022-12-19] 추후 실제 게시물페이지와 연동할 때 여기 이벤트를 수정해주면 된다.
 const Image = ({ src, alt, title }: IImageProps) => {
   const handleImage = () => {
@@ -224,6 +229,7 @@ const Maps = () => {
     lat: 33.450701,
     lng: 126.570667,
   });
+  const [boundaryLocation, setBoundaryLocation] = useState<IBoundaryLocation>();
 
   useEffect(() => {
     try {
@@ -267,6 +273,12 @@ const Maps = () => {
           borderRadius: '10px',
         }}
         level={3} // 지도의 확대 레벨
+        onBoundsChanged={(map) =>
+          setBoundaryLocation({
+            sw: map.getBounds().getSouthWest().toString(),
+            ne: map.getBounds().getNorthEast().toString(),
+          })
+        }
       >
         {hashtag === ''
           ? pictures.map((picture) => (
@@ -291,6 +303,13 @@ const Maps = () => {
               return null;
             })}
       </Map>
+      {!!boundaryLocation && (
+        <p>
+          {`남서쪽 위도, 경도는  ${boundaryLocation.sw} 이고 <->`}
+          <br />
+          {`북동쪽 위도, 경도는  ${boundaryLocation.ne}입니다`}
+        </p>
+      )}
     </>
   );
 };
