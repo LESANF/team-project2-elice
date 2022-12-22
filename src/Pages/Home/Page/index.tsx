@@ -9,8 +9,9 @@ import MapDemo from '../assets/map.gif';
 import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
 
+disableScroll();
+
 const Intro = () => {
-  disableScroll();
   const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
@@ -45,18 +46,23 @@ const Intro = () => {
         <S.Section backgroundColor="#ffffff">
           <S.Header>
             <Logo
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                navigate('/map');
-              }}
+            // style={{ cursor: 'pointer' }}
+            // onClick={() => {
+            //   navigate('/menu/maps');
+            // }}
             />
             <div style={{ display: 'flex', gap: '10px' }}>
-              <S.PrimaryButton fontSize="20px" onClick={alert}>
+              <S.PrimaryButton
+                fontSize="20px"
+                onClick={() => {
+                  navigate('/join');
+                }}
+              >
                 로그인
               </S.PrimaryButton>
               <S.TextButton
                 onClick={() => {
-                  navigate('/map');
+                  navigate('/join');
                 }}
               >
                 가입하기
@@ -162,6 +168,9 @@ const Intro = () => {
             <S.NavigateButton
               backgroundColor="#C52424"
               hoverBackgroundColor="#A51313"
+              onClick={() => {
+                navigate('/menu/maps');
+              }}
             >
               탐색
             </S.NavigateButton>
@@ -227,6 +236,9 @@ const Intro = () => {
             <S.NavigateButton
               backgroundColor="#0D61AE"
               hoverBackgroundColor="#044F94"
+              onClick={() => {
+                navigate('/menu/photolists');
+              }}
             >
               탐색
             </S.NavigateButton>
