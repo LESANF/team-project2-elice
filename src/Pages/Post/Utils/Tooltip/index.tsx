@@ -1,5 +1,18 @@
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 
-const TagToolTip = () => <h1>ToolTip</h1>;
+const TagToolTip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    lineHeight: '1.5',
+    backgroundColor: '#343A40',
+    padding: '12px',
+    color: '#fff',
+    maxWidth: 280,
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 export default TagToolTip;

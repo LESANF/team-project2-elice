@@ -2,10 +2,13 @@ import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const Editor = () => {
-  const QuillRef = useRef<ReactQuill>();
-  const [contents, setContents] = useState('');
+interface IQuillProps {
+  quillRef: any;
+  htmlContent: any;
+  setHtmlContent: any;
+}
 
+const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
   const imageHandler = () => {
     const formData = new FormData();
 
@@ -55,15 +58,12 @@ const Editor = () => {
 
   return (
     <ReactQuill
+      style={{ height: '500px', width: '706px' }}
       modules={modules}
-      ref={(element) => {
-        if (element !== null) {
-          QuillRef.current = element;
-        }
-      }}
+      ref={quillRef}
       placeholder="Photolog에 기록해 보세요 !"
-      value={contents}
-      onChange={setContents}
+      value={htmlContent}
+      onChange={setHtmlContent}
       theme="snow"
     />
   );
