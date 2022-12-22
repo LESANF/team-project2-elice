@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   min-width: 826px;
-  padding: 50px;
+  padding: 50px 50px 0 50px;
 `;
 
 export const Wrapper = styled.div`
@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
 export const TitleWrapper = styled.div`
   padding: 20px 60px 0px 60px;
   width: 826px;
+  margin-bottom: 60px;
 `;
 
 export const TitleBox = styled.div``;
@@ -31,10 +32,9 @@ export const TitleArea = styled.textarea.attrs({
   display: block;
   color: #000;
   width: 100%;
-  background-color: peru;
 `;
 export const BoxBorder = styled.div`
-  background: red;
+  background: rgb(73, 80, 87);
   width: 80px;
   align-self: flex-start;
   height: 6px;
@@ -59,11 +59,31 @@ export const TagInput = styled.input.attrs({
   line-height: 32px;
   margin-bottom: 10px;
   border: none;
-  background-color: blue;
 `;
-export const Tag = styled.div``;
+export const Tag = styled.div<{ bgColor: string }>`
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  border-radius: 16px;
+  padding: 0 16px 0 16px;
+  background: ${({ bgColor }) => bgColor};
+  color: white;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  transition: 0.125s ease-in 0s;
+  cursor: pointer;
+  animation: 0.125s ease-in-out 0s;
+`;
 
 export const ContentBox = styled.div``;
-export const QuillEditor = styled.div``;
+export const QuillEditor = styled.div`
+  height: 706px;
+`;
 
-export const PostFooter = styled.div``;
+export const PostFooter = styled.div`
+  width: 100%;
+  height: 70px;
+  background-color: red;
+  z-index: 100;
+`;
