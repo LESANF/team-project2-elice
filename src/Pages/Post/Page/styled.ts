@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  min-width: 826px;
   padding: 50px;
 `;
 
@@ -12,12 +13,15 @@ export const Wrapper = styled.div`
 
 export const TitleWrapper = styled.div`
   padding: 20px 60px 0px 60px;
-  width: 100%;
+  width: 826px;
 `;
 
 export const TitleBox = styled.div``;
-export const TitleArea = styled.textarea`
-  height: 66px;
+export const TitleArea = styled.textarea.attrs({
+  placeholder: '제목을 입력하세요',
+})`
+  height: 72px;
+  min-height: 72px;
   font-size: 48px;
   resize: none;
   line-height: 1.5;

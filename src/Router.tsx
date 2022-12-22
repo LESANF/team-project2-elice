@@ -10,7 +10,7 @@ import Join from './Pages/Join/Page';
 import Edit from './Pages/Edit/Page';
 import MyPage from './Pages/MyPage';
 import ErrorPage from './Components/Commons/ErrorPage';
-import PostPhoto from './Pages/Post';
+import PostPhoto from './Pages/Post/Page';
 
 const Router = () => (
   <BrowserRouter>

@@ -27,6 +27,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
+    "react-tooltip": "^5.3.0",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.6",
