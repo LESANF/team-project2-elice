@@ -61,30 +61,38 @@ const wheelOpt = supportsPassive ? { passive: false } : false;
 const wheelEvent =
   'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
 
-const preventResizeScroll = (e: any) => {
-  console.log(e);
+const preventResizeScroll = (e: any, start: any) => {
   if (window.visualViewport) {
     const vh = window.visualViewport.height;
+    const delta = vh - start;
     if (window.scrollY % vh === 0) return;
     if (window.scrollY < vh) window.scrollTo(0, vh);
-    else if (window.scrollY < vh * 2) window.scrollTo(0, vh * 2);
-    else if (window.scrollY < vh * 3) window.scrollTo(0, vh * 3);
-    else if (window.scrollY < vh * 4) window.scrollTo(0, vh * 4);
-    else if (window.scrollY < vh * 5) window.scrollTo(0, vh * 5);
+    else if (window.scrollY < vh * 2) {
+      if (delta < 0) window.scrollTo(0, vh);
+      else window.scrollTo(0, vh * 2);
+    } else if (window.scrollY < vh * 3) {
+      if (delta < 0) window.scrollTo(0, vh * 2);
+      else window.scrollTo(0, vh * 3);
+    } else if (window.scrollY < vh * 4) window.scrollTo(0, vh * 3);
   }
 };
 
 const debounceEvent = (cb: any, delay: number) => {
   let timeout: any;
+  let startVh: number | undefined = 0;
+  let flag = false;
   return function (...args: any) {
+    if (!flag) startVh = window.visualViewport?.height;
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      cb(args);
+      cb(args, startVh);
+      flag = false;
     }, delay);
+    flag = true;
   };
 };
 
-const debounceResizeEvent = debounceEvent(preventResizeScroll, 300);
+const debounceResizeEvent = debounceEvent(preventResizeScroll, 500);
 
 export const disableScroll = () => {
   window.addEventListener('DOMMouseScroll', handleWheelEvent, false); // older FF
