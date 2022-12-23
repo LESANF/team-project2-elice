@@ -15,7 +15,7 @@ const MyProfileTap = () => {
     <>
       <S.Form className="editProfile">
         <div className="title">프로필</div>
-        <img src={Image} alt="프로필" />
+        <img src={user.imageUrlId} alt="프로필" />
       </S.Form>
       <S.Form>
         <div className="title">닉네임</div>
