@@ -89,7 +89,7 @@ export const SearchInput = styled.input`
 export const SearchBar = styled.div`
   display: flex;
   align-items: center;
-  width: 610px;
+  width: 32vw;
   height: 40px;
   border-radius: 8px;
   border: 0;
