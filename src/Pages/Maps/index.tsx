@@ -241,6 +241,7 @@ const Maps = () => {
   });
 
   useEffect(() => {
+    // 페이지 로딩 시 내 위치정보를 불러오는 코드
     try {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -297,12 +298,13 @@ const Maps = () => {
       >
         {hashtag === ''
           ? pictures.map((picture) => {
-              if (
+              const isBoundary =
                 picture.latlng.lat > boundaryLocation?.sw.lat &&
                 picture.latlng.lng > boundaryLocation?.sw.lng &&
                 picture.latlng.lat < boundaryLocation?.ne.lat &&
-                picture.latlng.lat < boundaryLocation?.ne.lng
-              ) {
+                picture.latlng.lat < boundaryLocation?.ne.lng;
+              if (isBoundary) {
+                console.log('마커 리랜더링: ', picture.title);
                 return (
                   <CustomOverlayContainer
                     key={`${picture.title}-${picture.latlng}`}
@@ -315,7 +317,13 @@ const Maps = () => {
               return null;
             })
           : pictures.map((picture) => {
-              if (picture.hashtags.includes(hashtag)) {
+              const isBoundary =
+                picture.latlng.lat > boundaryLocation?.sw.lat &&
+                picture.latlng.lng > boundaryLocation?.sw.lng &&
+                picture.latlng.lat < boundaryLocation?.ne.lat &&
+                picture.latlng.lat < boundaryLocation?.ne.lng;
+              if (isBoundary && picture.hashtags.includes(hashtag)) {
+                console.log('마커 리랜더링: ', picture.title);
                 return (
                   <CustomOverlayContainer
                     key={`${picture.title}-${picture.latlng}`}
