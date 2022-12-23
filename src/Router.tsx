@@ -1,11 +1,9 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
 import Test from './Pages/Test';
 import Menu from './Pages/Menu/Page';
 import Spinner from './Pages/Home/Components/Spinner';
 import Intro from './Pages/Home/Page';
-import Maps from './Pages/Maps';
 import Join from './Pages/Join/Page';
 import Edit from './Pages/Edit/Page';
 import MyPage from './Pages/MyPage';
