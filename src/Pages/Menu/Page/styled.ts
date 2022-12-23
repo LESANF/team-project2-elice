@@ -10,7 +10,7 @@ export const Container = styled.div``;
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 300vh;
+  height: 120vh;
   flex-direction: column;
   padding: 100px;
 `;

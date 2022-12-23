@@ -4,6 +4,7 @@ import {
   HeaderWithProfile,
   HeaderForPost,
 } from '../../../Components/Commons/Header';
+import Footer from '../../../Components/Commons/Footer';
 import * as S from './styled';
 
 // 추가할 타입 없으면 나중에 string으로 변경
@@ -24,6 +25,7 @@ const Menu = ({ menuType }: IMenuTtype) => {
           </S.ContentsFrame>
         </S.Wrapper>
       </S.Container>
+      {menuType === 'photo' ? '' : <Footer />}
     </>
   );
 };
