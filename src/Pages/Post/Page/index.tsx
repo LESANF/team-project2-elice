@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import * as S from './styled';
 import Editor from '../../../Components/Commons/Editor';
 import TagToolTip from '../Utils/Tooltip';
@@ -12,13 +13,17 @@ const PostPhoto = () => {
   const tagColor: string[] = ['#7978C6', '#7EC885', '#E6549D'];
 
   const handleSubmit = async () => {
+    await axios
+      .get(`http://localhost:5001/photos/presigned-url?filetype=jpg`)
+      .then((res) => console.log(res));
+
     if (quillRef.current) {
-      // const description = quillRef.current.getEditor().getText();
+      const description = quillRef.current.getEditor().getText();
       const quill = quillRef.current.getEditor();
       const url = 'https://source.unsplash.com/user/c_v_r/300x300';
       const range = quill.getSelection()?.index;
-      // console.log(description);
-      // console.log(htmlContent);
+      console.log(description);
+      console.log(htmlContent);
       quill.clipboard.dangerouslyPasteHTML(1, `<img src=${url} alt="image" />`);
     }
   };
@@ -58,6 +63,11 @@ const PostPhoto = () => {
     }
   };
 
+  const removeTag = (tagName: string) => {
+    const newAry = [...tagList];
+    setTagList(newAry.filter((tag) => tag !== tagName));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const regex = /[,]/gi;
@@ -81,7 +91,11 @@ const PostPhoto = () => {
             <S.TagBox>
               {tagList &&
                 tagList.map((tagName: string, index: number) => (
-                  <S.Tag key={index.toString() + tagName} bgColor={tagColor[2]}>
+                  <S.Tag
+                    key={index.toString() + tagName}
+                    onClick={() => removeTag(tagName)}
+                    bgColor={tagColor[2]}
+                  >
                     {tagName}
                   </S.Tag>
                 ))}

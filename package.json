@@ -17,6 +17,7 @@
     "@types/react-dom": "^18.0.9",
     "axios": "^1.2.1",
     "env": "^0.0.2",
+    "exif-js": "^2.3.0",
     "framer-motion": "^7.10.3",
     "quill-image-resize-module": "^3.0.0",
     "quill-image-resize-module-ts": "^3.0.3",
