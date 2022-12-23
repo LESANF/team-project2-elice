@@ -25,9 +25,9 @@ export const PrimaryButton = styled.button<IPrimaryButton>`
   background: #07b8b8;
   border-radius: 6px;
   border: 0px;
-  font-family: 'Segoe UI';
+  font-family: 'Noto Sans', 'Noto Sans KR';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: ${(props) => props.fontSize};
   line-height: 140%;
   color: #ffffff;
@@ -114,11 +114,10 @@ export const StyledH1 = styled.h1`
 `;
 export const TextButton = styledMui(Button)`
   padding: 8px 10px;
-  font-family: 'Segoe UI';
+  font-family: 'Noto Sans','Noto Sans KR';
   font-style: normal;
   font-weight: 600;
   font-size:20px;
-  font-family: 'Segoe UI';
   line-height: 27px;
   color: #2A2A2A;
   :hover{
