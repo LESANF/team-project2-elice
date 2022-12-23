@@ -1,17 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as S from './styled';
 import { useGetData } from '../hooks/useGetData';
-import { disableScroll, debounceResizeEvent } from '../Utils';
+import { disableScroll, removeDisableScroll } from '../Utils';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import MapDemo from '../assets/map.gif';
 import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
 
-disableScroll();
-
 const Intro = () => {
+  useEffect(() => {
+    disableScroll();
+    return removeDisableScroll;
+  }, []);
   const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
@@ -21,20 +23,6 @@ const Intro = () => {
       transition: { duration: 0.5 },
     },
   };
-  window.onresize = debounceResizeEvent(
-    (e: React.UIEvent<Window, 'resize'>) => {
-      if (window.visualViewport) {
-        const vh = window.visualViewport.height;
-        if (window.scrollY % vh === 0) return;
-        if (window.scrollY < vh) window.scrollTo(0, vh);
-        else if (window.scrollY < vh * 2) window.scrollTo(0, vh * 2);
-        else if (window.scrollY < vh * 3) window.scrollTo(0, vh * 3);
-        else if (window.scrollY < vh * 4) window.scrollTo(0, vh * 4);
-        else if (window.scrollY < vh * 5) window.scrollTo(0, vh * 5);
-      }
-    },
-    500,
-  );
   return (
     <>
       <style id="scroll-properties">
