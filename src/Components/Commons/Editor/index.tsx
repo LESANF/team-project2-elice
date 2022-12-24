@@ -11,6 +11,9 @@ interface IQuillProps {
 }
 
 const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
+  const [finalLo, setFinalLo] = useState<number | null>(null);
+  const [finalLa, setFinalLa] = useState<number | null>(null);
+
   const imageHandler = () => {
     // http://localhost:5001/photos/presigned-url?filetype=jpg
     // https://photolog-bucket.s3.amazonaws.com/ (signURL)
@@ -45,14 +48,30 @@ const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
 
         EXIF.getData(fileInfo, () => {
           const tags = EXIF.getAllTags(fileInfo);
-          console.log(tags.Artist);
-          console.log(tags.Orientation);
 
-          // 모든 키와 해당 키의 값 얻기
-          for (const key in tags) {
-            console.log(key);
-            console.log(tags[key]);
-          }
+          const model = tags.Model;
+          const longitude = tags.GPSLongitude;
+          const longitudeRef = tags.GPSLongitudeRef;
+          const latitude = tags.GPSLatitude;
+          const latitudeRef = tags.GPSLatitudeRef;
+
+          // 위도 latitude, 경도 longitude
+          if (latitudeRef === 'S')
+            setFinalLa(
+              -1 * latitude[0] + (-60 * latitude[1] + -1 * latitude[2]) / 3600,
+            );
+          if (latitudeRef === 'N')
+            setFinalLa(latitude[0] + (60 * latitude[1] + latitude[2]) / 3600);
+
+          if (longitudeRef === 'W')
+            setFinalLo(
+              -1 * longitude[0] +
+                (-60 * longitude[1] + -1 * longitude[2]) / 3600,
+            );
+          if (longitudeRef === 'E')
+            setFinalLo(
+              longitude[0] + (60 * longitude[1] + longitude[2]) / 3600,
+            );
         });
       }
     };
