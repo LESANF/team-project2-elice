@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
+
+import { FaCameraRetro } from 'react-icons/fa';
 import * as S from './styled';
 import Editor from '../../../Components/Commons/Editor';
 import TagToolTip from '../Utils/Tooltip';
@@ -12,15 +15,21 @@ const PostPhoto = () => {
   const tagColor: string[] = ['#7978C6', '#7EC885', '#E6549D'];
 
   const handleSubmit = async () => {
-    if (quillRef.current) {
-      // const description = quillRef.current.getEditor().getText();
-      const quill = quillRef.current.getEditor();
-      const url = 'https://source.unsplash.com/user/c_v_r/300x300';
-      const range = quill.getSelection()?.index;
-      // console.log(description);
-      // console.log(htmlContent);
-      quill.clipboard.dangerouslyPasteHTML(1, `<img src=${url} alt="image" />`);
-    }
+    // await axios
+    //   .get(`http://localhost:5001/photos/presigned-url?filetype=jpg`)
+    //   .then((res) => console.log(res));
+
+    // if (quillRef.current) {
+    //   const description = quillRef.current.getEditor().getText();
+    //   const quill = quillRef.current.getEditor();
+    //   const url = 'https://source.unsplash.com/user/c_v_r/300x300';
+    //   const range = quill.getSelection()?.index;
+    //   console.log(description);
+    //   console.log(htmlContent);
+    //   quill.clipboard.dangerouslyPasteHTML(1, `<img src=${url} alt="image" />`);
+    // }
+
+    alert('등록');
   };
 
   const duplicateCheck = (value: string) => tagList.includes(value);
@@ -58,6 +67,11 @@ const PostPhoto = () => {
     }
   };
 
+  const removeTag = (tagName: string) => {
+    const newAry = [...tagList];
+    setTagList(newAry.filter((tag) => tag !== tagName));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const regex = /[,]/gi;
@@ -71,6 +85,11 @@ const PostPhoto = () => {
     }
   };
 
+  const iconStyle = {
+    color: '#07b8b8',
+    size: 24,
+  };
+
   return (
     <>
       <S.Container>
@@ -81,7 +100,11 @@ const PostPhoto = () => {
             <S.TagBox>
               {tagList &&
                 tagList.map((tagName: string, index: number) => (
-                  <S.Tag key={index.toString() + tagName} bgColor={tagColor[2]}>
+                  <S.Tag
+                    key={index.toString() + tagName}
+                    onClick={() => removeTag(tagName)}
+                    bgColor={tagColor[2]}
+                  >
                     {tagName}
                   </S.Tag>
                 ))}
@@ -94,6 +117,12 @@ const PostPhoto = () => {
                 />
               </TagToolTip>
             </S.TagBox>
+            <S.CameraModelBox>
+              <S.CameraIconBox>
+                <FaCameraRetro {...iconStyle} />
+              </S.CameraIconBox>
+              <S.CameraSelectBox />
+            </S.CameraModelBox>
           </S.TitleWrapper>
           <S.ContentBox>
             <S.QuillEditor>
@@ -107,7 +136,7 @@ const PostPhoto = () => {
         </S.Wrapper>
       </S.Container>
       <S.PostFooter>
-        <button onClick={handleSubmit}>click</button>
+        <S.SubmitBtn onClick={handleSubmit}>등록</S.SubmitBtn>
       </S.PostFooter>
     </>
   );

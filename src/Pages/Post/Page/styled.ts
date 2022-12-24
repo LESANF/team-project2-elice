@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 export const TitleWrapper = styled.div`
   padding: 20px 60px 0px 60px;
   width: 826px;
-  margin-bottom: 60px;
+  margin-bottom: 45px;
 `;
 
 export const TitleBox = styled.div``;
@@ -57,7 +57,7 @@ export const TagInput = styled.input.attrs({
   cursor: text;
   font-size: 18px;
   line-height: 32px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border: none;
 `;
 export const Tag = styled.div<{ bgColor: string }>`
@@ -76,14 +76,49 @@ export const Tag = styled.div<{ bgColor: string }>`
   animation: 0.125s ease-in-out 0s;
 `;
 
+export const CameraWrapper = styled.div``;
+export const CameraModelBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: flex-start; */
+  width: 100%;
+`;
+export const CameraIconBox = styled.div`
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CameraSelectBox = styled.select`
+  width: 200px;
+  height: 30px;
+`;
+
 export const ContentBox = styled.div``;
 export const QuillEditor = styled.div`
   height: 706px;
 `;
 
 export const PostFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   width: 100%;
-  height: 70px;
-  background-color: red;
+  height: 50px;
+  background-color: #d0d0d0;
   z-index: 100;
+`;
+
+export const SubmitBtn = styled.button`
+  width: 60px;
+  height: 40px;
+  margin-right: 30px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  color: white;
+  background-color: #07b8b8;
 `;

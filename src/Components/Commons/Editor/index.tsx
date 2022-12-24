@@ -1,5 +1,7 @@
+import axios from 'axios';
+import EXIF from 'exif-js';
 import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 interface IQuillProps {
@@ -9,7 +11,13 @@ interface IQuillProps {
 }
 
 const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
+  const [finalLo, setFinalLo] = useState<number | null>(null);
+  const [finalLa, setFinalLa] = useState<number | null>(null);
+
   const imageHandler = () => {
+    // http://localhost:5001/photos/presigned-url?filetype=jpg
+    // https://photolog-bucket.s3.amazonaws.com/ (signURL)
+
     const formData = new FormData();
 
     const input = document.createElement('input');
@@ -26,8 +34,45 @@ const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
     input.onchange = async () => {
       const file = input.files;
       if (file) {
-        formData.append('image', file[0]);
-        console.log(file[0]);
+        // http://localhost:5001/photos/presigned-url?filetype=jpg
+        // https://photolog-bucket.s3.amazonaws.com/ (signURL)
+        // formData.append('key', file[0]);
+        // formData.append('bucket', file[0]);
+        // formData.append('X-Amz-Algorithm', file[0]);
+        // formData.append('image', file[0]);
+        // formData.append('image', file[0]);
+        // formData.append('image', file[0]);
+        // formData.append('image', file[0]);
+        // formData.append('image', file[0]);
+        const fileInfo: any = file[0];
+
+        EXIF.getData(fileInfo, () => {
+          const tags = EXIF.getAllTags(fileInfo);
+
+          const model = tags.Model;
+          const longitude = tags.GPSLongitude;
+          const longitudeRef = tags.GPSLongitudeRef;
+          const latitude = tags.GPSLatitude;
+          const latitudeRef = tags.GPSLatitudeRef;
+
+          // 위도 latitude, 경도 longitude
+          if (latitudeRef === 'S')
+            setFinalLa(
+              -1 * latitude[0] + (-60 * latitude[1] + -1 * latitude[2]) / 3600,
+            );
+          if (latitudeRef === 'N')
+            setFinalLa(latitude[0] + (60 * latitude[1] + latitude[2]) / 3600);
+
+          if (longitudeRef === 'W')
+            setFinalLo(
+              -1 * longitude[0] +
+                (-60 * longitude[1] + -1 * longitude[2]) / 3600,
+            );
+          if (longitudeRef === 'E')
+            setFinalLo(
+              longitude[0] + (60 * longitude[1] + longitude[2]) / 3600,
+            );
+        });
       }
     };
   };
