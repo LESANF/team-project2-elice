@@ -5,9 +5,9 @@ import axios from 'axios';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
+  LOCAL_URL,
   validateEmail,
   validatePw,
-  IsExist,
   warningNickname,
   warningEmail,
   warningPw,
@@ -21,17 +21,14 @@ const JoinTap = () => {
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
   const [joinstate, setJoinState] = useState<string>(state.NORMAL);
 
+  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   const [nickname, setNickname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [pw, setpw] = useState<string>('');
 
   const [flag, setFlag] = useState<boolean>(false);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3232/users`)
-      .then((result) => console.log(result));
-  }, []);
 
   const changeNickNameHandler = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -40,8 +37,6 @@ const JoinTap = () => {
     console.log(nickNameInput);
     if (nickNameInput.length < 2 || nickNameInput.length > 8) {
       setNicknameState(state.STRERROR);
-    } else if (await IsExist(nickNameInput, 'nickname')) {
-      setNicknameState(state.EXISTERROR);
     } else {
       setNicknameState(state.SUCCESS);
       setNickname(nickNameInput);
@@ -53,8 +48,6 @@ const JoinTap = () => {
     console.log(emailInput);
     if (!validateEmail(emailInput)) {
       setEmailState(state.STRERROR);
-    } else if (await IsExist(emailInput, 'email')) {
-      setEmailState(state.EXISTERROR);
     } else {
       setEmailState(state.SUCCESS);
       setEmail(emailInput);
@@ -63,7 +56,6 @@ const JoinTap = () => {
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
     console.log(pwInput);
-    //  비밀번호 해시 암호화하는거 만들어야함
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
@@ -75,21 +67,26 @@ const JoinTap = () => {
   //  회원가입 button
   const clickJoinHandler = async () => {
     if (
-      nicknamestate === state.SUCCESS &&
-      emailstate === state.SUCCESS &&
-      pwstate === state.SUCCESS
+      !(
+        nicknamestate === state.SUCCESS &&
+        emailstate === state.SUCCESS &&
+        pwstate === state.SUCCESS
+      )
     ) {
-      const result = await axios.post(`http://localhost:3232/register`, {
+      return;
+    }
+    try {
+      const result = await axios.post(`${LOCAL_URL}/users`, {
         nickname,
         email,
         password: pw,
       });
-      console.log('토큰', result.data.accessToken);
       console.log(result);
       setJoinState(state.SUCCESS);
       setFlag(true);
-    } else {
+    } catch (err: any) {
       setJoinState(state.ERROR);
+      setErrorMessage(err.response.data.message);
       setFlag(true);
     }
   };
@@ -117,15 +114,7 @@ const JoinTap = () => {
       ];
     } else {
       title = '회원가입 오류';
-      if (nicknamestate !== state.SUCCESS) {
-        content += `\n${warningNickname(nicknamestate)}`;
-      }
-      if (emailstate !== state.SUCCESS) {
-        content += `\n${warningEmail(emailstate)}`;
-      }
-      if (pwstate !== state.SUCCESS) {
-        content += `\n${warningPw(pwstate)}`;
-      }
+      [title, content] = ['회원가입 오류', errorMessage];
     }
     return (
       <DialogTest
