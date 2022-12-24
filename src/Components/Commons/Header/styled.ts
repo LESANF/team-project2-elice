@@ -14,13 +14,19 @@ interface IButton {
   hoverBackgroundColor?: string;
 }
 
+interface IStyledP {
+  fontWeight?: string;
+  fontSize?: string;
+  color?: string;
+}
+
 export const HeaderContainer = styled.div`
   min-width: 100%;
   height: 77px;
   display: flex;
   align-items: center;
   position: fixed;
-  z-index: 10;
+  z-index: 12;
   background-color: #ffffff;
 `;
 
@@ -108,6 +114,7 @@ export const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: 32px;
+  cursor: pointer;
   gap: 10px;
 `;
 
@@ -115,4 +122,61 @@ export const ProfileImage = styled.img`
   width: 42px;
   height: 42px;
   border-radius: 100px;
+`;
+
+export const StyledP = styled.p<IStyledP>`
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '18px')};
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : '500')};
+  color: ${(props) => (props.color ? props.color : '#5F5F5F')};
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  text-align: center;
+  z-index: 2;
+  line-height: 146%;
+`;
+
+export const DropdownContainer = styled.div`
+  position: absolute;
+  width: 274.85px;
+  height: 460.31px;
+  transform: translate(-20px, 55px);
+  background: #ffffff;
+  box-shadow: -2px 3px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  z-index: 12;
+`;
+export const Dropdown = styled.div`
+  borderradius: 16px;
+  background: #ffffff;
+  boxshadow: -2px 3px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  width: 70%;
+  white-space: nowrap;
+  overflow-x: hidden;
+`;
+
+export const TextButton = styledMui(Button)`
+  padding: 8px 2000px;
+  font-family: 'Noto Sans','Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size:16px;
+  line-height: 27px;
+  color: #5F5F5F;
+  :hover{
+    font-weight: 500;
+    color:#07b8b8;
+  }
+`;
+
+export const DropdownRemover = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 11;
 `;
