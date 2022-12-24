@@ -7,6 +7,7 @@ import Intro from './Pages/Home/Page';
 import Join from './Pages/Join/Page';
 import Edit from './Pages/Edit/Page';
 import MyPage from './Pages/MyPage';
+import LoginDialog from './Pages/Join/Components/LoginDialog';
 import ErrorPage from './Components/Commons/ErrorPage';
 
 const Router = () => (
@@ -26,6 +27,7 @@ const Router = () => (
       <Route path="/edit" element={<Edit />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/logindialog" element={<LoginDialog />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   </BrowserRouter>

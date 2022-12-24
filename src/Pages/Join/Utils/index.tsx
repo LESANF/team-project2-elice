@@ -1,11 +1,15 @@
 import axios from 'axios';
 
+export const LOCAL_URL = 'http://localhost:5001';
+export const MYTEST_URL = 'http://localhost:3232';
+
 interface IState {
   NORMAL: string; // 입력 전
   SUCCESS: string; //  성공
   STRERROR: string; // 길이 문법 오류
   EXISTERROR: string; // 중복오류
-  NONEXISTERROR: string; // 중복오류
+  NONEXISTERROR: string; // 일치하는 정보 없음 오류
+  NONCONFIRMERROR: string;
   ERROR: string;
 }
 export const state: IState = {
@@ -14,6 +18,7 @@ export const state: IState = {
   STRERROR: 'STRERROR',
   EXISTERROR: 'EXISTERROR', // 회원가입
   NONEXISTERROR: 'NONEXISTERROR', // 로그인
+  NONCONFIRMERROR: 'NONCONFIRMERROR', // 비밀번호 확인 불일치
   ERROR: 'ERROR',
 };
 export const validateEmail = (i: string) =>
@@ -27,7 +32,7 @@ export const validatePw = (i: string) =>
 
 export const IsExist = (value: string, data: string) =>
   axios
-    .get(`http://localhost:3232/users/`)
+    .get(`${LOCAL_URL}/users/`)
     .then((result) => result.data.find((item: any) => item[data] === value)); // 디바운싱, focusout
 
 //  경고문구
@@ -69,6 +74,9 @@ export const warningPw = (s: string) => {
   switch (s) {
     case state.STRERROR:
       warning = `대문자 포함 8자 이상 16자 이하로 작성해주세요`;
+      break;
+    case state.NONCONFIRMERROR:
+      warning = `새 비밀번호와 일치하지 않습니다`;
       break;
     default:
       break;
