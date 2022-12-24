@@ -14,7 +14,7 @@ export const Header = () => {
       <Logo
         style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
         onClick={() => {
-          navigate('/');
+          navigate('/menu/photolists');
         }}
       />
       <S.MenuItems>
@@ -78,20 +78,6 @@ export const Header = () => {
 
 export const HeaderWithProfile = () => {
   const [isDropdownOn, setIsDropdownOn] = useState(false);
-  // const removeDropdown = () => {
-  //   setIsDropdownOn(false);
-  // };
-  // useEffect(() => {
-  //   window.addEventListener('click', () => {
-  //     console.log(isDropdownOn);
-  //     if (isDropdownOn) {
-  //       alert();
-
-  //       setIsDropdownOn(false);
-  //     }
-  //   });
-  //   return window.removeEventListener('click', alert);
-  // }, []);
   const navigate = useNavigate();
   const { pathname: curLocation } = useLocation();
   return (
@@ -100,7 +86,7 @@ export const HeaderWithProfile = () => {
         <Logo
           style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
           onClick={() => {
-            navigate('/');
+            navigate('/menu/photolists');
           }}
         />
         <S.MenuItems>
@@ -205,12 +191,32 @@ export const HeaderWithProfile = () => {
 
 export const HeaderForPost = () => {
   const navigate = useNavigate();
+  const handleScroll = (e: any) => {
+    const header = document.querySelector('.header');
+    if (e.deltaY < 0) {
+      header?.classList.remove('up');
+    } else if (window.scrollY > 77) {
+      header?.classList.add('up');
+    }
+  };
+  const handleResize = (e: any) => {
+    const header = document.querySelector('.header');
+    if (window.scrollY < 77) header?.classList.remove('up');
+  };
+  useEffect(() => {
+    window.addEventListener('wheel', handleScroll);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
-    <S.HeaderContainer>
+    <S.HeaderContainer className="header">
       <Logo
         style={{ cursor: 'pointer', margin: 'auto' }}
         onClick={() => {
-          navigate('/');
+          navigate('/menu/photolists');
         }}
       />
     </S.HeaderContainer>
