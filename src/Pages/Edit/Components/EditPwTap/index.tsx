@@ -5,13 +5,15 @@ import axios from 'axios';
 
 import * as S from './styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
-import { userState } from '../../../Join/Atoms';
-import { validatePw, warningPw, IsExist, state } from '../../../Join/Utils';
+import { TOKEN } from '../../../Join/Atoms';
+import { IsEditPwTap } from '../../Atoms';
+import { validatePw, warningPw, state, LOCAL_URL } from '../../../Join/Utils';
 
 const EditPwTap = () => {
   const navigate = useNavigate();
+  const [token, setToken] = useRecoilState(TOKEN);
+  const [isEditPwTap, setIsEditPwTap] = useRecoilState(IsEditPwTap);
 
-  const [user, setUser] = useRecoilState(userState);
   const [pw, setPw] = useState('');
   const [pwconfirm, setPwConfirm] = useState('');
   const [pwstate, setPwState] = useState(state.NORMAL);
@@ -47,14 +49,16 @@ const EditPwTap = () => {
   const clickEditPwHandler = async () => {
     if (pwstate === state.SUCCESS && pwconfirmstate === state.SUCCESS) {
       const result = await axios.patch(
-        `http://localhost:3232/users/${user.id}`,
+        `${LOCAL_URL}/users/password`,
         {
           password: pw,
         },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
-      // console.log('토큰', result.data.accessToken);
-      console.log(result);
 
+      console.log(result);
       setEditPwState(state.SUCCESS);
       setFlag(true);
     } else {
@@ -66,14 +70,14 @@ const EditPwTap = () => {
   const agreeFn = () => {
     console.log('확인');
     setFlag(false);
-    if (editpwstate === state.SUCCESS) navigate(`/`);
+    setIsEditPwTap(false);
     return flag;
   };
 
   const disAgreeFn = () => {
     console.log('취소');
     setFlag(false);
-    if (editpwstate === state.SUCCESS) navigate(`/`);
+    setIsEditPwTap(false);
     return flag;
   };
   const dialog = (): JSX.Element => {
@@ -81,7 +85,7 @@ const EditPwTap = () => {
     let content = '';
     if (editpwstate === state.SUCCESS) {
       [title, content] = [
-        `${user.nickname}님`,
+        `비밀번호 변경`,
         `비밀번호 변경이 정상적으로 이루어졌습니다`,
       ];
     } else {
@@ -106,16 +110,22 @@ const EditPwTap = () => {
   return (
     <>
       <S.Form>
-        <div className="title">새 비밀번호</div>
         <div>
-          <input type="password" onChange={changePwHandler} />
+          <input
+            type="password"
+            onChange={changePwHandler}
+            placeholder="새 비밀번호"
+          />
           <div>{warningPw(pwstate)}</div>
         </div>
       </S.Form>
       <S.Form>
-        <div className="title">새 비밀번호 확인</div>
         <div>
-          <input type="password" onChange={changePwConfirmHandler} />
+          <input
+            type="password"
+            onChange={changePwConfirmHandler}
+            placeholder="새 비밀번호 확인"
+          />
           <div>{warningPw(pwconfirmstate)}</div>
         </div>
       </S.Form>
