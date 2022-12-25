@@ -2,6 +2,5 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Container = styled.div`
-  background-color: peru;
-  height: 2000px;
+  height: 100%;
 `;
