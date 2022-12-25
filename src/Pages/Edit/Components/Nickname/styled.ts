@@ -1,3 +1,6 @@
 import styled from 'styled-components';
 
-export const Nickname = styled.div``;
+export const Nickname = styled.input`
+  width: 200px;
+  height: 50px;
+`;
