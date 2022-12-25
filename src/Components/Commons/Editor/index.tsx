@@ -1,8 +1,10 @@
 import axios from 'axios';
 import EXIF from 'exif-js';
+
 import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { getPresignedURL } from '../../../Pages/Post/Apis';
 
 interface IQuillProps {
   quillRef: any;
@@ -32,19 +34,21 @@ const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
      * 별도의 로직이 필요
      */
     input.onchange = async () => {
-      const file = input.files;
+      const [file]: any = input.files;
+
+      const getS3UploadImg = await getPresignedURL(file);
+
+      console.log('getS3UploadImg: ', getS3UploadImg);
+      const range = quillRef.current.getEditorSelection();
+      quillRef.current
+        .getEditor()
+        .insertEmbed(range.index, 'image', getS3UploadImg);
+      quillRef.current.getEditor().setSelection(range.index + 1);
+
+      // getS3UploadImg 클립보드에 붙일 이미지
+
       if (file) {
-        // http://localhost:5001/photos/presigned-url?filetype=jpg
-        // https://photolog-bucket.s3.amazonaws.com/ (signURL)
-        // formData.append('key', file[0]);
-        // formData.append('bucket', file[0]);
-        // formData.append('X-Amz-Algorithm', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        const fileInfo: any = file[0];
+        const fileInfo: any = file;
 
         EXIF.getData(fileInfo, () => {
           const tags = EXIF.getAllTags(fileInfo);

@@ -7,6 +7,7 @@ import Editor from '../../../Components/Commons/Editor';
 import TagToolTip from '../Utils/Tooltip';
 
 const PostPhoto = () => {
+  const titleRef = useRef<any>(null);
   const quillRef = useRef<any>();
   const tagInputRef = useRef<HTMLInputElement>(null);
   const [tagInputValue, setTagInputValue] = useState<string>('');
@@ -18,18 +19,26 @@ const PostPhoto = () => {
     // await axios
     //   .get(`http://localhost:5001/photos/presigned-url?filetype=jpg`)
     //   .then((res) => console.log(res));
-
     // if (quillRef.current) {
+    //   // const description = quillRef.current.getEditor().getText();
+    //   // const quill = quillRef.current.getEditor();
+    //   // const url = 'https://source.unsplash.com/user/c_v_r/300x300';
+    //   // const range = quill.getSelection()?.index;
+    //   // console.log(description);
+    //   // console.log(htmlContent);
+    //   // quill.clipboard.dangerouslyPasteHTML(1, `<img src=${url} alt="image" />`);
     //   const description = quillRef.current.getEditor().getText();
     //   const quill = quillRef.current.getEditor();
-    //   const url = 'https://source.unsplash.com/user/c_v_r/300x300';
-    //   const range = quill.getSelection()?.index;
-    //   console.log(description);
-    //   console.log(htmlContent);
-    //   quill.clipboard.dangerouslyPasteHTML(1, `<img src=${url} alt="image" />`);
+    //   console.log('description: ', description);
+    //   console.log('htmlContent: ', htmlContent);
     // }
-
-    alert('등록');
+    // console.log('title: ', titleRef.current.value);
+    // console.log('tag: ', tagList);
+    // const quill = quillRef.current.getEditor();
+    // quill.clipboard.dangerouslyPasteHTML(
+    //   1,
+    //   `<h2><span class="ql-size-huge" style="color: rgb(230, 0, 0);">asdasdasd</span><span class="ql-font-serif"><span class="ql-cursor"></span></span></h2>`,
+    // );
   };
 
   const duplicateCheck = (value: string) => tagList.includes(value);
@@ -95,7 +104,7 @@ const PostPhoto = () => {
       <S.Container>
         <S.Wrapper>
           <S.TitleWrapper>
-            <S.TitleArea />
+            <S.TitleArea ref={titleRef} />
             <S.BoxBorder />
             <S.TagBox>
               {tagList &&
@@ -133,6 +142,11 @@ const PostPhoto = () => {
               />
             </S.QuillEditor>
           </S.ContentBox>
+          <S.MapWrapper>
+            <S.CurLoaction>
+              <div>Kakao Map</div>
+            </S.CurLoaction>
+          </S.MapWrapper>
         </S.Wrapper>
       </S.Container>
       <S.PostFooter>

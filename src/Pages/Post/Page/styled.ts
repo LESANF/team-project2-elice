@@ -97,10 +97,16 @@ export const CameraSelectBox = styled.select`
   height: 30px;
 `;
 
-export const ContentBox = styled.div``;
+export const ContentBox = styled.div`
+  margin-bottom: 40px;
+`;
 export const QuillEditor = styled.div`
   height: 706px;
 `;
+
+export const MapWrapper = styled.div``;
+
+export const CurLoaction = styled.div``;
 
 export const PostFooter = styled.div`
   display: flex;
