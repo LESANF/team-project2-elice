@@ -24,6 +24,8 @@ const PostPhoto = () => {
   const [htmlContent, setHtmlContent] = useState('');
   const [photoMetaData, setPhotoMetaData] = useState<IPhotoMetaData>();
   const [mapFlag, setMapFlag] = useState<boolean>(false);
+  const [selCameraFlag, setSelCameraFlag] = useState<boolean>(false);
+  const [selLensFlag, setLensFlag] = useState<boolean>(false);
   const tagColor: string[] = ['#7978C6', '#7EC885', '#E6549D'];
 
   const setPhotoLocation = () => {
@@ -47,9 +49,14 @@ const PostPhoto = () => {
   }, [photoMetaData]);
 
   const handleSubmit = async () => {
-    await axios
-      .get(`http://localhost:5001/photos/presigned-url?filetype=jpg`)
-      .then((res) => console.log(res));
+    console.log('title: ', titleRef.current.value);
+    console.log('imageUrlId', '---');
+    console.log('lensId', '---');
+    console.log('cameraId', '---');
+    console.log('latitude', photoMetaData!.latitude);
+    console.log('longitude', photoMetaData!.longitude);
+    console.log('locationInfo', '위치정보 소개');
+    console.log('hashtags: ', tagList.join(','));
     if (quillRef.current) {
       // const range = quill.getSelection()?.index;
       // console.log(description);
@@ -58,15 +65,14 @@ const PostPhoto = () => {
       const description = quillRef.current.getEditor().getText();
       const quill = quillRef.current.getEditor();
       console.log('description: ', description);
-      console.log('htmlContent: ', htmlContent);
+      console.log('content: ', htmlContent);
     }
-    console.log('title: ', titleRef.current.value);
-    console.log('tag: ', tagList);
-    const quill = quillRef.current.getEditor();
-    quill.clipboard.dangerouslyPasteHTML(
-      1,
-      `<h2><span class="ql-size-huge" style="color: rgb(230, 0, 0);">asdasdasd</span><span class="ql-font-serif"><span class="ql-cursor"></span></span></h2>`,
-    );
+
+    // const quill = quillRef.current.getEditor();
+    // quill.clipboard.dangerouslyPasteHTML(
+    //   1,
+    //   `<h2><span class="ql-size-huge" style="color: rgb(230, 0, 0);">asdasdasd</span><span class="ql-font-serif"><span class="ql-cursor"></span></span></h2>`,
+    // );
   };
 
   const duplicateCheck = (value: string) => tagList.includes(value);
@@ -158,7 +164,9 @@ const PostPhoto = () => {
               <S.CameraIconBox>
                 <FaCameraRetro {...iconStyle} />
               </S.CameraIconBox>
-              <S.CameraSelectBox />
+              <S.CameraCompany />
+              {selCameraFlag && <S.CameraSelectBox />}
+              {selLensFlag && <S.CameraLens />}
             </S.CameraModelBox>
           </S.TitleWrapper>
           <S.ContentBox>
@@ -184,20 +192,17 @@ const PostPhoto = () => {
                 <S.CurLoaction>
                   <Map
                     center={{
-                      // 지도의 중심좌표
                       lat: photoMetaData!.latitude,
                       lng: photoMetaData!.longitude,
                     }}
                     style={{
-                      // 지도의 크기
                       width: '704px',
                       height: '304px',
                     }}
-                    level={4} // 지도의 확대 레벨
+                    level={3}
                   >
-                    <MapMarker // 마커를 생성합니다
+                    <MapMarker
                       position={{
-                        // 마커가 표시될 위치입니다
                         lat: photoMetaData!.latitude,
                         lng: photoMetaData!.longitude,
                       }}
@@ -211,7 +216,14 @@ const PostPhoto = () => {
       </S.Container>
       <S.PostFooter>
         <S.SubmitBtn onClick={handleSubmit}>등록</S.SubmitBtn>
-        <S.SubmitBtn onClick={() => setMapFlag((prev) => !prev)}>
+        <S.SubmitBtn
+          onClick={() => {
+            if (selCameraFlag === true) {
+              setLensFlag(true);
+            }
+            setSelCameraFlag(true);
+          }}
+        >
           값 테스트
         </S.SubmitBtn>
       </S.PostFooter>

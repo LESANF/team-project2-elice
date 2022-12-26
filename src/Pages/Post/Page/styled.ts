@@ -21,7 +21,7 @@ export const TitleBox = styled.div``;
 export const TitleArea = styled.textarea.attrs({
   placeholder: '제목을 입력하세요',
 })`
-  height: 72px;
+  height: 80px;
   min-height: 72px;
   font-size: 48px;
   resize: none;
@@ -92,8 +92,18 @@ export const CameraIconBox = styled.div`
   align-items: center;
 `;
 
+export const CameraCompany = styled.select`
+  width: 180px;
+  height: 30px;
+`;
 export const CameraSelectBox = styled.select`
-  width: 200px;
+  margin-left: 10px;
+  width: 180px;
+  height: 30px;
+`;
+export const CameraLens = styled.select`
+  margin-left: 10px;
+  width: 180px;
   height: 30px;
 `;
 
