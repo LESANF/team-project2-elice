@@ -43,13 +43,6 @@ const Default = ({ setMode }: IDefaultProps) => {
       <motion.div layoutId="email">
         <S.Email>{email}</S.Email>
       </motion.div>
-      {/* <S.PasswordChange
-        onClick={() => {
-          setMode('EDITPW');
-        }}
-      >
-        비밀번호 변경
-      </S.PasswordChange> */}
     </S.Container>
   );
 };

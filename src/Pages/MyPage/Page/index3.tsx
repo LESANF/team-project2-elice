@@ -1,13 +1,14 @@
+// 채현 코드
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
-import { TOKEN, userState } from '../Join/Atoms';
+import { TOKEN, userState } from '../../Join/Atoms';
 import * as S from './styled';
-import LoginTap from '../Join/Components/LoginTap';
-import JoinTap from '../Join/Components/JoinTap';
-import { Header } from '../../Components/Commons/Header';
-import { getUser } from '../Edit/Utils';
+import LoginTap from '../../Join/Components/LoginTap';
+import JoinTap from '../../Join/Components/JoinTap';
+import { Header } from '../../../Components/Commons/Header';
+import { getUser } from '../../Edit/Utils';
 
 const LOCAL_URL = 'http://localhost:5001';
 
