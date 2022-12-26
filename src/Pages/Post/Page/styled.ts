@@ -97,15 +97,35 @@ export const CameraSelectBox = styled.select`
   height: 30px;
 `;
 
-export const ContentBox = styled.div`
-  margin-bottom: 40px;
-`;
+export const ContentBox = styled.div``;
 export const QuillEditor = styled.div`
-  height: 706px;
+  height: 604px;
 `;
 
 export const MapWrapper = styled.div``;
 
+export const MapSectionBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 704px;
+  height: 40px;
+  margin-bottom: 30px;
+`;
+
+export const MapTitleLogoBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+`;
+
+export const KaKaoMapWrapper = styled.div`
+  width: 704px;
+  height: 304px;
+  margin-bottom: 30px;
+  background-color: peru;
+`;
 export const CurLoaction = styled.div``;
 
 export const PostFooter = styled.div`

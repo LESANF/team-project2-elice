@@ -10,54 +10,51 @@ interface IQuillProps {
   quillRef: any;
   htmlContent: any;
   setHtmlContent: any;
+  setMetaData: any;
 }
 
-const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
+const Editor = ({
+  quillRef,
+  htmlContent,
+  setHtmlContent,
+  setMetaData,
+}: IQuillProps) => {
   const [finalLo, setFinalLo] = useState<number | null>(null);
   const [finalLa, setFinalLa] = useState<number | null>(null);
+  const [cameraModel, setCameraModel] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMetaData({ model: cameraModel, longitude: finalLo, latitude: finalLa });
+  }, [finalLa, finalLo, cameraModel]);
 
   const imageHandler = () => {
-    // http://localhost:5001/photos/presigned-url?filetype=jpg
-    // https://photolog-bucket.s3.amazonaws.com/ (signURL)
-
-    const formData = new FormData();
-
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
+    input.setAttribute('accept', 'image/jpg');
     input.setAttribute('name', 'image');
     input.click();
 
-    /**
-     * Image Upload API
-     * 로컬로 하는 방법과달리 S3를 이용하여 진행하기 때문에
-     * 별도의 로직이 필요
-     */
     input.onchange = async () => {
       const [file]: any = input.files;
-
       const getS3UploadImg = await getPresignedURL(file);
-
-      console.log('getS3UploadImg: ', getS3UploadImg);
       const range = quillRef.current.getEditorSelection();
       quillRef.current
         .getEditor()
         .insertEmbed(range.index, 'image', getS3UploadImg);
       quillRef.current.getEditor().setSelection(range.index + 1);
 
-      // getS3UploadImg 클립보드에 붙일 이미지
-
       if (file) {
         const fileInfo: any = file;
 
         EXIF.getData(fileInfo, () => {
           const tags = EXIF.getAllTags(fileInfo);
-
           const model = tags.Model;
           const longitude = tags.GPSLongitude;
           const longitudeRef = tags.GPSLongitudeRef;
           const latitude = tags.GPSLatitude;
           const latitudeRef = tags.GPSLatitudeRef;
+
+          setCameraModel(model);
 
           // 위도 latitude, 경도 longitude
           if (latitudeRef === 'S')

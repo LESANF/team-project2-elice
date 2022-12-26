@@ -11,6 +11,7 @@ export const getPresignedURL: any = async (file: any) => {
       Object.keys(data.fields).forEach((key) => {
         form.append(key, data.fields[key]);
       });
+
       form.append('file', file);
 
       const s3ImgURL = await axios
