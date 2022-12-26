@@ -1,18 +1,28 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import * as S from './styled';
 import EditProfileTap from '../Components/EditProfileTap';
 import EditPwTap from '../Components/EditPwTap';
 import MyProfileTap from '../Components/MyProfileTap';
+import Default from '../Components/Default';
+import EditName from '../Components/EditName';
+import EditPw from '../Components/EditPw';
+import { HeaderForPost } from '../../../Components/Commons/Header';
+import { ReactComponent as DefaultProfile } from '../assets/defaultProfile.svg';
 
 interface IState {
   MYPROFILE: string;
   EDITPROFILE: string;
   EDITPW: string;
+  EDITNAME: string;
+  DEFAULT: string;
 }
 const state: IState = {
   MYPROFILE: 'MYPROFILE',
   EDITPROFILE: 'EDITPROFILE',
   EDITPW: 'EDITPW',
+  EDITNAME: 'EDITNAME',
+  DEFAULT: 'DEFAULT',
 };
 
 interface IStateTap {
@@ -28,40 +38,18 @@ const stateTap: IStateTap = {
   EDITPW: <EditPwTap />,
 };
 const Edit = () => {
-  const [mode, setMode] = useState<string>(state.EDITPROFILE);
+  const [mode, setMode] = useState<string>(state.DEFAULT);
   const clickHandler = (evt: any) => {
     setMode(evt.target.className);
   };
   return (
-    <S.Container>
-      <br />
-      <S.Tap mode={mode}>
-        <span
-          onClick={clickHandler}
-          className={state.MYPROFILE}
-          role="presentation"
-        >
-          내 정보
-        </span>
-        |
-        <span
-          onClick={clickHandler}
-          className={state.EDITPROFILE}
-          role="presentation"
-        >
-          프로필 수정
-        </span>
-        |
-        <span
-          onClick={clickHandler}
-          className={state.EDITPW}
-          role="presentation"
-        >
-          비밀번호 변경
-        </span>
-      </S.Tap>
-      {stateTap[mode]}
-    </S.Container>
+    <>
+      <HeaderForPost />
+      {mode === 'DEFAULT' ? <Default setMode={setMode} /> : ''}
+      {mode === 'EDITNAME' ? <EditName setMode={setMode} /> : ''}
+      {mode === 'EDITPW' ? <EditPw setMode={setMode} /> : ''}
+      <S.Copyright>© 2022 photolog, all rights reserved.</S.Copyright>
+    </>
   );
 };
 

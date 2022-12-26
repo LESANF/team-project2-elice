@@ -35,3 +35,14 @@ export const Tap = styled.div<{ mode: string }>`
     font-weight: ${(props) => (props.mode === 'EDITPW' ? 'bold' : 'normal')};
   }
 `;
+
+export const Copyright = styled.p`
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #5f5f5f;
+  margin-bottom: 30px;
+`;
