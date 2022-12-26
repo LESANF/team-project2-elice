@@ -96,7 +96,6 @@ const HeaderNonLogin = () => {
         sizeW="600px"
         sizeH="800px"
       />
-      ;
     </>
   );
 };
