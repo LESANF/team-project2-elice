@@ -1,4 +1,8 @@
+import React, { useCallback, useState, useEffect } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
+import { useInView } from 'react-intersection-observer';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import * as P from './styled';
 
 const pictures = [
@@ -122,22 +126,54 @@ const pictures = [
   },
 ];
 
-const PhotoLists = () => (
-  <P.Container>
-    <ImageList variant="masonry" cols={6} gap={16}>
-      {pictures.map((picture) => (
-        <ImageListItem key={picture.image}>
-          <img
-            src={`/images/${picture.image}.jpg?w=248&fit=crop&auto=format`}
-            srcSet={`/images/${picture.image}.jpg?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={picture.title}
-            loading="lazy"
-            style={{ borderRadius: 8 }}
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
-  </P.Container>
-);
+const PhotoLists = () => {
+  const [ref, inView] = useInView();
+  const [items, setItems] = useState<Array<object>>([]);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const getItems = useCallback(async () => {
+    setLoading(true);
+    // await axios ... 로 데이터 응답 res 받아서 아래 "pictures"에 넣어준다.
+    await axios.get(`http://34.64.34.184:5001/posts`).then((res) => {
+      console.log(res);
+    });
+    setItems((prevState) => [...prevState, pictures]);
+    setLoading(false);
+  }, [page]);
+
+  useEffect(() => {
+    getItems();
+  }, [getItems]);
+
+  useEffect(() => {
+    if (inView && !loading) {
+      setPage((prevState) => prevState + 1);
+    }
+  }, [inView, loading]);
+
+  return (
+    <P.Container>
+      <ImageList variant="masonry" cols={6} gap={16}>
+        {items.map((item: any): any => (
+          <React.Fragment key={uuidv4()}>
+            {item.map((picture: any): any => (
+              <ImageListItem key={picture.image}>
+                <img
+                  src={`/images/${picture.image}.jpg?w=248&fit=crop&auto=format`}
+                  srcSet={`/images/${picture.image}.jpg?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={picture.title}
+                  loading="lazy"
+                  style={{ borderRadius: 8 }}
+                />
+              </ImageListItem>
+            ))}
+          </React.Fragment>
+        ))}
+      </ImageList>
+      <div ref={ref} style={{ height: '100px' }} />
+    </P.Container>
+  );
+};
 
 export default PhotoLists;
