@@ -8,6 +8,10 @@ import App from './App';
 const GlobalStyles = createGlobalStyle`
   ${reset}
 
+  html, body{
+    height:100vh;
+  }
+
   a{
     text-decoration:none;
     color:#000;
