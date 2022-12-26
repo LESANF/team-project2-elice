@@ -37,7 +37,7 @@ const FindPwTap = () => {
       setEmail(emailInput);
     }
   };
-  const clickLoginHandler = async () => {
+  const clickFindPwHandler = async () => {
     if (!(emailstate === state.SUCCESS)) {
       console.log('다시');
       return;
@@ -53,6 +53,7 @@ const FindPwTap = () => {
         },
       );
       setFindPwState(state.SUCCESS);
+      setFlag(true);
       setFlag(true);
     } catch (err: any) {
       setFindPwState(state.ERROR);
@@ -125,7 +126,8 @@ const FindPwTap = () => {
         </ul>
       </S.InfoBottom>
 
-      <S.Button onClick={clickLoginHandler}>임시 비밀번호 전송</S.Button>
+      <S.Button onClick={clickFindPwHandler}>임시 비밀번호 전송</S.Button>
+      {dialog()}
     </>
   );
 };

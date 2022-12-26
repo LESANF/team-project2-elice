@@ -50,22 +50,9 @@ const Edit = () => {
   return (
     <>
       <HeaderForPost />
-      {mode === 'EDITNAME' ? (
-        <EditName setMode={setMode} />
-      ) : (
-        <Default setMode={setMode} />
-      )}
-      {mode === 'EDITPW' ? (
-        <EditPw setMode={setMode} />
-      ) : (
-        <S.PasswordChange
-          onClick={() => {
-            setMode('EDITPW');
-          }}
-        >
-          비밀번호 변경
-        </S.PasswordChange>
-      )}
+      {mode === 'DEFAULT' ? <Default setMode={setMode} /> : ''}
+      {mode === 'EDITNAME' ? <EditName setMode={setMode} /> : ''}
+      {mode === 'EDITPW' ? <EditPw setMode={setMode} /> : ''}
       <S.Copyright>© 2022 photolog, all rights reserved.</S.Copyright>
     </>
   );

@@ -10,6 +10,7 @@ import { IsEditPwTap } from '../../Atoms';
 import { validatePw, warningPw, state, LOCAL_URL } from '../../../Join/Utils';
 
 const EditPwTap = () => {
+  console.log('editpwtap');
   const navigate = useNavigate();
   const [token, setToken] = useRecoilState(TOKEN);
   const [isEditPwTap, setIsEditPwTap] = useRecoilState(IsEditPwTap);

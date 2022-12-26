@@ -1,14 +1,27 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+
 import CustomizedTooltips from '../Tooltip/tooltip';
 import * as S from './styled';
 import { ReactComponent as DefaultProfile } from '../../assets/defaultProfile.svg';
+import { getUser } from '../../Utils';
+import { TOKEN } from '../../../Join/Atoms';
 
 interface IDefaultProps {
   setMode?: any;
+  user?: any;
 }
 const Default = ({ setMode }: IDefaultProps) => {
-  console.log('default');
+  const [token, setToken] = useRecoilState(TOKEN);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  getUser(token).then((res) => {
+    setName(res.data.id);
+    setEmail(res.data.email);
+  }); //    일단 id로
+
   return (
     <S.Container>
       <motion.div layoutId="avatar">
@@ -23,20 +36,20 @@ const Default = ({ setMode }: IDefaultProps) => {
               setMode('EDITNAME');
             }}
           >
-            유저닉네임
+            {name}
           </S.NickName>
         </CustomizedTooltips>
       </motion.div>
       <motion.div layoutId="email">
-        <S.Email>photolog@naver.com</S.Email>
+        <S.Email>{email}</S.Email>
       </motion.div>
-      <S.PasswordChange
+      {/* <S.PasswordChange
         onClick={() => {
           setMode('EDITPW');
         }}
       >
         비밀번호 변경
-      </S.PasswordChange>
+      </S.PasswordChange> */}
     </S.Container>
   );
 };
