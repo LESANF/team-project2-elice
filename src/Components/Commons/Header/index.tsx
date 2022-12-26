@@ -5,74 +5,97 @@ import { ReactComponent as Logo } from '../../../Pages/Home/assets/logo.svg';
 import { ReactComponent as SearchIcon } from './searchicon.svg';
 import { ReactComponent as ArrowIcon } from './arrowdown.svg';
 import avatar from './sampleAvatar.png';
+import { DialogTest } from '../../../Pages/Join/Components/LoginDialog/index';
 
 export const Header = () => {
   const navigate = useNavigate();
   const { pathname: curLocation } = useLocation();
+  const [flag, setFlag] = useState(false);
+  const disAgreeFn = () => {
+    console.log('취소');
+    setFlag(false);
+    return flag;
+  };
+
   return (
-    <S.HeaderContainer>
-      <Logo
-        style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
-        onClick={() => {
-          navigate('/menu/photolists');
-        }}
+    <>
+      <S.HeaderContainer>
+        <Logo
+          style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
+          onClick={() => {
+            navigate('/menu/photolists');
+          }}
+        />
+        <S.MenuItems>
+          <Link to="/menu/maps">
+            {curLocation === '/menu/maps' ? (
+              <>
+                <S.MenuItem fontWeight="600">지도</S.MenuItem>
+                <S.MenuUnderLine layoutId="underLine" />
+              </>
+            ) : (
+              <S.MenuItem fontWeight="400">지도</S.MenuItem>
+            )}
+          </Link>
+          <div style={{ width: '12px' }} />
+          <Link to="/menu/photolists">
+            {curLocation === '/menu/photolists' ? (
+              <>
+                <S.MenuItem fontWeight="600">사진</S.MenuItem>
+                <S.MenuUnderLine layoutId="underLine" />
+              </>
+            ) : (
+              <S.MenuItem fontWeight="400">사진</S.MenuItem>
+            )}
+          </Link>
+        </S.MenuItems>
+        <S.SearchBar
+          onClick={() => {
+            document.querySelector<HTMLInputElement>('.search_input')?.focus();
+          }}
+        >
+          <SearchIcon />
+          <S.SearchInput className="search_input" />
+        </S.SearchBar>
+        <div style={{ width: '3.16vw' }} />
+        <div
+          style={{
+            marginLeft: 'auto',
+            marginRight: '7.7vw',
+            width: 'max-content',
+          }}
+        >
+          <S.MuiButton
+            textColor="#5F5F5F"
+            hoverTextColor="#07B8B8"
+            hoverBackgroundColor="#f9f9f9"
+          >
+            가입하기
+          </S.MuiButton>
+          <S.MuiButton
+            style={{ marginLeft: '24px' }}
+            textColor="#ffffff"
+            backgroundColor="#07B8B8"
+            hoverBackgroundColor="#00A8A7"
+            onClick={() => {
+              setFlag(true);
+            }}
+          >
+            로그인
+          </S.MuiButton>
+        </div>
+      </S.HeaderContainer>
+      <DialogTest
+        openFlag={flag}
+        title="test"
+        content="test"
+        agreeFn={() => {}}
+        disAgreeFn={disAgreeFn}
+        sizeW="600px"
+        sizeH="800px"
       />
-      <S.MenuItems>
-        <Link to="/menu/maps">
-          {curLocation === '/menu/maps' ? (
-            <>
-              <S.MenuItem fontWeight="600">지도</S.MenuItem>
-              <S.MenuUnderLine layoutId="underLine" />
-            </>
-          ) : (
-            <S.MenuItem fontWeight="400">지도</S.MenuItem>
-          )}
-        </Link>
-        <div style={{ width: '12px' }} />
-        <Link to="/menu/photolists">
-          {curLocation === '/menu/photolists' ? (
-            <>
-              <S.MenuItem fontWeight="600">사진</S.MenuItem>
-              <S.MenuUnderLine layoutId="underLine" />
-            </>
-          ) : (
-            <S.MenuItem fontWeight="400">사진</S.MenuItem>
-          )}
-        </Link>
-      </S.MenuItems>
-      <S.SearchBar
-        onClick={() => {
-          document.querySelector<HTMLInputElement>('.search_input')?.focus();
-        }}
-      >
-        <SearchIcon />
-        <S.SearchInput className="search_input" />
-      </S.SearchBar>
-      <div style={{ width: '3.16vw' }} />
-      <div
-        style={{
-          marginLeft: 'auto',
-          marginRight: '7.7vw',
-          width: 'max-content',
-        }}
-      >
-        <S.MuiButton
-          textColor="#5F5F5F"
-          hoverTextColor="#07B8B8"
-          hoverBackgroundColor="#f9f9f9"
-        >
-          가입하기
-        </S.MuiButton>
-        <S.MuiButton
-          style={{ marginLeft: '24px' }}
-          textColor="#ffffff"
-          backgroundColor="#07B8B8"
-          hoverBackgroundColor="#00A8A7"
-        >
-          로그인
-        </S.MuiButton>
-      </div>
-    </S.HeaderContainer>
+      ;
+    </>
   );
 };
 

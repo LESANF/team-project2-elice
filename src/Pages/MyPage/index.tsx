@@ -5,6 +5,7 @@ import { userState } from '../Join/Atoms';
 import * as S from './styled';
 import LoginTap from '../Join/Components/LoginTap';
 import JoinTap from '../Join/Components/JoinTap';
+import { Header } from '../../Components/Commons/Header';
 
 interface IState {
   MYPOST: string;
@@ -37,6 +38,7 @@ const MyPage = () => {
   };
   return (
     <>
+      <Header />
       <S.MyPage>
         <img className="profileImg" alt="프로필 사진" src={Image} />
         <div className="profileBody">

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
 
-import { authenticatedState, userState, TOKEN } from '../../Atoms';
+import { TOKEN } from '../../Atoms';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
@@ -29,6 +29,10 @@ const LoginTap = () => {
   const [pw, setpw] = useState<string>('');
 
   const [flag, setFlag] = useState<boolean>(false);
+  useEffect(() => {
+    setToken(null);
+    console.log(`토큰 초기화${token}`);
+  }, []);
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailInput = e.target.value;
@@ -61,7 +65,8 @@ const LoginTap = () => {
         password: pw,
       });
       setLoginState(state.SUCCESS);
-      setToken(result.data.token);
+      setToken(result.data.data);
+      console.log('토큰', result.data.data, token);
       setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);

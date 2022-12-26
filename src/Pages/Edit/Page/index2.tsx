@@ -1,36 +1,35 @@
 import { useState } from 'react';
-import * as S from './styled';
-import LoginTap from '../Components/LoginTap';
-import JoinTap from '../Components/JoinTap';
-import FindPwTap from '../Components/FindPwTap';
+import * as S from './styled2';
+import EditProfileTap from '../Components/EditProfileTap';
+import EditPwTap from '../Components/EditPwTap';
+import MyProfileTap from '../Components/MyProfileTap';
 import { Header } from '../../../Components/Commons/Header';
-// import HeaderWithProfile from 'src/Components/Commons/Header';
 
 interface IState {
-  LOGIN: string;
-  JOIN: string;
-  FINDPW: string;
+  MYPROFILE: string;
+  EDITPROFILE: string;
+  EDITPW: string;
 }
 const state: IState = {
-  LOGIN: 'LOGIN',
-  JOIN: 'JOIN',
-  FINDPW: 'FINDPW',
+  MYPROFILE: 'MYPROFILE',
+  EDITPROFILE: 'EDITPROFILE',
+  EDITPW: 'EDITPW',
 };
 
 interface IStateTap {
   [index: string]: JSX.Element;
-  LOGIN: JSX.Element;
-  JOIN: JSX.Element;
-  FINDPW: JSX.Element;
+  MYPROFILE: JSX.Element;
+  EDITPROFILE: JSX.Element;
+  EDITPW: JSX.Element;
 }
 
 const stateTap: IStateTap = {
-  LOGIN: <LoginTap />,
-  JOIN: <JoinTap />,
-  FINDPW: <FindPwTap />,
+  MYPROFILE: <MyProfileTap />,
+  EDITPROFILE: <EditProfileTap />,
+  EDITPW: <EditPwTap />,
 };
-const Join = () => {
-  const [mode, setMode] = useState<string>(state.JOIN);
+const Edit = () => {
+  const [mode, setMode] = useState<string>(state.EDITPROFILE);
   const clickHandler = (evt: any) => {
     setMode(evt.target.className);
   };
@@ -42,26 +41,26 @@ const Join = () => {
         <S.Tap mode={mode}>
           <span
             onClick={clickHandler}
-            className={state.LOGIN}
+            className={state.MYPROFILE}
             role="presentation"
           >
-            로그인
+            내 정보
           </span>
           |
           <span
             onClick={clickHandler}
-            className={state.JOIN}
+            className={state.EDITPROFILE}
             role="presentation"
           >
-            회원가입
+            프로필 수정
           </span>
           |
           <span
             onClick={clickHandler}
-            className={state.FINDPW}
+            className={state.EDITPW}
             role="presentation"
           >
-            비밀번호 찾기
+            비밀번호 변경
           </span>
         </S.Tap>
         {stateTap[mode]}
@@ -70,4 +69,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default Edit;

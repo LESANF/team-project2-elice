@@ -11,13 +11,13 @@ const Default = ({ setMode }: IDefaultProps) => {
   console.log('default');
   return (
     <S.Container>
-      <CustomizedTooltips content="사진 변경">
-        <motion.div layoutId="avatar">
+      <motion.div layoutId="avatar">
+        <CustomizedTooltips content="사진 변경">
           <DefaultProfile style={{ cursor: 'pointer' }} onClick={alert} />
-        </motion.div>
-      </CustomizedTooltips>
-      <CustomizedTooltips content="닉네임 변경">
-        <motion.div layoutId="nickname">
+        </CustomizedTooltips>
+      </motion.div>
+      <motion.div layoutId="nickname">
+        <CustomizedTooltips content="닉네임 변경">
           <S.NickName
             onClick={() => {
               setMode('EDITNAME');
@@ -25,8 +25,8 @@ const Default = ({ setMode }: IDefaultProps) => {
           >
             유저닉네임
           </S.NickName>
-        </motion.div>
-      </CustomizedTooltips>
+        </CustomizedTooltips>
+      </motion.div>
       <motion.div layoutId="email">
         <S.Email>photolog@naver.com</S.Email>
       </motion.div>

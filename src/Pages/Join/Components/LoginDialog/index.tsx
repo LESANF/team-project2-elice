@@ -150,7 +150,7 @@ const LoginContent = (): JSX.Element => {
   );
 };
 
-const DialogTest = (props: IDialogProps) => {
+export const DialogTest = (props: IDialogProps) => {
   const { title, content, agreeFn, disAgreeFn, openFlag } = props;
   const setOpen = useState<boolean>(false)[1];
   const [dialogSize, setDialogSize] = useState<{
