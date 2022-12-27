@@ -81,9 +81,10 @@ color: #5f5f5f;
 & .MuiInputBase-input{
   font-family: 'Noto Sans', 'Noto Sans KR';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
-  color: #5f5f5f;
+  color: #2a2a2a;
+  padding-left:20px;
 }
 & label {
   color:${(props) => (props.state ? '#FF9E44' : '#7f7676')};
