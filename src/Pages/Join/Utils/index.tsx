@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+// import div from '@mui/material/div';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
@@ -94,7 +94,7 @@ export const warningPw = (s: string) => {
   return warning;
 };
 
-//  채현 다이얼로그
+//  join 다이얼로그
 const Transition = forwardRef(
   (
     props: TransitionProps & {
@@ -146,12 +146,12 @@ export const JoinDialog = (props: IDialogProps) => {
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText
+          <div
             id="alert-dialog-slide-description"
             style={{ textAlign: 'center' }}
           >
             {content}
-          </DialogContentText>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => handleClose(agreeFn())}>확인</Button>
