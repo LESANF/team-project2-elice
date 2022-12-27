@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useRecoilState } from 'recoil';
 import { client } from '../../../../axiosInstance';
 import * as S from './styled';
-import DialogTest from '../../../../Components/Commons/Dialog';
-import { validateEmail, warningEmail, state } from '../../Utils';
+import {
+  validateEmail,
+  warningEmail,
+  state,
+  IsfindpwDialog,
+} from '../../Utils';
+import { MODE } from '../../Atoms';
 
 const FindPwTap = () => {
-  const navigate = useNavigate();
+  const [mode, setMode] = useRecoilState(MODE);
   const [findpwstate, setFindPwState] = useState<string>(state.NORMAL);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
 
@@ -46,42 +50,9 @@ const FindPwTap = () => {
   const agreeFn = () => {
     console.log('확인');
     setFlag(false);
-    if (findpwstate === state.SUCCESS) navigate(`/`);
+    if (findpwstate === state.SUCCESS) setMode('login');
 
     return flag;
-  };
-
-  const disAgreeFn = () => {
-    console.log('취소');
-    setFlag(false);
-    if (findpwstate === state.SUCCESS) navigate(`/`);
-
-    return flag;
-  };
-
-  const dialog = (): JSX.Element => {
-    let title = '';
-    let content = '';
-    if (findpwstate === state.SUCCESS) {
-      [title, content] = [
-        `임시비밀번호 전송 완료`,
-        `임시비밀번호가 정상적으로 전송되었습니다`,
-      ];
-    } else {
-      title = '임시비밀번호 전송 오류';
-      [title, content] = ['임시비밀번호 전송 오류', errorMessage];
-    }
-    return (
-      <DialogTest
-        openFlag={flag}
-        title={title}
-        content={content}
-        agreeFn={agreeFn}
-        disAgreeFn={disAgreeFn}
-        sizeW="700px"
-        sizeH="300px"
-      />
-    );
   };
 
   return (
@@ -109,7 +80,12 @@ const FindPwTap = () => {
       </S.InfoBottom>
 
       <S.Button onClick={clickFindPwHandler}>임시 비밀번호 전송</S.Button>
-      {dialog()}
+      <IsfindpwDialog
+        flag={flag}
+        tapstate={findpwstate}
+        errorMessage={errorMessage}
+        agreeFn={agreeFn}
+      />
     </>
   );
 };

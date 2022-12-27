@@ -144,8 +144,8 @@ const EditPw = ({ setMode }: IEditPwProps) => {
       <div>
         <MuiButton
           style={{ width: '93px', marginTop: '44px;' }}
-          textColor="#07B8B8"
-          hoverBackgroundColor="#f9f9f9"
+          textcolor="#07B8B8"
+          hoverbackgroundcolor="#f9f9f9"
           onClick={() => {
             setMode('DEFAULT');
           }}
@@ -154,9 +154,9 @@ const EditPw = ({ setMode }: IEditPwProps) => {
         </MuiButton>
         <MuiButton
           style={{ marginLeft: '24px' }}
-          textColor="#ffffff"
-          backgroundColor="#07B8B8"
-          hoverBackgroundColor="#00A8A7"
+          textcolor="#ffffff"
+          backgroundcolor="#07B8B8"
+          hoverbackgroundcolor="#00A8A7"
           onClick={clickEditPwHandler}
         >
           변경하기
