@@ -13,9 +13,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { client } from '../../../../axiosInstance';
 import FormControl from '@mui/material/FormControl';
 import HelperText from '../HelperText';
 import * as S from './styled';
@@ -26,7 +26,6 @@ import {
   warningEmail,
   warningPw,
   state,
-  LOCAL_URL,
 } from '../../Utils';
 import { ReactComponent as Favicon } from './favicon.svg';
 
@@ -101,7 +100,7 @@ const LoginContent = (): JSX.Element => {
       return;
     }
     try {
-      const result = await axios.post(`${LOCAL_URL}/auth/login`, {
+      const result = await client.post(`/auth/login`, {
         email,
         password: pw,
       });

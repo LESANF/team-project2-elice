@@ -8,7 +8,12 @@ export const Container = styled.div`
   align-items: center;
   gap: 8px;
 `;
-
+export const Profile = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  cursor: pointer;
+`;
 export const PasswordChange = styled.p`
   padding: 10px 20px;
   font-family: 'Noto Sans', 'Noto Sans KR';

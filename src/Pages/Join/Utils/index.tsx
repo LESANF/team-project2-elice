@@ -1,8 +1,3 @@
-import axios from 'axios';
-
-export const LOCAL_URL = 'http://localhost:5001';
-export const MYTEST_URL = 'http://localhost:3232';
-
 interface IState {
   NORMAL: string; // 입력 전
   SUCCESS: string; //  성공
@@ -29,11 +24,6 @@ export const validateEmail = (i: string) =>
     );
 export const validatePw = (i: string) =>
   String(i).match(/^(?=.*?[A-Z])(?=.*?[0-9]).{8,16}$/);
-
-export const IsExist = (value: string, data: string) =>
-  axios
-    .get(`${LOCAL_URL}/users/`)
-    .then((result) => result.data.find((item: any) => item[data] === value)); // 디바운싱, focusout
 
 //  경고문구
 export const warningNickname = (s: string) => {

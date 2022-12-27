@@ -1,25 +1,13 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
+import { client } from '../../../../axiosInstance';
 import * as S from './styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
-import {
-  validateEmail,
-  validatePw,
-  warningEmail,
-  warningPw,
-  state,
-  LOCAL_URL,
-} from '../../Utils';
-import { TOKEN } from '../../Atoms';
+import { validateEmail, warningEmail, state } from '../../Utils';
 
 const FindPwTap = () => {
   const navigate = useNavigate();
-
-  const [token, setToken] = useRecoilState(TOKEN);
-
   const [findpwstate, setFindPwState] = useState<string>(state.NORMAL);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
 
@@ -37,22 +25,17 @@ const FindPwTap = () => {
       setEmail(emailInput);
     }
   };
-  const clickLoginHandler = async () => {
+  const clickFindPwHandler = async () => {
     if (!(emailstate === state.SUCCESS)) {
       console.log('다시');
       return;
     }
     try {
-      const result = await axios.post(
-        `${LOCAL_URL}/auth/resetPassword`,
-        {
-          email,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const result = await client.post(`/auth/resetPassword`, {
+        email,
+      });
       setFindPwState(state.SUCCESS);
+      setFlag(true);
       setFlag(true);
     } catch (err: any) {
       setFindPwState(state.ERROR);
@@ -125,7 +108,8 @@ const FindPwTap = () => {
         </ul>
       </S.InfoBottom>
 
-      <S.Button onClick={clickLoginHandler}>임시 비밀번호 전송</S.Button>
+      <S.Button onClick={clickFindPwHandler}>임시 비밀번호 전송</S.Button>
+      {dialog()}
     </>
   );
 };

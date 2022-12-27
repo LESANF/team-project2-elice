@@ -1,13 +1,15 @@
+// 충우님 코드
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { userState } from '../Join/Atoms';
 import * as S from './styled';
-import MypostTap from './Components/MypostTap';
-import MylikeTap from './Components/MylikeTap';
-import { Header } from '../../Components/Commons/Header';
-import Nothing from './Components/Nothing';
-import defaultProfile from './assets/defaultProfile.png';
+import MypostTap from '../Components/MypostTap';
+import MylikeTap from '.././Components/MylikeTap';
+import { Header } from '../../../Components/Commons/Header';
+import Nothing from '../Components/Nothing';
+import defaultProfile from '../assets/defaultProfile.png';
+import { getUser } from '../../Edit/Utils';
+import { TOKEN } from '../../Join/Atoms';
 
 interface IState {
   MYPOST: string;
@@ -29,23 +31,27 @@ const stateTap: StateTap = {
   MYLIKE: <MylikeTap />,
 };
 const MyPage = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const [token, setToken] = useRecoilState(TOKEN);
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
 
+  getUser(token).then((res) => {
+    setNickname(res.data.id);
+    setEmail(res.data.email);
+  }); //    일단 id로
   const [Image, setImage] = useState<string>(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
   );
   const [mode, setMode] = useState<string>(state.MYPOST);
-  const clickHandler = (evt: any) => {
-    setMode(evt.target.className);
-  };
+
   return (
     <>
       <Header />
       <S.ProfileContainer>
         <S.Profile>
           <img width="150px" height="150px" src={defaultProfile} alt="프사" />
-          <S.NickName>유저닉네임</S.NickName>
-          <S.Email>photolog@naver.com</S.Email>
+          <S.NickName>{nickname}</S.NickName>
+          <S.Email>{email}</S.Email>
           <S.ChangeMode
             onClick={() => {
               setMode('MYPOST');
