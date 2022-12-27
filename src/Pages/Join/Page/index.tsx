@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import * as S from './styled';
 import LoginTap from '../Components/LoginTap';
 import JoinTap from '../Components/JoinTap';
 import FindPwTap from '../Components/FindPwTap';
 import { Header } from '../../../Components/Commons/Header';
-// import HeaderWithProfile from 'src/Components/Commons/Header';
+import { MODE } from '../Atoms';
 
 interface IState {
   LOGIN: string;
@@ -12,25 +13,25 @@ interface IState {
   FINDPW: string;
 }
 const state: IState = {
-  LOGIN: 'LOGIN',
-  JOIN: 'JOIN',
-  FINDPW: 'FINDPW',
+  LOGIN: 'login',
+  JOIN: 'join',
+  FINDPW: 'findpw',
 };
 
 interface IStateTap {
   [index: string]: JSX.Element;
-  LOGIN: JSX.Element;
-  JOIN: JSX.Element;
-  FINDPW: JSX.Element;
+  login: JSX.Element;
+  join: JSX.Element;
+  findpw: JSX.Element;
 }
 
 const stateTap: IStateTap = {
-  LOGIN: <LoginTap />,
-  JOIN: <JoinTap />,
-  FINDPW: <FindPwTap />,
+  login: <LoginTap />,
+  join: <JoinTap />,
+  findpw: <FindPwTap />,
 };
 const Join = () => {
-  const [mode, setMode] = useState<string>(state.JOIN);
+  const [mode, setMode] = useRecoilState<string>(MODE);
   const clickHandler = (evt: any) => {
     setMode(evt.target.className);
   };

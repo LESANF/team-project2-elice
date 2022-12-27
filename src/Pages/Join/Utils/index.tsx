@@ -1,3 +1,23 @@
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  Ref,
+  ReactElement,
+} from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import { TransitionProps } from '@mui/material/transitions';
+// import { useNavigate } from 'react-router-dom';
+// import { useRecoilState } from 'recoil';
+// import { client } from '../../../../axiosInstance';
+// import { TOKEN } from '../../Atoms';
+
 interface IState {
   NORMAL: string; // 입력 전
   SUCCESS: string; //  성공
@@ -72,4 +92,146 @@ export const warningPw = (s: string) => {
       break;
   }
   return warning;
+};
+
+//  채현 다이얼로그
+const Transition = forwardRef(
+  (
+    props: TransitionProps & {
+      children: ReactElement<any, any>;
+    },
+    ref: Ref<unknown>,
+  ) => <Slide direction="up" ref={ref} {...props} />,
+);
+
+interface IDialogProps {
+  openFlag: boolean;
+  title: string | JSX.Element;
+  content: string | JSX.Element;
+  agreeFn(): any;
+}
+
+export const JoinDialog = (props: IDialogProps) => {
+  const { title, content, agreeFn, openFlag } = props;
+  const setOpen = useState<boolean>(false)[1];
+  const [dialogSize, setDialogSize] = useState<{
+    sizeW: string | undefined;
+    sizeH: string | undefined;
+  }>({
+    sizeW: '700px',
+    sizeH: '300px',
+  });
+
+  const handleClose = (flag: boolean) => {
+    setOpen(flag);
+  };
+
+  const dialogStyle = {
+    sx: {
+      width: dialogSize.sizeW,
+      height: dialogSize.sizeH,
+      borderRadius: '12px',
+      padding: '40px',
+    },
+  };
+
+  return (
+    <div>
+      <Dialog
+        open={openFlag}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+        PaperProps={dialogStyle}
+      >
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            id="alert-dialog-slide-description"
+            style={{ textAlign: 'center' }}
+          >
+            {content}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleClose(agreeFn())}>확인</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+//  로그인시 다이얼로그
+interface IJoinProps {
+  flag: boolean;
+  tapstate: string;
+  errorMessage: string;
+  agreeFn(): any;
+}
+export const IsLoginDialog = (props: IJoinProps): JSX.Element => {
+  const { flag, tapstate, errorMessage, agreeFn } = props;
+  let title = '';
+  let content = '';
+  if (tapstate === state.SUCCESS) {
+    [title, content] = [`로그인 성공`, `로그인이 정상적으로 이루어졌습니다`];
+  } else {
+    [title, content] = [`로그인 오류`, errorMessage];
+  }
+
+  return (
+    <JoinDialog
+      openFlag={flag}
+      title={title}
+      content={content}
+      agreeFn={agreeFn}
+    />
+  );
+};
+
+// 회원가입시 다이얼로그
+export const IsJoinDialog = (props: IJoinProps): JSX.Element => {
+  const { flag, tapstate, errorMessage, agreeFn } = props;
+  let title = '';
+  let content = '';
+  if (tapstate === state.SUCCESS) {
+    [title, content] = [
+      `회원가입 완료`,
+      `회원가입이 정상적으로 이루어졌습니다`,
+    ];
+  } else {
+    title = '회원가입 오류';
+    [title, content] = ['회원가입 오류', errorMessage];
+  }
+  return (
+    <JoinDialog
+      openFlag={flag}
+      title={title}
+      content={content}
+      agreeFn={agreeFn}
+    />
+  );
+};
+
+// 임시비밀번호 전송시 다이얼로그
+export const IsfindpwDialog = (props: IJoinProps): JSX.Element => {
+  const { flag, tapstate, errorMessage, agreeFn } = props;
+  let title = '';
+  let content = '';
+  if (tapstate === state.SUCCESS) {
+    [title, content] = [
+      `임시비밀번호 전송 완료`,
+      `임시비밀번호가 정상적으로 전송되었습니다`,
+    ];
+  } else {
+    title = '임시비밀번호 전송 오류';
+    [title, content] = ['임시비밀번호 전송 오류', errorMessage];
+  }
+  return (
+    <JoinDialog
+      openFlag={flag}
+      title={title}
+      content={content}
+      agreeFn={agreeFn}
+    />
+  );
 };

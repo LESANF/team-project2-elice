@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { client } from '../../../../axiosInstance';
-import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
   validateEmail,
@@ -10,10 +9,12 @@ import {
   warningEmail,
   warningPw,
   state,
+  IsJoinDialog,
 } from '../../Utils';
+import { MODE } from '../../Atoms';
 
 const JoinTap = () => {
-  const navigate = useNavigate();
+  const [mode, setMode] = useRecoilState(MODE);
   const [nicknamestate, setNicknameState] = useState<string>(state.NORMAL);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
@@ -92,39 +93,8 @@ const JoinTap = () => {
   const agreeFn = () => {
     console.log('확인');
     setFlag(false);
-    if (joinstate === state.SUCCESS) navigate(`/`);
+    if (joinstate === state.SUCCESS) setMode('login');
     return flag;
-  };
-
-  const disAgreeFn = () => {
-    console.log('취소');
-    setFlag(false);
-    if (joinstate === state.SUCCESS) navigate(`/`);
-    return flag;
-  };
-  const dialog = (): JSX.Element => {
-    let title = '';
-    let content = '';
-    if (joinstate === state.SUCCESS) {
-      [title, content] = [
-        `회원가입 완료`,
-        `회원가입이 정상적으로 이루어졌습니다`,
-      ];
-    } else {
-      title = '회원가입 오류';
-      [title, content] = ['회원가입 오류', errorMessage];
-    }
-    return (
-      <DialogTest
-        openFlag={flag}
-        title={title}
-        content={content}
-        agreeFn={agreeFn}
-        disAgreeFn={disAgreeFn}
-        sizeW="700px"
-        sizeH="300px"
-      />
-    );
   };
 
   return (
@@ -155,7 +125,12 @@ const JoinTap = () => {
         </div>
       </S.Form>
       <S.Button onClick={clickJoinHandler}>회원가입</S.Button>
-      {dialog()}
+      <IsJoinDialog
+        flag={flag}
+        tapstate={joinstate}
+        errorMessage={errorMessage}
+        agreeFn={agreeFn}
+      />
     </>
   );
 };
