@@ -20,15 +20,21 @@ interface IStyledP {
   color?: string;
 }
 
-export const HeaderContainer = styled.div`
-  min-width: 100%;
+interface IHeaderContainer {
+  scrollX?: number;
+  animationOff?: boolean;
+}
+export const HeaderContainer = styled.div<IHeaderContainer>`
+  width: 100%;
+  min-width: 1240px;
   height: 77px;
   display: flex;
   align-items: center;
   position: fixed;
+  left: -${(props) => props.scrollX}px;
   z-index: 12;
   background-color: #ffffff;
-  transition: 500ms all;
+  transition: ${(props) => (props.animationOff ? 'null' : '500ms all')};
   &.up {
     transform: translateY(-77px);
   }
@@ -50,11 +56,22 @@ export const MuiButton = styledMui(Button)<IButton>`
     background-color:${(props) => props.hoverBackgroundColor};
 `;
 
+export const Logo = styled.div`
+  cursor: 'pointer';
+  margin-left: 7.7vw;
+  @media screen and (max-width: 1300px) {
+    margin-left: 100.1px;
+  }
+`;
+
 export const MenuItems = styled.ul`
   display: flex;
   align-items: flex-start;
   align-self: flex-end;
-  margin-left: 70px;
+  margin-left: 3.57vw;
+  @media screen and (max-width: 1300px) {
+    margin-left: 46.41px;
+  }
 `;
 
 export const MenuItem = styled(motion.li)<IMenuItem>`
@@ -100,17 +117,21 @@ export const SearchBar = styled.div`
   display: flex;
   align-items: center;
   width: 32vw;
+  min-width: 440px;
   height: 40px;
   border-radius: 8px;
   border: 0;
   padding: 12px;
-  margin-left: 73px;
+  margin-left: 3.57vw;
   background-color: #f9f9f9;
   :hover {
     background-color: #efefef;
   }
   svg {
     margin-right: 10px;
+  }
+  @media screen and (max-width: 1300px) {
+    margin-left: 46.41px;
   }
 `;
 
