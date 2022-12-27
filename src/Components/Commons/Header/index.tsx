@@ -37,7 +37,7 @@ const HeaderNonLogin = () => {
         <S.Logo>
           <Logo
             onClick={() => {
-              navigate('/menu/photoliststs');
+              navigate('/menu/photolists');
             }}
           />
         </S.Logo>
