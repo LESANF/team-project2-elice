@@ -28,22 +28,23 @@ const EditPw = ({ setMode }: IEditPwProps) => {
   //  새 비번 input onChange
   const changePwHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
+    setPw(pwInput);
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
       setPwState(state.SUCCESS);
-      setPw(pwInput);
     }
+    if (pwInput === '') setPwState(state.NORMAL);
   };
   //  새 비번 확인 input onChange
   const changePwConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwconfirmInput = e.target.value;
     console.log(warningPw(pwconfirmstate));
+    setPwConfirm(pwconfirmInput);
     if (pwconfirmInput !== pw) {
       setPwConfirmState(state.NONCONFIRMERROR);
     } else {
       setPwConfirmState(state.SUCCESS);
-      setPwConfirm(pwconfirmInput);
     }
     if (!pwconfirmInput) setPwConfirmState(state.NORMAL);
   };

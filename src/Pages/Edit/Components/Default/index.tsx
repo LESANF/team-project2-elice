@@ -73,20 +73,18 @@ const Default = ({ setMode }: IDefaultProps) => {
         onChange={changeHandler}
         ref={fileInput}
       />
-      <motion.div layoutId="nickname">
-        <CustomizedTooltips content="닉네임 변경">
-          <S.NickName
-            onClick={() => {
-              setMode('EDITNAME');
-            }}
-          >
-            {name}
-          </S.NickName>
-        </CustomizedTooltips>
-      </motion.div>
-      <motion.div layoutId="email">
-        <S.Email>{email}</S.Email>
-      </motion.div>
+
+      <CustomizedTooltips content="닉네임 변경">
+        <S.NickName
+          onClick={() => {
+            setMode('EDITNAME');
+          }}
+        >
+          {name}
+        </S.NickName>
+      </CustomizedTooltips>
+
+      <S.Email>{email}</S.Email>
     </S.Container>
   );
 };

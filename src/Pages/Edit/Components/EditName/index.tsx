@@ -6,7 +6,7 @@ import { accessClient } from '../../../../axiosInstance';
 import * as S from './styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
-import { ReactComponent as DefaultProfile } from '../../assets/defaultProfile.svg';
+import defaultProfile from '../../assets/defaultProfile.svg';
 import { warningNickname, state } from '../../../Join/Utils';
 import { TOKEN } from '../../../Join/Atoms';
 import HelperText from '../HelperText';
@@ -20,7 +20,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
   const [nickName, setnickName] = useState('');
   const [nickNamestate, setnickNameState] = useState<string>(state.NORMAL);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
+  const [Image, setImage] = useState(defaultProfile);
   const [flag, setFlag] = useState<boolean>(false);
 
   //  닉네임 input onChange
@@ -94,7 +94,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
   return (
     <S.Container>
       <motion.div layoutId="avatar">
-        <DefaultProfile />
+        <S.Profile src={Image} alt="프로필 사진" />
       </motion.div>
       <S.NickName
         placeholder="새로운 닉네임을 적어주세요"

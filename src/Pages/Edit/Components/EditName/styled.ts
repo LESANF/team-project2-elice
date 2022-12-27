@@ -2,13 +2,18 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: 93vh;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 50px;
 `;
-
+export const Profile = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  cursor: default;
+`;
 export const PasswordChange = styled.p`
   padding: 10px 20px;
   font-family: 'Noto Sans', 'Noto Sans KR';

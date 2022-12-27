@@ -201,8 +201,20 @@ const HeaderWithProfile = () => {
                 <S.StyledP style={{ marginBottom: '40px' }} fontSize="18px">
                   photolog@naver.com
                 </S.StyledP>
-                <S.TextButton>내 페이지</S.TextButton>
-                <S.TextButton>계정 관리</S.TextButton>
+                <S.TextButton
+                  onClick={() => {
+                    navigate('/mypage');
+                  }}
+                >
+                  내 페이지
+                </S.TextButton>
+                <S.TextButton
+                  onClick={() => {
+                    navigate('/edit');
+                  }}
+                >
+                  계정 관리
+                </S.TextButton>
                 <S.TextButton>로그아웃</S.TextButton>
               </S.Dropdown>
             </S.DropdownContainer>
