@@ -138,6 +138,15 @@ export const KaKaoMapWrapper = styled.div`
 `;
 export const CurLoaction = styled.div``;
 
+export const MapDescription = styled.div``;
+export const DescriptionInput = styled.input.attrs({
+  placeholder: '사진 설명',
+})`
+  margin: 20px 0px;
+  width: 704px;
+  height: 20px;
+`;
+
 export const PostFooter = styled.div`
   display: flex;
   justify-content: flex-end;

@@ -10,7 +10,7 @@ import Editor from '../../../Components/Commons/Editor';
 import TagToolTip from '../Utils/Tooltip';
 
 interface IPhotoMetaData {
-  model: string;
+  takenAt: string;
   longitude: number;
   latitude: number;
 }
@@ -21,7 +21,7 @@ const PostPhoto = () => {
   const tagInputRef = useRef<HTMLInputElement>(null);
   const [tagInputValue, setTagInputValue] = useState<string>('');
   const [tagList, setTagList] = useState<string[]>([]);
-  const [htmlContent, setHtmlContent] = useState('');
+  const [htmlContent, setHtmlContent] = useState<string>('');
   const [photoMetaData, setPhotoMetaData] = useState<IPhotoMetaData>();
   const [mapFlag, setMapFlag] = useState<boolean>(false);
   const [selCameraFlag, setSelCameraFlag] = useState<boolean>(false);
@@ -55,8 +55,9 @@ const PostPhoto = () => {
     console.log('cameraId', '---');
     console.log('latitude', photoMetaData!.latitude);
     console.log('longitude', photoMetaData!.longitude);
+    console.log('takenAt', photoMetaData!.takenAt);
     console.log('locationInfo', '위치정보 소개');
-    console.log('hashtags: ', tagList.join(','));
+    console.log('hashtags: ', tagList);
     if (quillRef.current) {
       // const range = quill.getSelection()?.index;
       // console.log(description);
@@ -208,6 +209,7 @@ const PostPhoto = () => {
                       }}
                     />
                   </Map>
+                  <S.DescriptionInput />
                 </S.CurLoaction>
               </S.KaKaoMapWrapper>
             </S.MapWrapper>
