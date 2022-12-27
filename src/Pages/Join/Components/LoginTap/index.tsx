@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
-
-import { authenticatedState, userState, TOKEN } from '../../Atoms';
+import { client } from '../../../../axiosInstance';
+import { TOKEN } from '../../Atoms';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
@@ -12,7 +11,6 @@ import {
   warningEmail,
   warningPw,
   state,
-  LOCAL_URL,
 } from '../../Utils';
 
 const LoginTap = () => {
@@ -29,6 +27,10 @@ const LoginTap = () => {
   const [pw, setpw] = useState<string>('');
 
   const [flag, setFlag] = useState<boolean>(false);
+  useEffect(() => {
+    setToken(null);
+    console.log(`토큰 초기화${token}`);
+  }, []);
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailInput = e.target.value;
@@ -56,12 +58,13 @@ const LoginTap = () => {
       return;
     }
     try {
-      const result = await axios.post(`${LOCAL_URL}/auth/login`, {
+      const result = await client.post(`/auth/login`, {
         email,
         password: pw,
       });
       setLoginState(state.SUCCESS);
-      setToken(result.data.token);
+      setToken(result.data.data);
+      console.log('토큰', result.data.data, token);
       setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);

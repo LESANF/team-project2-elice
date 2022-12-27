@@ -3,6 +3,8 @@ import * as S from './styled';
 import LoginTap from '../Components/LoginTap';
 import JoinTap from '../Components/JoinTap';
 import FindPwTap from '../Components/FindPwTap';
+import { Header } from '../../../Components/Commons/Header';
+// import HeaderWithProfile from 'src/Components/Commons/Header';
 
 interface IState {
   LOGIN: string;
@@ -33,31 +35,38 @@ const Join = () => {
     setMode(evt.target.className);
   };
   return (
-    <S.Container>
-      <br />
-      <S.Tap mode={mode}>
-        <span
-          onClick={clickHandler}
-          className={state.LOGIN}
-          role="presentation"
-        >
-          로그인
-        </span>
-        |
-        <span onClick={clickHandler} className={state.JOIN} role="presentation">
-          회원가입
-        </span>
-        |
-        <span
-          onClick={clickHandler}
-          className={state.FINDPW}
-          role="presentation"
-        >
-          비밀번호 찾기
-        </span>
-      </S.Tap>
-      {stateTap[mode]}
-    </S.Container>
+    <>
+      <Header />
+      <S.Container>
+        <br />
+        <S.Tap mode={mode}>
+          <span
+            onClick={clickHandler}
+            className={state.LOGIN}
+            role="presentation"
+          >
+            로그인
+          </span>
+          |
+          <span
+            onClick={clickHandler}
+            className={state.JOIN}
+            role="presentation"
+          >
+            회원가입
+          </span>
+          |
+          <span
+            onClick={clickHandler}
+            className={state.FINDPW}
+            role="presentation"
+          >
+            비밀번호 찾기
+          </span>
+        </S.Tap>
+        {stateTap[mode]}
+      </S.Container>
+    </>
   );
 };
 

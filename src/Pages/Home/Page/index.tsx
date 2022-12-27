@@ -10,10 +10,10 @@ import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
 
 const Intro = () => {
-  useEffect(() => {
-    disableScroll();
-    return removeDisableScroll;
-  }, []);
+  // useEffect(() => {
+  //   disableScroll();
+  //   return removeDisableScroll;
+  // }, []);
   const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
@@ -25,11 +25,11 @@ const Intro = () => {
   };
   return (
     <>
-      <style id="scroll-properties">
+      {/* <style id="scroll-properties">
         {`::-webkit-scrollbar {
           display: none;
 			  }`}
-      </style>
+      </style> */}
       <S.Container className="Intro" fontFamily="Segoe UI">
         <S.Section backgroundColor="#ffffff">
           <S.Header>

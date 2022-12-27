@@ -44,7 +44,9 @@
     "react/destructuring-assignment": "off",
     "no-console": "off",
     "react-hooks/exhaustive-deps": "off",
-    "react/no-unknown-property": "off"
+    "react/no-unknown-property": "off",
+    "no-restricted-syntax": "off",
+    "guard-for-in": "off"
   },
   "settings": {
     "react": {

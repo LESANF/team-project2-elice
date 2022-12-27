@@ -1,18 +1,103 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { client } from '../../../../axiosInstance';
 import * as S from './styled';
+import DialogTest from '../../../../Components/Commons/Dialog';
+import { validateEmail, warningEmail, state } from '../../Utils';
 
 const FindPwTap = () => {
-  const [state, setState] = useState<string>('NORMAL');
+  const navigate = useNavigate();
+  const [findpwstate, setFindPwState] = useState<string>(state.NORMAL);
+  const [emailstate, setEmailState] = useState<string>(state.NORMAL);
+
+  const [email, setEmail] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [flag, setFlag] = useState<boolean>(false);
+
+  const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailInput = e.target.value;
+    if (!validateEmail(emailInput)) {
+      setEmailState(state.STRERROR);
+    } else {
+      setEmailState(state.SUCCESS);
+      setEmail(emailInput);
+    }
+  };
+  const clickFindPwHandler = async () => {
+    if (!(emailstate === state.SUCCESS)) {
+      console.log('다시');
+      return;
+    }
+    try {
+      const result = await client.post(`/auth/resetPassword`, {
+        email,
+      });
+      setFindPwState(state.SUCCESS);
+      setFlag(true);
+      setFlag(true);
+    } catch (err: any) {
+      setFindPwState(state.ERROR);
+      setErrorMessage(err.response.data.message);
+      setFlag(true);
+    }
+  };
+  const agreeFn = () => {
+    console.log('확인');
+    setFlag(false);
+    if (findpwstate === state.SUCCESS) navigate(`/`);
+
+    return flag;
+  };
+
+  const disAgreeFn = () => {
+    console.log('취소');
+    setFlag(false);
+    if (findpwstate === state.SUCCESS) navigate(`/`);
+
+    return flag;
+  };
+
+  const dialog = (): JSX.Element => {
+    let title = '';
+    let content = '';
+    if (findpwstate === state.SUCCESS) {
+      [title, content] = [
+        `임시비밀번호 전송 완료`,
+        `임시비밀번호가 정상적으로 전송되었습니다`,
+      ];
+    } else {
+      title = '임시비밀번호 전송 오류';
+      [title, content] = ['임시비밀번호 전송 오류', errorMessage];
+    }
+    return (
+      <DialogTest
+        openFlag={flag}
+        title={title}
+        content={content}
+        agreeFn={agreeFn}
+        disAgreeFn={disAgreeFn}
+        sizeW="700px"
+        sizeH="300px"
+      />
+    );
+  };
+
   return (
     <>
       <S.InfoTop>가입되어 있는 이메일 주소를 입력해주세요</S.InfoTop>
       <S.Form>
-        <div className="title">이메일</div>
+        <div
+          placeholder="이메일"
+          className="title"
+          onChange={changeEmailHandler}
+        >
+          이메일
+        </div>
         <div>
-          <input type="password" />
-          {state === 'ERROR' ? (
-            <div>2자이상 8자 이하로 작성해주세요</div>
-          ) : null}
+          <input placeholder="이메일" onChange={changeEmailHandler} />
+          <div>{warningEmail(emailstate)}</div>
         </div>
       </S.Form>
 
@@ -23,7 +108,8 @@ const FindPwTap = () => {
         </ul>
       </S.InfoBottom>
 
-      <S.Button>임시 비밀번호 전송</S.Button>
+      <S.Button onClick={clickFindPwHandler}>임시 비밀번호 전송</S.Button>
+      {dialog()}
     </>
   );
 };
