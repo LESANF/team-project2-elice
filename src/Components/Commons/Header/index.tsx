@@ -34,7 +34,7 @@ const HeaderNonLogin = () => {
         <S.Logo>
           <Logo
             onClick={() => {
-              navigate('/menu/photolistst');
+              navigate('/menu/photoliststs');
             }}
           />
         </S.Logo>
@@ -168,7 +168,9 @@ const HeaderWithProfile = () => {
           <S.MuiButton
             textColor="#07B8B8"
             hoverBackgroundColor="#f9f9f9"
-            onClick={alert}
+            onClick={() => {
+              navigate('/postwrite');
+            }}
           >
             사진 올리기
           </S.MuiButton>
