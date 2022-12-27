@@ -10,6 +10,7 @@ import { DialogTest } from '../../../Pages/Join/Components/LoginDialog/index';
 import { TOKEN } from '../../../Pages/Join/Atoms';
 
 const HeaderNonLogin = () => {
+  const [s, setS] = useState({});
   const navigate = useNavigate();
   const { pathname: curLocation } = useLocation();
   const [flag, setFlag] = useState(false);
@@ -18,16 +19,25 @@ const HeaderNonLogin = () => {
     setFlag(false);
     return flag;
   };
-
+  const handleScroll = (e: any) => {
+    setS({});
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <>
-      <S.HeaderContainer>
-        <Logo
-          style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
-          onClick={() => {
-            navigate('/menu/photolistst');
-          }}
-        />
+      <S.HeaderContainer scrollX={window.scrollX} animationOff>
+        <S.Logo>
+          <Logo
+            onClick={() => {
+              navigate('/menu/photoliststs');
+            }}
+          />
+        </S.Logo>
         <S.MenuItems>
           <Link to="/menu/maps">
             {curLocation === '/menu/maps' ? (
@@ -59,7 +69,6 @@ const HeaderNonLogin = () => {
           <SearchIcon />
           <S.SearchInput className="search_input" />
         </S.SearchBar>
-        <div style={{ width: '3.16vw' }} />
         <div
           style={{
             marginLeft: 'auto',
@@ -71,6 +80,9 @@ const HeaderNonLogin = () => {
             textColor="#5F5F5F"
             hoverTextColor="#07B8B8"
             hoverBackgroundColor="#f9f9f9"
+            onClick={() => {
+              navigate('/join');
+            }}
           >
             가입하기
           </S.MuiButton>
@@ -87,6 +99,7 @@ const HeaderNonLogin = () => {
           </S.MuiButton>
         </div>
       </S.HeaderContainer>
+      <div style={{ background: 'red', width: '1240px', height: '0.1px' }} />
       <DialogTest
         openFlag={flag}
         title="test"
@@ -144,7 +157,6 @@ const HeaderWithProfile = () => {
           <SearchIcon />
           <S.SearchInput className="search_input" />
         </S.SearchBar>
-        <div style={{ width: '3.16vw' }} />
         <div
           style={{
             display: 'flex',
@@ -156,7 +168,9 @@ const HeaderWithProfile = () => {
           <S.MuiButton
             textColor="#07B8B8"
             hoverBackgroundColor="#f9f9f9"
-            onClick={alert}
+            onClick={() => {
+              navigate('/postwrite');
+            }}
           >
             사진 올리기
           </S.MuiButton>
@@ -202,6 +216,7 @@ const HeaderWithProfile = () => {
           />
         )}
       </S.HeaderContainer>
+      <div style={{ background: 'red', width: '1240px', height: '0.1px' }} />
       {isDropdownOn && (
         <S.DropdownRemover
           onClick={(e) => {

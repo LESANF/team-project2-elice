@@ -239,7 +239,19 @@ const Maps = () => {
       lng: 126.73862053,
     },
   });
-
+  const enterKey = (e: any) => {
+    if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+      alert(e.target.value);
+      setHashtag(e.target.value);
+    }
+  };
+  useEffect(() => {
+    const searchInput = document.querySelector('.search_input');
+    searchInput?.addEventListener('keyup', enterKey);
+    return () => {
+      searchInput?.removeEventListener('keyup', enterKey);
+    };
+  }, []);
   useEffect(() => {
     // 페이지 로딩 시 내 위치정보를 불러오는 코드
     try {
