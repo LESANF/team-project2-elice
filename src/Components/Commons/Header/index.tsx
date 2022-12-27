@@ -77,9 +77,9 @@ const HeaderNonLogin = () => {
           }}
         >
           <S.MuiButton
-            textColor="#5F5F5F"
-            hoverTextColor="#07B8B8"
-            hoverBackgroundColor="#f9f9f9"
+            textcolor="#5F5F5F"
+            hovertextcolor="#07B8B8"
+            hoverbackgroundcolor="#f9f9f9"
             onClick={() => {
               navigate('/join');
             }}
@@ -88,9 +88,9 @@ const HeaderNonLogin = () => {
           </S.MuiButton>
           <S.MuiButton
             style={{ marginLeft: '24px' }}
-            textColor="#ffffff"
-            backgroundColor="#07B8B8"
-            hoverBackgroundColor="#00A8A7"
+            textcolor="#ffffff"
+            backgroundcolor="#07B8B8"
+            hoverbackgroundcolor="#00A8A7"
             onClick={() => {
               setFlag(true);
             }}
@@ -166,8 +166,8 @@ const HeaderWithProfile = () => {
           }}
         >
           <S.MuiButton
-            textColor="#07B8B8"
-            hoverBackgroundColor="#f9f9f9"
+            textcolor="#07B8B8"
+            hoverbackgroundcolor="#f9f9f9"
             onClick={() => {
               navigate('/postwrite');
             }}

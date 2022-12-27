@@ -9,11 +9,11 @@ interface IContainer {
   fontFamily: string;
 }
 interface ISection {
-  backgroundColor: string;
+  backgroundcolor: string;
 }
 interface INavigateButton {
-  backgroundColor: string;
-  hoverBackgroundColor: string;
+  backgroundcolor: string;
+  hoverbackgroundcolor: string;
 }
 
 export const PrimaryButton = styled.button<IPrimaryButton>`
@@ -44,7 +44,7 @@ export const Container = styled.div<IContainer>`
 `;
 export const Section = styled.div<ISection>`
   position: relative;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   height: 100vh;
   width: 100%;
   display: flex;
@@ -54,7 +54,7 @@ export const Section = styled.div<ISection>`
 `;
 export const Section2 = styled.div<ISection>`
   position: relative;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   height: 100vh;
   width: 100%;
   display: flex;
@@ -135,8 +135,8 @@ export const NavigateButton = styledMui(Button)<INavigateButton>`
   font-family: 'Segoe UI';
   line-height: 32px;
   color: #FFFFFF;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   :hover{
-    background-color: ${(props) => props.hoverBackgroundColor};
+    background-color: ${(props) => props.hoverbackgroundcolor};
   }
 `;

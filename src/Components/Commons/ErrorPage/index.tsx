@@ -52,8 +52,8 @@ const ErrorPage = () => {
       </S.StyledP>
       <div style={{ display: 'flex', marginTop: '7vh' }}>
         <MuiButton
-          textColor="#07B8B8"
-          hoverBackgroundColor="#f9f9f9"
+          textcolor="#07B8B8"
+          hoverbackgroundcolor="#f9f9f9"
           onClick={() => {
             navigate(-1);
           }}
@@ -62,9 +62,9 @@ const ErrorPage = () => {
         </MuiButton>
         <MuiButton
           style={{ marginLeft: '24px' }}
-          textColor="#ffffff"
-          backgroundColor="#07B8B8"
-          hoverBackgroundColor="#00A8A7"
+          textcolor="#ffffff"
+          backgroundcolor="#07B8B8"
+          hoverbackgroundcolor="#00A8A7"
           onClick={() => {
             navigate('/');
           }}
