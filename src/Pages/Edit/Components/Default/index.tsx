@@ -22,7 +22,7 @@ const Default = ({ setMode }: IDefaultProps) => {
   const [token, setToken] = useRecoilState(TOKEN);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [Image, setImage] = useState(defaultProfile);
+  const [Image, setImage] = useState('');
 
   const fileInput = useRef<any>(null);
   useEffect(() => {

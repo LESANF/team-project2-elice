@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { accessClient } from '../../../../axiosInstance';
 import * as S from './styled';
+import { Profile } from '../Default/styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
-import { ReactComponent as DefaultProfile } from '../../assets/defaultProfile.svg';
+import defaultProfile from '../../assets/defaultProfile.svg';
 import { warningNickname, state } from '../../../Join/Utils';
 import { TOKEN } from '../../../Join/Atoms';
 import HelperText from '../HelperText';
+import { getUser } from '../../Utils';
 
 interface IEditNameProps {
   setMode?: any;
@@ -18,10 +20,16 @@ interface IEditNameProps {
 const EditName = ({ setMode }: IEditNameProps) => {
   const [token, setToken] = useRecoilState(TOKEN);
   const [nickName, setnickName] = useState('');
+  const [Image, setImage] = useState('');
   const [nickNamestate, setnickNameState] = useState<string>(state.NORMAL);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [flag, setFlag] = useState<boolean>(false);
+  useEffect(() => {
+    getUser(token).then((res) => {
+      setImage(res.image_url || defaultProfile);
+    });
+  }, []);
 
   //  닉네임 input onChange
   const changenickNameHandler = async (
@@ -93,9 +101,9 @@ const EditName = ({ setMode }: IEditNameProps) => {
   };
   return (
     <S.Container>
-      <motion.div layoutId="avatar">
-        <DefaultProfile />
-      </motion.div>
+      {/* <motion.div layoutId="avatar"> */}
+      <Profile src={Image} alt="프로필 사진" />
+      {/* </motion.div> */}
       <S.NickName
         placeholder="새로운 닉네임을 적어주세요"
         onChange={changenickNameHandler}
