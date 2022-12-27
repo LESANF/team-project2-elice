@@ -6,14 +6,12 @@ export const TestHeader = styled.div`
   background-color: blue;
 `;
 
-export const Container = styled.div`
-  background-color: peru;
-`;
+export const Container = styled.div``;
 
 export const Wrapper = styled.div`
   display: flex;
+  height: 120vh;
   flex-direction: column;
-  background-color: skyblue;
   padding: 100px;
 `;
 

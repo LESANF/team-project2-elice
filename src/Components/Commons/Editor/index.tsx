@@ -1,59 +1,73 @@
+import React, {
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  useEffect,
+  SetStateAction,
+} from 'react';
 import axios from 'axios';
 import EXIF from 'exif-js';
-import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
+
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { getPresignedURL } from '../../../Pages/Post/Apis';
 
 interface IQuillProps {
   quillRef: any;
-  htmlContent: any;
-  setHtmlContent: any;
+  htmlContent: string;
+  setHtmlContent: React.Dispatch<SetStateAction<string>>;
+  setMetaData: any;
 }
 
-const Editor = ({ quillRef, htmlContent, setHtmlContent }: IQuillProps) => {
-  const [finalLo, setFinalLo] = useState<number | null>(null);
-  const [finalLa, setFinalLa] = useState<number | null>(null);
+const Editor = ({
+  quillRef,
+  htmlContent,
+  setHtmlContent,
+  setMetaData,
+}: IQuillProps) => {
+  const [finalLo, setFinalLo] = useState<number>();
+  const [finalLa, setFinalLa] = useState<number>();
+  const [finalTakenAt, setFinalTakenAt] = useState<string>();
+
+  useEffect(() => {
+    setMetaData({
+      takenAt: finalTakenAt,
+      longitude: finalLo,
+      latitude: finalLa,
+    });
+  }, [finalLa, finalLo, finalTakenAt]);
 
   const imageHandler = () => {
-    // http://localhost:5001/photos/presigned-url?filetype=jpg
-    // https://photolog-bucket.s3.amazonaws.com/ (signURL)
-
-    const formData = new FormData();
-
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
+    input.setAttribute('accept', 'image/jpg');
     input.setAttribute('name', 'image');
     input.click();
 
-    /**
-     * Image Upload API
-     * 로컬로 하는 방법과달리 S3를 이용하여 진행하기 때문에
-     * 별도의 로직이 필요
-     */
     input.onchange = async () => {
-      const file = input.files;
+      const [file]: any = input.files;
+      const getS3UploadImg = await getPresignedURL(file);
+      const range = quillRef.current.getEditorSelection();
+      quillRef.current
+        .getEditor()
+        .insertEmbed(range.index, 'image', getS3UploadImg);
+      quillRef.current.getEditor().setSelection(range.index + 1);
+
       if (file) {
-        // http://localhost:5001/photos/presigned-url?filetype=jpg
-        // https://photolog-bucket.s3.amazonaws.com/ (signURL)
-        // formData.append('key', file[0]);
-        // formData.append('bucket', file[0]);
-        // formData.append('X-Amz-Algorithm', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        // formData.append('image', file[0]);
-        const fileInfo: any = file[0];
+        const fileInfo: any = file;
 
         EXIF.getData(fileInfo, () => {
           const tags = EXIF.getAllTags(fileInfo);
-
-          const model = tags.Model;
           const longitude = tags.GPSLongitude;
           const longitudeRef = tags.GPSLongitudeRef;
           const latitude = tags.GPSLatitude;
           const latitudeRef = tags.GPSLatitudeRef;
+
+          let takenTime = tags.DateTimeDigitized;
+          for (let i = 0; i <= 1; i++) takenTime = takenTime.replace(':', '-');
+
+          setFinalTakenAt(new Date(takenTime).toISOString());
 
           // 위도 latitude, 경도 longitude
           if (latitudeRef === 'S')

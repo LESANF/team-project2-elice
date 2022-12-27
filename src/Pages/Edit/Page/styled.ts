@@ -12,26 +12,32 @@ export const Container = styled.div`
   padding: 50px 110px;
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
 `;
 
-export const Tap = styled.div<{ mode: string }>`
-  margin: 20px 0px;
-  span {
-    cursor: pointer;
-    display: inline-block;
-    text-align: center;
-    width: 80px;
-  }
-  span.MYPROFILE {
-    font-weight: ${(props) => (props.mode === 'MYPROFILE' ? 'bold' : 'normal')};
-  }
-  span.EDITPROFILE {
-    width: 120px;
-    font-weight: ${(props) =>
-      props.mode === 'EDITPROFILE' ? 'bold' : 'normal'};
-  }
-  span.EDITPW {
-    width: 120px;
-    font-weight: ${(props) => (props.mode === 'EDITPW' ? 'bold' : 'normal')};
+export const Copyright = styled.p`
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #5f5f5f;
+  margin-bottom: 30px;
+`;
+export const PasswordChange = styled.p`
+  padding: 10px 20px;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #5f5f5f;
+  cursor: pointer;
+  :hover {
+    font-weight: 500;
+    color: #07b8b8;
   }
 `;

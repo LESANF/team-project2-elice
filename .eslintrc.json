@@ -46,7 +46,9 @@
     "react-hooks/exhaustive-deps": "off",
     "react/no-unknown-property": "off",
     "no-restricted-syntax": "off",
-    "guard-for-in": "off"
+    "guard-for-in": "off",
+    "prefer-const": "off",
+    "no-plusplus": "off"
   },
   "settings": {
     "react": {

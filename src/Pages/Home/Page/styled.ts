@@ -9,11 +9,11 @@ interface IContainer {
   fontFamily: string;
 }
 interface ISection {
-  backgroundColor: string;
+  backgroundcolor: string;
 }
 interface INavigateButton {
-  backgroundColor: string;
-  hoverBackgroundColor: string;
+  backgroundcolor: string;
+  hoverbackgroundcolor: string;
 }
 
 export const PrimaryButton = styled.button<IPrimaryButton>`
@@ -25,9 +25,9 @@ export const PrimaryButton = styled.button<IPrimaryButton>`
   background: #07b8b8;
   border-radius: 6px;
   border: 0px;
-  font-family: 'Segoe UI';
+  font-family: 'Noto Sans', 'Noto Sans KR';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: ${(props) => props.fontSize};
   line-height: 140%;
   color: #ffffff;
@@ -44,7 +44,7 @@ export const Container = styled.div<IContainer>`
 `;
 export const Section = styled.div<ISection>`
   position: relative;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   height: 100vh;
   width: 100%;
   display: flex;
@@ -54,7 +54,7 @@ export const Section = styled.div<ISection>`
 `;
 export const Section2 = styled.div<ISection>`
   position: relative;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   height: 100vh;
   width: 100%;
   display: flex;
@@ -114,11 +114,10 @@ export const StyledH1 = styled.h1`
 `;
 export const TextButton = styledMui(Button)`
   padding: 8px 10px;
-  font-family: 'Segoe UI';
+  font-family: 'Noto Sans','Noto Sans KR';
   font-style: normal;
   font-weight: 600;
   font-size:20px;
-  font-family: 'Segoe UI';
   line-height: 27px;
   color: #2A2A2A;
   :hover{
@@ -136,8 +135,8 @@ export const NavigateButton = styledMui(Button)<INavigateButton>`
   font-family: 'Segoe UI';
   line-height: 32px;
   color: #FFFFFF;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   :hover{
-    background-color: ${(props) => props.hoverBackgroundColor};
+    background-color: ${(props) => props.hoverbackgroundcolor};
   }
 `;

@@ -1,16 +1,34 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './styled';
 import { useGetData } from '../hooks/useGetData';
-import { disableScroll, debounceResizeEvent } from '../Utils';
+import { disableScroll, removeDisableScroll } from '../Utils';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import MapDemo from '../assets/map.gif';
 import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
+import { DialogTest } from '../../Join/Components/LoginDialog/index';
 
 const Intro = () => {
-  disableScroll();
+  const [flag, setFlag] = useState(false);
+  const disAgreeFn = () => {
+    console.log('취소');
+    setFlag(false);
+    return flag;
+  };
+  useEffect(() => {
+    console.log(flag);
+    if (flag) {
+      removeDisableScroll();
+    } else {
+      disableScroll();
+    }
+  }, [flag]);
+  useEffect(() => {
+    disableScroll();
+    return removeDisableScroll;
+  }, []);
   const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
@@ -20,20 +38,6 @@ const Intro = () => {
       transition: { duration: 0.5 },
     },
   };
-  window.onresize = debounceResizeEvent(
-    (e: React.UIEvent<Window, 'resize'>) => {
-      if (window.visualViewport) {
-        const vh = window.visualViewport.height;
-        if (window.scrollY % vh === 0) return;
-        if (window.scrollY < vh) window.scrollTo(0, vh);
-        else if (window.scrollY < vh * 2) window.scrollTo(0, vh * 2);
-        else if (window.scrollY < vh * 3) window.scrollTo(0, vh * 3);
-        else if (window.scrollY < vh * 4) window.scrollTo(0, vh * 4);
-        else if (window.scrollY < vh * 5) window.scrollTo(0, vh * 5);
-      }
-    },
-    500,
-  );
   return (
     <>
       <style id="scroll-properties">
@@ -42,21 +46,26 @@ const Intro = () => {
 			  }`}
       </style>
       <S.Container className="Intro" fontFamily="Segoe UI">
-        <S.Section backgroundColor="#ffffff">
+        <S.Section backgroundcolor="#ffffff">
           <S.Header>
             <Logo
               style={{ cursor: 'pointer' }}
               onClick={() => {
-                navigate('/map');
+                navigate('/menu/maps');
               }}
             />
             <div style={{ display: 'flex', gap: '10px' }}>
-              <S.PrimaryButton fontSize="20px" onClick={alert}>
+              <S.PrimaryButton
+                fontSize="20px"
+                onClick={() => {
+                  setFlag(true);
+                }}
+              >
                 로그인
               </S.PrimaryButton>
               <S.TextButton
                 onClick={() => {
-                  navigate('/map');
+                  navigate('/join');
                 }}
               >
                 가입하기
@@ -84,6 +93,7 @@ const Intro = () => {
                 if (idx === 3) offset = 75 + 65 + 50;
                 return (
                   <motion.div
+                    key={key}
                     variants={motionVariants}
                     style={{
                       position: 'relative',
@@ -140,7 +150,7 @@ const Intro = () => {
             />
           </div>
         </S.Section>
-        <S.Section2 backgroundColor="#FFE696">
+        <S.Section2 backgroundcolor="#FFE696">
           <S.Body2>
             <S.StyledH1>
               <p style={{ color: '#C52424' }}>지도로 주변 명소 검색</p>
@@ -160,8 +170,11 @@ const Intro = () => {
               친구들과 공유해 보세요.
             </pre>
             <S.NavigateButton
-              backgroundColor="#C52424"
-              hoverBackgroundColor="#A51313"
+              backgroundcolor="#C52424"
+              hoverbackgroundcolor="#A51313"
+              onClick={() => {
+                navigate('/menu/maps');
+              }}
             >
               탐색
             </S.NavigateButton>
@@ -185,7 +198,7 @@ const Intro = () => {
             />
           </div>
         </S.Section2>
-        <S.Section2 backgroundColor="#AAE0E1">
+        <S.Section2 backgroundcolor="#AAE0E1">
           <div
             style={{
               width: '713.59px',
@@ -225,17 +238,29 @@ const Intro = () => {
               좋아요를 남겨 언제든 다시 볼 수 있어요.
             </pre>
             <S.NavigateButton
-              backgroundColor="#0D61AE"
-              hoverBackgroundColor="#044F94"
+              backgroundcolor="#0D61AE"
+              hoverbackgroundcolor="#044F94"
+              onClick={() => {
+                navigate('/menu/photolists');
+              }}
             >
               탐색
             </S.NavigateButton>
           </S.Body2>
         </S.Section2>
-        <S.Section2 backgroundColor="#FFFFFF">
+        <S.Section2 backgroundcolor="#FFFFFF">
           <CubeContainer />
         </S.Section2>
       </S.Container>
+      <DialogTest
+        openFlag={flag}
+        title="test"
+        content="test"
+        agreeFn={() => {}}
+        disAgreeFn={disAgreeFn}
+        sizeW="600px"
+        sizeH="800px"
+      />
     </>
   );
 };

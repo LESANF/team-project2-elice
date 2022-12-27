@@ -25,15 +25,15 @@ export const NavigateButton = styledMui(Button)<INavigateButton>`
   width:fit-content;
   height:fit-content;
   padding: 1vh 1vw;
-  font-family: 'Segoe UI';
+  font-family: 'Noto Sans','Noto Sans KR';
   font-style: normal;
-  font-weight: 600;
-  font-size:calc(2.7px + 1.4vmin);
-  font-family: 'Segoe UI';
+  font-weight: 500;
+  font-size:calc(3px + 1.5vmin);
   line-height: 140%;
   color: #FFFFFF;
   background-color: ${(props) => props.backgroundColor};
   :hover{
+    font-weight: 600;
     background-color: ${(props) => props.hoverBackgroundColor};
   }
 `;

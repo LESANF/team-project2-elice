@@ -21,7 +21,7 @@ export const TitleBox = styled.div``;
 export const TitleArea = styled.textarea.attrs({
   placeholder: '제목을 입력하세요',
 })`
-  height: 72px;
+  height: 80px;
   min-height: 72px;
   font-size: 48px;
   resize: none;
@@ -92,14 +92,59 @@ export const CameraIconBox = styled.div`
   align-items: center;
 `;
 
+export const CameraCompany = styled.select`
+  width: 180px;
+  height: 30px;
+`;
 export const CameraSelectBox = styled.select`
-  width: 200px;
+  margin-left: 10px;
+  width: 180px;
+  height: 30px;
+`;
+export const CameraLens = styled.select`
+  margin-left: 10px;
+  width: 180px;
   height: 30px;
 `;
 
 export const ContentBox = styled.div``;
 export const QuillEditor = styled.div`
-  height: 706px;
+  height: 604px;
+`;
+
+export const MapWrapper = styled.div``;
+
+export const MapSectionBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 704px;
+  height: 40px;
+  margin-bottom: 30px;
+`;
+
+export const MapTitleLogoBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+`;
+
+export const KaKaoMapWrapper = styled.div`
+  width: 704px;
+  height: 304px;
+  margin-bottom: 30px;
+  background-color: peru;
+`;
+export const CurLoaction = styled.div``;
+
+export const MapDescription = styled.div``;
+export const DescriptionInput = styled.input.attrs({
+  placeholder: '사진 설명',
+})`
+  margin: 20px 0px;
+  width: 704px;
+  height: 20px;
 `;
 
 export const PostFooter = styled.div`
