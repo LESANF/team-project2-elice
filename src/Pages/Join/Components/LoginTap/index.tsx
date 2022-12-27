@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { client } from '../../../../axiosInstance';
 import { TOKEN } from '../../Atoms';
-import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
   validateEmail,
@@ -11,6 +10,7 @@ import {
   warningEmail,
   warningPw,
   state,
+  IsLoginDialog,
 } from '../../Utils';
 
 const LoginTap = () => {
@@ -74,37 +74,11 @@ const LoginTap = () => {
   };
   const agreeFn = () => {
     console.log('확인');
-    setFlag(false);
-    navigate(loginState === state.SUCCESS ? '/' : '/join');
+    if (loginState === state.SUCCESS) navigate('/menu/maps');
+    else setFlag(false);
     return flag;
   };
 
-  const disAgreeFn = () => {
-    console.log('취소');
-    setFlag(false);
-    navigate(loginState === state.SUCCESS ? '/' : '/join');
-    return flag;
-  };
-  const dialog = (): JSX.Element => {
-    let title = '';
-    let content = '';
-    if (loginState === state.SUCCESS) {
-      [title, content] = [`로그인 성공`, `로그인이 정상적으로 이루어졌습니다`];
-    } else {
-      [title, content] = [`로그인 오류`, errorMessage];
-    }
-    return (
-      <DialogTest
-        openFlag={flag}
-        title={title}
-        content={content}
-        agreeFn={agreeFn}
-        disAgreeFn={disAgreeFn}
-        sizeW="700px"
-        sizeH="300px"
-      />
-    );
-  };
   return (
     <>
       <S.Form>
@@ -132,7 +106,12 @@ const LoginTap = () => {
         </div>
       </S.Form>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
-      {dialog()}
+      <IsLoginDialog
+        flag={flag}
+        tapstate={loginState}
+        errorMessage={errorMessage}
+        agreeFn={agreeFn}
+      />
     </>
   );
 };

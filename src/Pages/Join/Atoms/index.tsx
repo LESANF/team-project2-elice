@@ -20,3 +20,8 @@ export const TOKEN = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const MODE = atom({
+  key: 'mode',
+  default: 'join',
+});
