@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const URL = 'http://34.64.34.184:5001';
+// export const URL = `http://localhost:5001/`; // 'http://34.64.34.184:5001';
 
 export const client = axios.create({
   baseURL: URL,
@@ -14,7 +15,7 @@ export const accessClient = (token: string) =>
     },
   });
 
-export const getPresignedURL: any = async (file: any) => {
+export const getprofilePresignedURL: any = async (file: any) => {
   const form: any = new FormData();
 
   const s3BucketURL = 'https://photolog-bucket.s3.amazonaws.com/';
