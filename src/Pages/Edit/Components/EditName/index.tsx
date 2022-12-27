@@ -112,7 +112,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
 
       <div>
         <MuiButton
-          style={{ width: '93px', marginTop: '22px;' }}
+          style={{ width: '93px', marginTop: '22px' }}
           textcolor="#07B8B8"
           hoverbackgroundcolor="#f9f9f9"
           onClick={() => {
