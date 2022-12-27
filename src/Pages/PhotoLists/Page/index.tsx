@@ -3,9 +3,11 @@ import { ImageList, ImageListItem } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { useRecoilState } from 'recoil';
 import * as P from './styled';
 import getRandomArbitrary from '../utils/getRandomArbitrary';
 import getRandomHashtags from '../utils/getRandomHashtags';
+import { TOKEN } from '../../Join/Atoms';
 
 const pictures = [
   {
@@ -128,11 +130,14 @@ const pictures = [
   },
 ];
 
+const URL = 'http://34.64.34.184:5001';
+
 const PhotoLists = () => {
   const [ref, inView] = useInView();
   const [items, setItems] = useState<Array<object>>([]);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [token, setToken] = useRecoilState(TOKEN);
 
   const getItems = useCallback(async () => {
     setLoading(true);
@@ -140,7 +145,7 @@ const PhotoLists = () => {
     // 1. 한번에 30개 데이터 받아오기 (최신게시글)
     // 2. 받아온 데이터가 30개 미만이면 더이상 요청하지 않기
     // 3. 받아온 데이터가 30개 이상이면 받아온 데이터의 마지막 postID를 넣어 다시 요청
-    await axios.get(`http://34.64.34.184:5001/posts`).then((res) => {
+    await axios.get(`${URL}/posts`).then((res) => {
       console.log(res);
     });
     // await axios ... 로 데이터 응답 res 받아서 아래 "pictures"에 넣어준다.
@@ -192,9 +197,19 @@ const PhotoLists = () => {
     };
     // data를 json화 해서 보내기
     try {
-      const response = await axios.post(`http://34.64.34.184:5001/posts`, data);
-      if (response.statusText === 'OK') {
+      if (token === null) {
+        throw new Error('토큰 없음');
+      }
+      const response = await axios.post(`${URL}/posts`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.statusText === 'Created') {
         console.log('post 성공');
+        console.log('response: ', response);
+      } else {
+        throw new Error('api요청실패');
       }
     } catch (err) {
       console.error('api요청에러: ', err);
