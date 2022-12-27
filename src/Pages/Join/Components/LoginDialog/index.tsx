@@ -219,7 +219,7 @@ export const DialogTest = (props: IDialogProps) => {
           <LoginTitle />
         </DialogTitle>
         <DialogContent>
-          <DialogContentText
+          <div
             id="alert-dialog-slide-description"
             style={{
               height: '90%',
@@ -228,7 +228,7 @@ export const DialogTest = (props: IDialogProps) => {
             }}
           >
             <LoginContent />
-          </DialogContentText>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

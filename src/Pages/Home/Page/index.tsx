@@ -18,6 +18,14 @@ const Intro = () => {
     return flag;
   };
   useEffect(() => {
+    console.log(flag);
+    if (flag) {
+      removeDisableScroll();
+    } else {
+      disableScroll();
+    }
+  }, [flag]);
+  useEffect(() => {
     disableScroll();
     return removeDisableScroll;
   }, []);
