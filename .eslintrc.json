@@ -48,7 +48,9 @@
     "no-restricted-syntax": "off",
     "guard-for-in": "off",
     "prefer-const": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "react/no-array-index-key": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   },
   "settings": {
     "react": {

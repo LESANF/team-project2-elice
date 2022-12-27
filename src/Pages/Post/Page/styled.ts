@@ -83,6 +83,13 @@ export const CameraModelBox = styled.div`
   /* align-items: flex-start; */
   width: 100%;
 `;
+export const LensModelBox = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: flex-start; */
+  width: 100%;
+`;
 export const CameraIconBox = styled.div`
   margin-right: 10px;
   width: 30px;
@@ -93,6 +100,10 @@ export const CameraIconBox = styled.div`
 `;
 
 export const CameraCompany = styled.select`
+  width: 180px;
+  height: 30px;
+`;
+export const LensCompany = styled.select`
   width: 180px;
   height: 30px;
 `;

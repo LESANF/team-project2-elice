@@ -18,6 +18,7 @@ interface IQuillProps {
   htmlContent: string;
   setHtmlContent: React.Dispatch<SetStateAction<string>>;
   setMetaData: any;
+  setImgUrl: React.Dispatch<SetStateAction<string>>;
 }
 
 const Editor = ({
@@ -25,6 +26,7 @@ const Editor = ({
   htmlContent,
   setHtmlContent,
   setMetaData,
+  setImgUrl,
 }: IQuillProps) => {
   const [finalLo, setFinalLo] = useState<number>();
   const [finalLa, setFinalLa] = useState<number>();
@@ -47,11 +49,12 @@ const Editor = ({
 
     input.onchange = async () => {
       const [file]: any = input.files;
-      const getS3UploadImg = await getPresignedURL(file);
+      const { url: imgUrl, id: imgId } = await getPresignedURL(file);
+
+      setImgUrl(imgId);
+
       const range = quillRef.current.getEditorSelection();
-      quillRef.current
-        .getEditor()
-        .insertEmbed(range.index, 'image', getS3UploadImg);
+      quillRef.current.getEditor().insertEmbed(range.index, 'image', imgUrl);
       quillRef.current.getEditor().setSelection(range.index + 1);
 
       if (file) {
@@ -65,9 +68,12 @@ const Editor = ({
           const latitudeRef = tags.GPSLatitudeRef;
 
           let takenTime = tags.DateTimeDigitized;
-          for (let i = 0; i <= 1; i++) takenTime = takenTime.replace(':', '-');
+          if (takenTime) {
+            for (let i = 0; i <= 1; i++)
+              takenTime = takenTime.replace(':', '-');
 
-          setFinalTakenAt(new Date(takenTime).toISOString());
+            setFinalTakenAt(new Date(takenTime).toISOString());
+          }
 
           // 위도 latitude, 경도 longitude
           if (latitudeRef === 'S')
