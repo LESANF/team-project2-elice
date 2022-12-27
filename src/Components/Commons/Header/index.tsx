@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import * as S from './styled';
 import { ReactComponent as Logo } from '../../../Pages/Home/assets/logo.svg';
 import { ReactComponent as SearchIcon } from './searchicon.svg';
 import { ReactComponent as ArrowIcon } from './arrowdown.svg';
 import avatar from './sampleAvatar.png';
 import { DialogTest } from '../../../Pages/Join/Components/LoginDialog/index';
+import { TOKEN } from '../../../Pages/Join/Atoms';
 
-export const Header = () => {
+const HeaderNonLogin = () => {
   const navigate = useNavigate();
   const { pathname: curLocation } = useLocation();
   const [flag, setFlag] = useState(false);
@@ -23,7 +25,7 @@ export const Header = () => {
         <Logo
           style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
           onClick={() => {
-            navigate('/');
+            navigate('/menu/photolistst');
           }}
         />
         <S.MenuItems>
@@ -94,27 +96,12 @@ export const Header = () => {
         sizeW="600px"
         sizeH="800px"
       />
-      ;
     </>
   );
 };
 
-export const HeaderWithProfile = () => {
+const HeaderWithProfile = () => {
   const [isDropdownOn, setIsDropdownOn] = useState(false);
-  // const removeDropdown = () => {
-  //   setIsDropdownOn(false);
-  // };
-  // useEffect(() => {
-  //   window.addEventListener('click', () => {
-  //     console.log(isDropdownOn);
-  //     if (isDropdownOn) {
-  //       alert();
-
-  //       setIsDropdownOn(false);
-  //     }
-  //   });
-  //   return window.removeEventListener('click', alert);
-  // }, []);
   const navigate = useNavigate();
   const { pathname: curLocation } = useLocation();
   return (
@@ -123,7 +110,7 @@ export const HeaderWithProfile = () => {
         <Logo
           style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
           onClick={() => {
-            navigate('/');
+            navigate('/menu/photolists');
           }}
         />
         <S.MenuItems>
@@ -228,14 +215,40 @@ export const HeaderWithProfile = () => {
 
 export const HeaderForPost = () => {
   const navigate = useNavigate();
+  const handleScroll = (e: any) => {
+    const header = document.querySelector('.header');
+    if (e.deltaY < 0) {
+      header?.classList.remove('up');
+    } else if (window.scrollY > 77) {
+      header?.classList.add('up');
+    }
+  };
+  const handleResize = (e: any) => {
+    const header = document.querySelector('.header');
+    if (window.scrollY < 77) header?.classList.remove('up');
+  };
+  useEffect(() => {
+    window.addEventListener('wheel', handleScroll);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
-    <S.HeaderContainer>
+    <S.HeaderContainer className="header">
       <Logo
         style={{ cursor: 'pointer', margin: 'auto' }}
         onClick={() => {
-          navigate('/');
+          navigate('/menu/photolists');
         }}
       />
     </S.HeaderContainer>
   );
+};
+
+export const Header = () => {
+  const [token, setToken] = useRecoilState(TOKEN);
+  console.log('token :', token);
+  return token ? <HeaderWithProfile /> : <HeaderNonLogin />;
 };

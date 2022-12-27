@@ -1,34 +1,48 @@
+//  충우님 코드
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
 
-import { Header } from '../../../Components/Commons/Header';
-import ProfileImg from '../Components/ProfileImg';
-import { TOKEN } from '../../Join/Atoms';
-import { IsEditPwTap, IsEditNicknameTap } from '../Atoms';
 import * as S from './styled';
-import { Nickname, EditNickname } from '../Components/Nickname';
-import Email from '../Components/Email';
-import EditPwTap from '../Components/EditPwTap';
+import Default from '../Components/Default';
+import EditName from '../Components/EditName';
+import EditPw from '../Components/EditPw';
+import { HeaderForPost } from '../../../Components/Commons/Header';
+import { ReactComponent as DefaultProfile } from '../assets/defaultProfile.svg';
+
+interface IState {
+  EDITPW: string;
+  EDITNAME: string;
+  DEFAULT: string;
+}
+const state: IState = {
+  EDITPW: 'EDITPW',
+  EDITNAME: 'EDITNAME',
+  DEFAULT: 'DEFAULT',
+};
 
 const Edit = () => {
-  const [token, setToken] = useRecoilState(TOKEN);
-  const [isEditPwTap, setIsEditPwTap] = useRecoilState(IsEditPwTap);
-  const [isEditNicknameTap, setEditNicknameTap] =
-    useRecoilState(IsEditNicknameTap);
-  console.log('token', token);
+  const [mode, setMode] = useState<string>(state.DEFAULT);
+
   return (
     <>
-      <Header />
-      <S.Container>
-        <ProfileImg />
-        {!isEditNicknameTap ? <Nickname /> : <EditNickname />}
-        <Email />
-        {!isEditPwTap ? (
-          <button onClick={() => setIsEditPwTap(true)}>비밀번호 변경</button>
-        ) : (
-          <EditPwTap />
-        )}
-      </S.Container>
+      <HeaderForPost />
+      {mode === 'EDITNAME' ? (
+        <EditName setMode={setMode} />
+      ) : (
+        <Default setMode={setMode} />
+      )}
+      {mode === 'EDITPW' ? (
+        <EditPw setMode={setMode} />
+      ) : (
+        <S.PasswordChange
+          onClick={() => {
+            setMode('EDITPW');
+          }}
+        >
+          비밀번호 변경
+        </S.PasswordChange>
+      )}
+      <S.Copyright>© 2022 photolog, all rights reserved.</S.Copyright>
     </>
   );
 };

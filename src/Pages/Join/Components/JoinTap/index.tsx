@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import axios from 'axios';
+import { client } from '../../../../axiosInstance';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
 import {
-  LOCAL_URL,
   validateEmail,
   validatePw,
   warningNickname,
@@ -76,7 +74,7 @@ const JoinTap = () => {
       return;
     }
     try {
-      const result = await axios.post(`${LOCAL_URL}/users`, {
+      const result = await client.post(`/users`, {
         nickname,
         email,
         password: pw,

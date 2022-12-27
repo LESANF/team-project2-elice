@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
-
+import { client } from '../../../../axiosInstance';
 import { TOKEN } from '../../Atoms';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import * as S from './styled';
@@ -12,7 +11,6 @@ import {
   warningEmail,
   warningPw,
   state,
-  LOCAL_URL,
 } from '../../Utils';
 
 const LoginTap = () => {
@@ -60,7 +58,7 @@ const LoginTap = () => {
       return;
     }
     try {
-      const result = await axios.post(`${LOCAL_URL}/auth/login`, {
+      const result = await client.post(`/auth/login`, {
         email,
         password: pw,
       });

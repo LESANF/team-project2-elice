@@ -28,6 +28,10 @@ export const HeaderContainer = styled.div`
   position: fixed;
   z-index: 12;
   background-color: #ffffff;
+  transition: 500ms all;
+  &.up {
+    transform: translateY(-77px);
+  }
 `;
 
 export const MuiButton = styledMui(Button)<IButton>`
