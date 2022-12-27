@@ -16,6 +16,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import FormControl from '@mui/material/FormControl';
+import HelperText from '../HelperText';
 import * as S from './styled';
 import { TOKEN } from '../../Atoms';
 import {
@@ -26,6 +28,7 @@ import {
   state,
   LOCAL_URL,
 } from '../../Utils';
+import { ReactComponent as Favicon } from './favicon.svg';
 
 const Transition = forwardRef(
   (
@@ -47,7 +50,7 @@ interface IDialogProps {
 }
 const LoginTitle = (): JSX.Element => (
   <S.Title>
-    <img src={`${process.env.PUBLIC_URL}/logo512.png`} alt="로고" />
+    <Favicon />
     포토로그에 오신 것을 환영합니다!
   </S.Title>
 );
@@ -103,7 +106,6 @@ const LoginContent = (): JSX.Element => {
       setLoginState(state.SUCCESS);
       setToken(result.data.token);
       setFlag(false);
-      navigate('/');
     } catch (err: any) {
       console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
@@ -115,6 +117,22 @@ const LoginContent = (): JSX.Element => {
   };
   return (
     <>
+      <FormControl
+        sx={{
+          width: '30ch',
+          height: '70px',
+        }}
+      >
+        <S.Input
+          margin="normal"
+          label="이메일"
+          fullWidth
+          className="title"
+          state={warningEmail(emailstate)}
+          onChange={changeEmailHandler}
+        />
+        <HelperText helper={warningEmail(emailstate)} content={email} />
+      </FormControl>
       <S.Form>
         <div
           placeholder="이메일"
@@ -173,7 +191,9 @@ export const DialogTest = (props: IDialogProps) => {
   const handleClose = (flag: boolean) => {
     setOpen(flag);
   };
-
+  const handleOutsideClose = (event: any, reason: any) => {
+    if (reason === 'backdropClick') setOpen(disAgreeFn());
+  };
   const dialogStyle = {
     sx: {
       width: dialogSize.sizeW,
@@ -191,17 +211,9 @@ export const DialogTest = (props: IDialogProps) => {
         keepMounted
         aria-describedby="alert-dialog-slide-description"
         PaperProps={dialogStyle}
+        onClose={handleOutsideClose}
       >
         <DialogActions>
-          <Button
-            onClick={() => handleClose(disAgreeFn())}
-            style={{
-              fontSize: '35px',
-              fontWeight: '40',
-            }}
-          >
-            X
-          </Button>
           {/* <Button onClick={() => handleClose(agreeFn())}>확인</Button> */}
         </DialogActions>
         <DialogTitle>
