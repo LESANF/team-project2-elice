@@ -16,6 +16,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { client } from '../../../../axiosInstance';
+import FormControl from '@mui/material/FormControl';
+import HelperText from '../HelperText';
 import * as S from './styled';
 import { TOKEN } from '../../Atoms';
 import {
@@ -25,6 +27,7 @@ import {
   warningPw,
   state,
 } from '../../Utils';
+import { ReactComponent as Favicon } from './favicon.svg';
 
 const Transition = forwardRef(
   (
@@ -46,7 +49,7 @@ interface IDialogProps {
 }
 const LoginTitle = (): JSX.Element => (
   <S.Title>
-    <img src={`${process.env.PUBLIC_URL}/logo512.png`} alt="로고" />
+    <Favicon />
     포토로그에 오신 것을 환영합니다!
   </S.Title>
 );
@@ -74,6 +77,7 @@ const LoginContent = (): JSX.Element => {
     } else {
       setEmailState(state.SUCCESS);
     }
+    if (emailInput === '') setEmailState(state.NORMAL);
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage('');
@@ -87,6 +91,7 @@ const LoginContent = (): JSX.Element => {
     } else {
       setPwState(state.SUCCESS);
     }
+    if (pwInput === '') setPwState(state.NORMAL);
   };
   //  로그인 button
   const clickLoginHandler = async () => {
@@ -102,7 +107,7 @@ const LoginContent = (): JSX.Element => {
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
       setFlag(false);
-      navigate('/');
+      navigate('/menu/maps');
     } catch (err: any) {
       console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
@@ -113,39 +118,52 @@ const LoginContent = (): JSX.Element => {
     }
   };
   return (
-    <>
-      <S.Form>
-        <div
-          placeholder="이메일"
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '10px',
+      }}
+    >
+      <FormControl
+        sx={{
+          width: '42ch',
+          height: '100px',
+        }}
+        style={{ marginTop: '10px' }}
+      >
+        <S.Input
+          margin="normal"
+          label="이메일"
+          fullWidth
           className="title"
+          state={warningEmail(emailstate)}
           onChange={changeEmailHandler}
-        >
-          이메일
-        </div>
-        <div className="body">
-          <input
-            placeholder="이메일"
-            onChange={changeEmailHandler}
-            value={email}
-          />
-          <div>{warningEmail(emailstate)}</div>
-        </div>
-      </S.Form>
-      <S.Form>
-        <div className="title">비밀번호</div>
-        <div className="body">
-          <input
-            type="password"
-            placeholder="비밀번호"
-            onChange={changePwHandler}
-            value={pw}
-          />
-          <div>{warningPw(pwstate)}</div>
-        </div>
-      </S.Form>
+        />
+        <HelperText helper={warningEmail(emailstate)} content={email} />
+      </FormControl>
+      <FormControl
+        sx={{
+          width: '42ch',
+          height: '100px',
+        }}
+        style={{ marginTop: '10px' }}
+      >
+        <S.Input
+          type="password"
+          margin="normal"
+          label="비밀번호"
+          fullWidth
+          className="title"
+          state={warningPw(pwstate)}
+          onChange={changePwHandler}
+        />
+        <HelperText helper={warningPw(pwstate)} content={pw} />
+      </FormControl>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
       <div>{errorMessage}</div>
-    </>
+    </div>
   );
 };
 
@@ -156,8 +174,8 @@ export const DialogTest = (props: IDialogProps) => {
     sizeW: string | undefined;
     sizeH: string | undefined;
   }>({
-    sizeW: '230px',
-    sizeH: '170px',
+    sizeW: '500px',
+    sizeH: '600px',
   });
 
   useEffect(() => {
@@ -172,7 +190,9 @@ export const DialogTest = (props: IDialogProps) => {
   const handleClose = (flag: boolean) => {
     setOpen(flag);
   };
-
+  const handleOutsideClose = (event: any, reason: any) => {
+    if (reason === 'backdropClick') setOpen(disAgreeFn());
+  };
   const dialogStyle = {
     sx: {
       width: dialogSize.sizeW,
@@ -190,17 +210,9 @@ export const DialogTest = (props: IDialogProps) => {
         keepMounted
         aria-describedby="alert-dialog-slide-description"
         PaperProps={dialogStyle}
+        onClose={handleOutsideClose}
       >
         <DialogActions>
-          <Button
-            onClick={() => handleClose(disAgreeFn())}
-            style={{
-              fontSize: '35px',
-              fontWeight: '40',
-            }}
-          >
-            X
-          </Button>
           {/* <Button onClick={() => handleClose(agreeFn())}>확인</Button> */}
         </DialogActions>
         <DialogTitle>

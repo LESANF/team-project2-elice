@@ -1,17 +1,24 @@
+import TextField from '@mui/material/TextField';
+import { styled as styledMui } from '@mui/material/styles';
 import styled from 'styled-components';
+
+interface IInput {
+  state?: string;
+}
 
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Noto Sans KR', 'Noto Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 35px;
+  color: #2a2a2a;
   text-align: center;
-  font-size: 25px;
-  font-weight: 800;
   margin-bottom: 30px;
-  img {
-    height: 100px;
-    margin: 0px auto;
-    margin-bottom: 20px;
-  }
 `;
 export const Form = styled.form`
   /* border: 1px solid pink; */
@@ -40,15 +47,18 @@ export const Form = styled.form`
 `;
 
 export const Button = styled.button`
-  margin-top: auto;
+  margin-top: 70px;
   width: 100%;
   height: 80px;
-  border-radius: 40px;
+  border-radius: 12px;
   border: 0px;
   background: #07b8b8;
   font-size: 35px;
   color: white;
-  font-weight: 400;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  cursor: pointer;
   :hover {
     background-color: #00a8a7;
   }
@@ -56,4 +66,54 @@ export const Button = styled.button`
     margin-top: 20px;
     text-align: center;
   }
+`;
+
+export const Input = styledMui(TextField)<IInput>`
+font-family: 'Noto Sans', 'Noto Sans KR';
+font-style: normal;
+font-weight: 600;
+font-size: 25px;
+border-radius: 8px;
+padding: 2px 2px;
+line-height: 27px;
+text-align: center;
+color: #5f5f5f;
+& .MuiInputBase-input{
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  color: #2a2a2a;
+  padding-left:20px;
+}
+& label {
+  color:${(props) => (props.state ? '#FF9E44' : '#7f7676')};
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 34px;
+  text-align: center;
+}
+&:hover label{
+  color:${(props) => (props.state ? '#FF9E44' : '#07b8b8')};
+}
+& label.Mui-focused {
+  color: ${(props) => (props.state ? '#FF9E44' : '#07b8b8')};
+}
+& .MuiOutlinedInput-root {
+  border-radius:10px;
+  & fieldset{
+    border: ${(props) =>
+      props.state ? '3px solid #FF9E44' : '2px solid #ccc'};
+  }
+  &:hover fieldset {
+    border: ${(props) =>
+      props.state ? '3px solid #FF9E44' : '3px solid #07b8b8'};
+  }
+  &.Mui-focused fieldset{
+    border: ${(props) =>
+      props.state ? '3px solid #FF9E44' : '3px solid #07b8b8'};
+  }
+}
 `;
