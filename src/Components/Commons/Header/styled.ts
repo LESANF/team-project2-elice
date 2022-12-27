@@ -8,10 +8,10 @@ interface IMenuItem {
 }
 
 interface IButton {
-  textColor?: string;
-  hoverTextColor?: string;
-  backgroundColor?: string;
-  hoverBackgroundColor?: string;
+  textcolor?: string;
+  hovertextcolor?: string;
+  backgroundcolor?: string;
+  hoverbackgroundcolor?: string;
 }
 
 interface IStyledP {
@@ -48,12 +48,12 @@ export const MuiButton = styledMui(Button)<IButton>`
   font-weight: 500;
   font-size:18px;
   line-height: 23px;
-  color: ${(props) => props.textColor};
-  background-color:${(props) => props.backgroundColor};
+  color: ${(props) => props.textcolor};
+  background-color:${(props) => props.backgroundcolor};
   :hover{
     font-weight: 600;
-    color:${(props) => props.hoverTextColor};
-    background-color:${(props) => props.hoverBackgroundColor};
+    color:${(props) => props.hovertextcolor};
+    background-color:${(props) => props.hoverbackgroundcolor};
 `;
 
 export const Logo = styled.div`

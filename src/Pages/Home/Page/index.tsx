@@ -38,7 +38,7 @@ const Intro = () => {
 			  }`}
       </style>
       <S.Container className="Intro" fontFamily="Segoe UI">
-        <S.Section backgroundColor="#ffffff">
+        <S.Section backgroundcolor="#ffffff">
           <S.Header>
             <Logo
               style={{ cursor: 'pointer' }}
@@ -85,6 +85,7 @@ const Intro = () => {
                 if (idx === 3) offset = 75 + 65 + 50;
                 return (
                   <motion.div
+                    key={key}
                     variants={motionVariants}
                     style={{
                       position: 'relative',
@@ -141,7 +142,7 @@ const Intro = () => {
             />
           </div>
         </S.Section>
-        <S.Section2 backgroundColor="#FFE696">
+        <S.Section2 backgroundcolor="#FFE696">
           <S.Body2>
             <S.StyledH1>
               <p style={{ color: '#C52424' }}>지도로 주변 명소 검색</p>
@@ -161,8 +162,8 @@ const Intro = () => {
               친구들과 공유해 보세요.
             </pre>
             <S.NavigateButton
-              backgroundColor="#C52424"
-              hoverBackgroundColor="#A51313"
+              backgroundcolor="#C52424"
+              hoverbackgroundcolor="#A51313"
               onClick={() => {
                 navigate('/menu/maps');
               }}
@@ -189,7 +190,7 @@ const Intro = () => {
             />
           </div>
         </S.Section2>
-        <S.Section2 backgroundColor="#AAE0E1">
+        <S.Section2 backgroundcolor="#AAE0E1">
           <div
             style={{
               width: '713.59px',
@@ -229,8 +230,8 @@ const Intro = () => {
               좋아요를 남겨 언제든 다시 볼 수 있어요.
             </pre>
             <S.NavigateButton
-              backgroundColor="#0D61AE"
-              hoverBackgroundColor="#044F94"
+              backgroundcolor="#0D61AE"
+              hoverbackgroundcolor="#044F94"
               onClick={() => {
                 navigate('/menu/photolists');
               }}
@@ -239,7 +240,7 @@ const Intro = () => {
             </S.NavigateButton>
           </S.Body2>
         </S.Section2>
-        <S.Section2 backgroundColor="#FFFFFF">
+        <S.Section2 backgroundcolor="#FFFFFF">
           <CubeContainer />
         </S.Section2>
       </S.Container>

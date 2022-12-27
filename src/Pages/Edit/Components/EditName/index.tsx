@@ -105,8 +105,8 @@ const EditName = ({ setMode }: IEditNameProps) => {
       <div>
         <MuiButton
           style={{ width: '93px', marginTop: '22px;' }}
-          textColor="#07B8B8"
-          hoverBackgroundColor="#f9f9f9"
+          textcolor="#07B8B8"
+          hoverbackgroundcolor="#f9f9f9"
           onClick={() => {
             setMode('DEFAULT');
           }}
@@ -115,9 +115,9 @@ const EditName = ({ setMode }: IEditNameProps) => {
         </MuiButton>
         <MuiButton
           style={{ marginLeft: '24px' }}
-          textColor="#ffffff"
-          backgroundColor="#07B8B8"
-          hoverBackgroundColor="#00A8A7"
+          textcolor="#ffffff"
+          backgroundcolor="#07B8B8"
+          hoverbackgroundcolor="#00A8A7"
           onClick={clickEditHandler}
         >
           수정 완료
