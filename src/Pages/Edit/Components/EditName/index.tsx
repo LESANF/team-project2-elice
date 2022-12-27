@@ -1,15 +1,13 @@
 import { motion } from 'framer-motion';
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
 
+import { accessClient } from '../../../../axiosInstance';
 import * as S from './styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
 import { ReactComponent as DefaultProfile } from '../../assets/defaultProfile.svg';
 import { warningNickname, state } from '../../../Join/Utils';
-import { LOCAL_URL } from '../../Utils';
 import { TOKEN } from '../../../Join/Atoms';
 import HelperText from '../HelperText';
 
@@ -18,8 +16,6 @@ interface IEditNameProps {
 }
 
 const EditName = ({ setMode }: IEditNameProps) => {
-  console.log('EditName');
-  const navigate = useNavigate();
   const [token, setToken] = useRecoilState(TOKEN);
   const [nickName, setnickName] = useState('');
   const [nickNamestate, setnickNameState] = useState<string>(state.NORMAL);
@@ -48,15 +44,9 @@ const EditName = ({ setMode }: IEditNameProps) => {
       return;
     }
     try {
-      const result = await axios.patch(
-        `${LOCAL_URL}/users/nickname`,
-        {
-          nickname: nickName,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const result = await accessClient(token).patch(`/users/nickname`, {
+        nickname: nickName,
+      });
       setnickNameState(state.SUCCESS);
       setFlag(true);
     } catch (err: any) {

@@ -1,31 +1,22 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
-import { motion } from 'framer-motion';
 import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import HelperText from '../HelperText';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
 import * as S from './styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import { TOKEN } from '../../../Join/Atoms';
 
-import { ReactComponent as DefaultProfile } from '../../assets/defaultProfile.svg';
 import { validatePw, warningPw, state } from '../../../Join/Utils';
-import { LOCAL_URL } from '../../Utils';
+import { accessClient } from '../../../../axiosInstance';
 
 interface IEditPwProps {
   setMode?: any;
 }
 
-const EditPw = ({ setMode }: IEditPwProps, { userdata }: any) => {
-  const navigate = useNavigate();
-
+const EditPw = ({ setMode }: IEditPwProps) => {
   const [token, setToken] = useRecoilState(TOKEN);
-
   const [pw, setPw] = useState('');
   const [pwstate, setPwState] = useState(state.NORMAL);
   const [pwconfirm, setPwConfirm] = useState('');
@@ -37,19 +28,16 @@ const EditPw = ({ setMode }: IEditPwProps, { userdata }: any) => {
   //  새 비번 input onChange
   const changePwHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
-    // console.log(pwInput);
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
       setPwState(state.SUCCESS);
       setPw(pwInput);
     }
-    // if (!pwInput) setPwState(state.NORMAL);
   };
   //  새 비번 확인 input onChange
   const changePwConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwconfirmInput = e.target.value;
-    // console.log(pwconfirmInput, pw);
     console.log(warningPw(pwconfirmstate));
     if (pwconfirmInput !== pw) {
       setPwConfirmState(state.NONCONFIRMERROR);
@@ -63,15 +51,9 @@ const EditPw = ({ setMode }: IEditPwProps, { userdata }: any) => {
   // 비밀번호 변경 버튼
   const clickEditPwHandler = async () => {
     if (pwstate === state.SUCCESS && pwconfirmstate === state.SUCCESS) {
-      const result = await axios.patch(
-        `${LOCAL_URL}/users/password`,
-        {
-          password: pw,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const result = await accessClient(token).patch(`users/password`, {
+        password: pw,
+      });
 
       console.log(result);
       setEditPwState(state.SUCCESS);
@@ -124,16 +106,6 @@ const EditPw = ({ setMode }: IEditPwProps, { userdata }: any) => {
   };
   return (
     <S.Container>
-      {/* <motion.div layoutId="avatar">
-        <DefaultProfile />
-      </motion.div>
-      <motion.div layoutId="nickname">
-        <S.NickName>유저닉네임</S.NickName>
-      </motion.div>
-      <motion.div layoutId="email">
-        <S.Email>photolog@naver.com</S.Email>
-      </motion.div> */}
-
       <div style={{ height: '3vh' }} />
 
       <FormControl

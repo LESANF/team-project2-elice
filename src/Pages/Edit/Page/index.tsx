@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 import * as S from './styled';
-import EditProfileTap from '../Components/EditProfileTap';
-
 import Default from '../Components/Default';
 import EditName from '../Components/EditName';
 import EditPw from '../Components/EditPw';
@@ -12,27 +10,14 @@ import { HeaderForPost } from '../../../Components/Commons/Header';
 import { ReactComponent as DefaultProfile } from '../assets/defaultProfile.svg';
 
 interface IState {
-  MYPROFILE: string;
-  EDITPROFILE: string;
   EDITPW: string;
   EDITNAME: string;
   DEFAULT: string;
 }
 const state: IState = {
-  MYPROFILE: 'MYPROFILE',
-  EDITPROFILE: 'EDITPROFILE',
   EDITPW: 'EDITPW',
   EDITNAME: 'EDITNAME',
   DEFAULT: 'DEFAULT',
-};
-
-interface IStateTap {
-  [index: string]: JSX.Element;
-  EDITPROFILE: JSX.Element;
-}
-
-const stateTap: IStateTap = {
-  EDITPROFILE: <EditProfileTap />,
 };
 
 const Edit = () => {

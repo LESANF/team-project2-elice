@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
-import axios from 'axios';
 
 import { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { LOCAL_URL, getUser, getPresignedURL } from '../../Utils';
+import { getUser } from '../../Utils';
 
 import CustomizedTooltips from '../Tooltip/tooltip';
 import * as S from './styled';
 import defaultProfile from '../../assets/defaultProfile.svg';
 import { TOKEN } from '../../../Join/Atoms';
+import { accessClient, getPresignedURL } from '../../../../axiosInstance';
 
 interface IDefaultProps {
   setMode?: any;
@@ -34,16 +34,10 @@ const Default = ({ setMode }: IDefaultProps) => {
       setImage(e.target.files[0]);
       const getS3UploadImg = await getPresignedURL(e.target.files[0]);
       console.log('getS3UploadImg', getS3UploadImg);
-      axios
-        .patch(
-          `${LOCAL_URL}/profiles/image/${id}`,
-          {
-            ImageUrlId: getS3UploadImg,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        )
+      accessClient(token)
+        .patch(`/profiles/image/${id}`, {
+          ImageUrlId: getS3UploadImg,
+        })
         .then((res) => console.log('result', res))
         .catch((err) => console.log('err', err));
     } else {
