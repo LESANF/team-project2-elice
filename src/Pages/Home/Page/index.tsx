@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './styled';
 import { useGetData } from '../hooks/useGetData';
 import { disableScroll, removeDisableScroll } from '../Utils';
@@ -8,12 +8,19 @@ import { ReactComponent as Logo } from '../assets/logo.svg';
 import MapDemo from '../assets/map.gif';
 import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
+import { DialogTest } from '../../Join/Components/LoginDialog/index';
 
 const Intro = () => {
-  // useEffect(() => {
-  //   disableScroll();
-  //   return removeDisableScroll;
-  // }, []);
+  const [flag, setFlag] = useState(false);
+  const disAgreeFn = () => {
+    console.log('취소');
+    setFlag(false);
+    return flag;
+  };
+  useEffect(() => {
+    disableScroll();
+    return removeDisableScroll;
+  }, []);
   const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
@@ -25,25 +32,25 @@ const Intro = () => {
   };
   return (
     <>
-      {/* <style id="scroll-properties">
+      <style id="scroll-properties">
         {`::-webkit-scrollbar {
           display: none;
 			  }`}
-      </style> */}
+      </style>
       <S.Container className="Intro" fontFamily="Segoe UI">
         <S.Section backgroundColor="#ffffff">
           <S.Header>
             <Logo
-            // style={{ cursor: 'pointer' }}
-            // onClick={() => {
-            //   navigate('/menu/maps');
-            // }}
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                navigate('/menu/maps');
+              }}
             />
             <div style={{ display: 'flex', gap: '10px' }}>
               <S.PrimaryButton
                 fontSize="20px"
                 onClick={() => {
-                  navigate('/join');
+                  setFlag(true);
                 }}
               >
                 로그인
@@ -236,6 +243,15 @@ const Intro = () => {
           <CubeContainer />
         </S.Section2>
       </S.Container>
+      <DialogTest
+        openFlag={flag}
+        title="test"
+        content="test"
+        agreeFn={() => {}}
+        disAgreeFn={disAgreeFn}
+        sizeW="600px"
+        sizeH="800px"
+      />
     </>
   );
 };
