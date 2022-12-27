@@ -33,7 +33,7 @@ export const HeaderContainer = styled.div<IHeaderContainer>`
   position: fixed;
   left: -${(props) => props.scrollX}px;
   z-index: 12;
-  background-color: #ffa362;
+  background-color: #ffffff;
   transition: ${(props) => (props.animationOff ? 'null' : '500ms all')};
   &.up {
     transform: translateY(-77px);

@@ -78,6 +78,7 @@ const LoginContent = (): JSX.Element => {
     } else {
       setEmailState(state.SUCCESS);
     }
+    if (emailInput === '') setEmailState(state.NORMAL);
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage('');
@@ -91,6 +92,7 @@ const LoginContent = (): JSX.Element => {
     } else {
       setPwState(state.SUCCESS);
     }
+    if (pwInput === '') setPwState(state.NORMAL);
   };
   //  로그인 button
   const clickLoginHandler = async () => {
@@ -104,8 +106,9 @@ const LoginContent = (): JSX.Element => {
         password: pw,
       });
       setLoginState(state.SUCCESS);
-      setToken(result.data.token);
+      setToken(result.data.data);
       setFlag(false);
+      navigate('/menu/maps');
     } catch (err: any) {
       console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
@@ -116,12 +119,20 @@ const LoginContent = (): JSX.Element => {
     }
   };
   return (
-    <>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '10px',
+      }}
+    >
       <FormControl
         sx={{
-          width: '30ch',
-          height: '70px',
+          width: '42ch',
+          height: '100px',
         }}
+        style={{ marginTop: '10px' }}
       >
         <S.Input
           margin="normal"
@@ -133,38 +144,27 @@ const LoginContent = (): JSX.Element => {
         />
         <HelperText helper={warningEmail(emailstate)} content={email} />
       </FormControl>
-      <S.Form>
-        <div
-          placeholder="이메일"
+      <FormControl
+        sx={{
+          width: '42ch',
+          height: '100px',
+        }}
+        style={{ marginTop: '10px' }}
+      >
+        <S.Input
+          type="password"
+          margin="normal"
+          label="비밀번호"
+          fullWidth
           className="title"
-          onChange={changeEmailHandler}
-        >
-          이메일
-        </div>
-        <div className="body">
-          <input
-            placeholder="이메일"
-            onChange={changeEmailHandler}
-            value={email}
-          />
-          <div>{warningEmail(emailstate)}</div>
-        </div>
-      </S.Form>
-      <S.Form>
-        <div className="title">비밀번호</div>
-        <div className="body">
-          <input
-            type="password"
-            placeholder="비밀번호"
-            onChange={changePwHandler}
-            value={pw}
-          />
-          <div>{warningPw(pwstate)}</div>
-        </div>
-      </S.Form>
+          state={warningPw(pwstate)}
+          onChange={changePwHandler}
+        />
+        <HelperText helper={warningPw(pwstate)} content={pw} />
+      </FormControl>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
       <div>{errorMessage}</div>
-    </>
+    </div>
   );
 };
 
@@ -175,8 +175,8 @@ export const DialogTest = (props: IDialogProps) => {
     sizeW: string | undefined;
     sizeH: string | undefined;
   }>({
-    sizeW: '230px',
-    sizeH: '170px',
+    sizeW: '500px',
+    sizeH: '600px',
   });
 
   useEffect(() => {
