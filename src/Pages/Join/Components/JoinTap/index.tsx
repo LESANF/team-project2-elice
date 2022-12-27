@@ -85,6 +85,11 @@ const JoinTap = () => {
         password: pw,
       });
       console.log(result);
+      const loginresult = await client.post(`/auth/login`, {
+        email,
+        password: pw,
+      });
+      setToken(loginresult.data.data);
       setJoinState(state.SUCCESS);
       setFlag(true);
     } catch (err: any) {
@@ -97,15 +102,15 @@ const JoinTap = () => {
   const agreeFn = async () => {
     console.log('확인');
     setFlag(false);
-    if (joinstate === state.SUCCESS) {
-      //  setMode('login')
-      const result = await client.post(`/auth/login`, {
-        email,
-        password: pw,
-      });
-      setToken(result.data.data);
-      navigate('/menu/maps');
-    }
+    if (joinstate === state.SUCCESS) navigate('/menu/maps');
+    // {
+    //   const result = await client.post(`/auth/login`, {
+    //     email,
+    //     password: pw,
+    //   });
+    //   setToken(result.data.data);
+    // }
+    navigate('/menu/maps');
     return flag;
   };
 
@@ -137,12 +142,14 @@ const JoinTap = () => {
         </div>
       </S.Form>
       <S.Button onClick={clickJoinHandler}>회원가입</S.Button>
-      <IsJoinDialog
-        flag={flag}
-        tapstate={joinstate}
-        errorMessage={errorMessage}
-        agreeFn={agreeFn}
-      />
+      {flag ? (
+        <IsJoinDialog
+          flag={flag}
+          tapstate={joinstate}
+          errorMessage={errorMessage}
+          agreeFn={agreeFn}
+        />
+      ) : null}
     </>
   );
 };
