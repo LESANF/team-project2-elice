@@ -4,6 +4,8 @@ import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import * as P from './styled';
+import getRandomArbitrary from '../utils/getRandomArbitrary';
+import getRandomHashtags from '../utils/getRandomHashtags';
 
 const pictures = [
   {
@@ -134,13 +136,24 @@ const PhotoLists = () => {
 
   const getItems = useCallback(async () => {
     setLoading(true);
-    // await axios ... 로 데이터 응답 res 받아서 아래 "pictures"에 넣어준다.
+    // - API 요청 로직 -
+    // 1. 한번에 30개 데이터 받아오기 (최신게시글)
+    // 2. 받아온 데이터가 30개 미만이면 더이상 요청하지 않기
+    // 3. 받아온 데이터가 30개 이상이면 받아온 데이터의 마지막 postID를 넣어 다시 요청
     await axios.get(`http://34.64.34.184:5001/posts`).then((res) => {
       console.log(res);
     });
+    // await axios ... 로 데이터 응답 res 받아서 아래 "pictures"에 넣어준다.
     setItems((prevState) => [...prevState, pictures]);
     setLoading(false);
   }, [page]);
+
+  // 새로고침 시 화면 맨 위로. (화면 아래에서 새로고침 했을 때 한꺼번에 API요청 여러번 하는 것 방지)
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      window.scrollTo(0, 0);
+    };
+  }, []);
 
   useEffect(() => {
     getItems();
@@ -152,8 +165,45 @@ const PhotoLists = () => {
     }
   }, [inView, loading]);
 
+  // 임시 버튼을 위한 핸들러
+  // 데이터를 200개 쯤 넣을 것임
+  // 위치 데이터는 특정 범위를 줘서 랜덤으로 넣을 것임.
+  // sw: {
+  //   lat: 37.48970512,
+  //   lng: 126.72134047,
+  // },
+  // ne: {
+  //   lat: 37.49551104,
+  //   lng: 126.73862053,
+  // },
+  // 이 사이 위치를 랜덤으로.
+  const handleTempPostButton = async () => {
+    const data = {
+      title: '자동화제목',
+      content: '자동화컨텐츠',
+      imageUrlId: 1,
+      lensId: 254,
+      cameraId: 292,
+      latitude: getRandomArbitrary(37.48970512, 37.49551104),
+      longitude: getRandomArbitrary(126.72134047, 126.73862053),
+      locationInfo: '자동화위치',
+      takenAt: new Date().toISOString(),
+      hashtags: getRandomHashtags(),
+    };
+    // data를 json화 해서 보내기
+    try {
+      const response = await axios.post(`http://34.64.34.184:5001/posts`, data);
+      if (response.statusText === 'OK') {
+        console.log('post 성공');
+      }
+    } catch (err) {
+      console.error('api요청에러: ', err);
+    }
+  };
+
   return (
     <P.Container>
+      <button onClick={handleTempPostButton}>post 밀어넣기 임시 버튼</button>
       <ImageList variant="masonry" cols={6} gap={16}>
         {items.map((item: any): any => (
           <React.Fragment key={uuidv4()}>
