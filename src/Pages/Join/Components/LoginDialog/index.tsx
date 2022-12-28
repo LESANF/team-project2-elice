@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import FormControl from '@mui/material/FormControl';
 import { client } from '../../../../axiosInstance';
@@ -55,6 +55,8 @@ const LoginTitle = (): JSX.Element => (
 );
 const LoginContent = (): JSX.Element => {
   const navigate = useNavigate();
+  const url = useParams();
+
   const [token, setToken] = useRecoilState(TOKEN);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
@@ -108,7 +110,12 @@ const LoginContent = (): JSX.Element => {
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
       setFlag(false);
-      navigate('/menu/maps');
+      console.log('url', window.location.pathname);
+      navigate(
+        window.location.pathname === `/`
+          ? '/menu/maps'
+          : window.location.pathname,
+      ); //   인트로만 /menu/maps로 갑니다
     } catch (err: any) {
       console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
