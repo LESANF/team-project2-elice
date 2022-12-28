@@ -77,7 +77,7 @@ const MyPage = () => {
 
       <S.PhotoContainer>
         {stateTap[mode]}
-        <Nothing />
+        {/* <Nothing /> */}
       </S.PhotoContainer>
     </>
   );
