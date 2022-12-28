@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -35,8 +36,6 @@ const PhotoLists = () => {
           response = await axios.get(
             `${URL}/posts?quantity=${quantity}&endPostId=${endPostId}`,
           );
-        } else {
-          console.log('페이지 끝');
         }
         const dataLength = response?.data.data.length;
         if (dataLength < quantity) {
@@ -52,7 +51,6 @@ const PhotoLists = () => {
         console.error('api요청에러: ', err);
       }
     }
-    console.log('items: ', items);
     setLoading(false);
   }, [page]);
 
@@ -132,7 +130,15 @@ const PhotoLists = () => {
                   srcSet={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   alt={picture.title}
                   loading="lazy"
-                  style={{ borderRadius: 8 }}
+                  style={{
+                    borderRadius: 8,
+                  }}
+                  onClick={() => {
+                    console.log(
+                      `여기서 ${picture.id}번 포스트 상세 페이지로 이동`,
+                    );
+                  }}
+                  role="presentation"
                 />
               </ImageListItem>
             ))}
