@@ -8,6 +8,7 @@ import { BsPinMapFill } from 'react-icons/bs';
 import { RiCameraLensFill } from 'react-icons/ri';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 import Editor from '../../../Components/Commons/Editor';
 import TagToolTip from '../Utils/Tooltip';
@@ -50,7 +51,9 @@ interface IPostFormData {
 }
 
 const PostPhoto = () => {
-  const [token, setToken] = useRecoilState(TOKEN);
+  const token = useRecoilState(TOKEN)[0];
+  console.log(token);
+  const navigate = useNavigate();
 
   const titleRef = useRef<any>(null);
   const cameraRef = useRef<HTMLSelectElement>(null);
@@ -96,7 +99,6 @@ const PostPhoto = () => {
   const agreeFn = () => {
     const getlensId = () => {
       if (!lensMdRef.current) return null;
-
       return +lensMdRef.current!.value !== null
         ? +lensMdRef.current!.value
         : null;
@@ -108,6 +110,7 @@ const PostPhoto = () => {
       content: htmlContent,
       imageUrlId: imgUrlId,
       lensId,
+      cameraId: cameraMdRef.current?.value,
       latitude: photoMetaData!.latitude,
       longitude: photoMetaData!.longitude,
       locationInfo: mapDesRef.current?.value,
@@ -138,6 +141,7 @@ const PostPhoto = () => {
     fetchPost(sendData);
     console.log(sendData);
     setFlag(false);
+    navigate('/menu/photolists');
     return flag;
   };
 
