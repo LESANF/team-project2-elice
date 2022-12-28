@@ -65,6 +65,7 @@ const LoginTap = () => {
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
       console.log('토큰', result.data.data, token);
+
       setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);
@@ -106,12 +107,14 @@ const LoginTap = () => {
         </div>
       </S.Form>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
-      <IsLoginDialog
-        flag={flag}
-        tapstate={loginState}
-        errorMessage={errorMessage}
-        agreeFn={agreeFn}
-      />
+      {flag ? (
+        <IsLoginDialog
+          flag={flag}
+          tapstate={loginState}
+          errorMessage={errorMessage}
+          agreeFn={agreeFn}
+        />
+      ) : null}
     </>
   );
 };

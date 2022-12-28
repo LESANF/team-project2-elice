@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { accessClient } from '../../../../axiosInstance';
 import * as S from './styled';
+import { Profile } from '../Default/styled';
 import DialogTest from '../../../../Components/Commons/Dialog';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
 import defaultProfile from '../../assets/defaultProfile.svg';
 import { warningNickname, state } from '../../../Join/Utils';
 import { TOKEN } from '../../../Join/Atoms';
 import HelperText from '../HelperText';
+import { getUser } from '../../Utils';
 
 interface IEditNameProps {
   setMode?: any;
@@ -22,6 +24,11 @@ const EditName = ({ setMode }: IEditNameProps) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [Image, setImage] = useState(defaultProfile);
   const [flag, setFlag] = useState<boolean>(false);
+  useEffect(() => {
+    getUser(token).then((res) => {
+      setImage(res.image_url || defaultProfile);
+    });
+  }, []);
 
   //  닉네임 input onChange
   const changenickNameHandler = async (
@@ -104,7 +111,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
 
       <div>
         <MuiButton
-          style={{ width: '93px', marginTop: '22px;' }}
+          style={{ width: '93px', marginTop: '22px' }}
           textcolor="#07B8B8"
           hoverbackgroundcolor="#f9f9f9"
           onClick={() => {

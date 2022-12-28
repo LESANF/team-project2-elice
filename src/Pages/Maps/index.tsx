@@ -316,7 +316,6 @@ const Maps = () => {
                 picture.latlng.lat < boundaryLocation?.ne.lat &&
                 picture.latlng.lat < boundaryLocation?.ne.lng;
               if (isBoundary) {
-                console.log('마커 리랜더링: ', picture.title);
                 return (
                   <CustomOverlayContainer
                     key={`${picture.title}-${picture.latlng}`}

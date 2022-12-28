@@ -8,6 +8,9 @@ import { ReactComponent as ArrowIcon } from './arrowdown.svg';
 import avatar from './sampleAvatar.png';
 import { DialogTest } from '../../../Pages/Join/Components/LoginDialog/index';
 import { TOKEN } from '../../../Pages/Join/Atoms';
+import { getUser } from '../../../Pages/Edit/Utils';
+import defaultProfile from '../../../Pages/Edit/assets/defaultProfile.svg';
+import { client } from '../../../axiosInstance';
 
 const HeaderNonLogin = () => {
   const [s, setS] = useState({});
@@ -34,7 +37,7 @@ const HeaderNonLogin = () => {
         <S.Logo>
           <Logo
             onClick={() => {
-              navigate('/menu/photoliststs');
+              navigate('/menu/photolists');
             }}
           />
         </S.Logo>
@@ -114,9 +117,26 @@ const HeaderNonLogin = () => {
 };
 
 const HeaderWithProfile = () => {
+  const [token, setToken] = useRecoilState(TOKEN);
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
+  const [Image, setImage] = useState('');
   const [isDropdownOn, setIsDropdownOn] = useState(false);
   const navigate = useNavigate();
   const { pathname: curLocation } = useLocation();
+
+  useEffect(() => {
+    getUser(token).then((res) => {
+      setImage(res.image_url || defaultProfile);
+      setNickname(res.profile_nickname);
+      setEmail(res.user_email);
+    });
+  }, []);
+
+  const logoutHandler = () => {
+    client.get(`auth/logout`).then((res) => console.log('logout', res));
+    setToken(null);
+  };
   return (
     <>
       <S.HeaderContainer>
@@ -180,7 +200,7 @@ const HeaderWithProfile = () => {
               setIsDropdownOn((c) => !c);
             }}
           >
-            <S.ProfileImage src={avatar} alt="프사" />
+            <S.ProfileImage src={Image} alt="프사" />
             <ArrowIcon />
           </S.ProfileContainer>
           {isDropdownOn && (
@@ -188,7 +208,7 @@ const HeaderWithProfile = () => {
               <S.Dropdown>
                 <S.ProfileImage
                   style={{ scale: '3', marginBottom: '50px' }}
-                  src={avatar}
+                  src={Image}
                   alt="프사"
                 />
                 <S.StyledP
@@ -196,26 +216,18 @@ const HeaderWithProfile = () => {
                   fontSize="20px"
                   fontWeight="600"
                 >
-                  유저닉네임
+                  {nickname}
                 </S.StyledP>
                 <S.StyledP style={{ marginBottom: '40px' }} fontSize="18px">
-                  photolog@naver.com
+                  {email}
                 </S.StyledP>
-                <S.TextButton
-                  onClick={() => {
-                    navigate('/mypage');
-                  }}
-                >
-                  내 페이지
-                </S.TextButton>
-                <S.TextButton
-                  onClick={() => {
-                    navigate('/edit');
-                  }}
-                >
-                  계정 관리
-                </S.TextButton>
-                <S.TextButton>로그아웃</S.TextButton>
+                <Link to="/mypage">
+                  <S.TextButton>내 페이지</S.TextButton>
+                </Link>
+                <Link to="/edit">
+                  <S.TextButton>계정 관리</S.TextButton>
+                </Link>
+                <S.TextButton onClick={logoutHandler}>로그아웃</S.TextButton>
               </S.Dropdown>
             </S.DropdownContainer>
           )}

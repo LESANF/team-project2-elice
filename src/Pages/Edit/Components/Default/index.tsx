@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { getUser } from '../../Utils';
 
@@ -8,7 +8,11 @@ import CustomizedTooltips from '../Tooltip/tooltip';
 import * as S from './styled';
 import defaultProfile from '../../assets/defaultProfile.svg';
 import { TOKEN } from '../../../Join/Atoms';
-import { accessClient, getPresignedURL } from '../../../../axiosInstance';
+import {
+  accessClient,
+  client,
+  getprofilePresignedURL,
+} from '../../../../axiosInstance';
 
 interface IDefaultProps {
   setMode?: any;
@@ -16,41 +20,37 @@ interface IDefaultProps {
 }
 const Default = ({ setMode }: IDefaultProps) => {
   const [token, setToken] = useRecoilState(TOKEN);
-  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [Image, setImage] = useState(defaultProfile);
+  const [Image, setImage] = useState('');
 
   const fileInput = useRef<any>(null);
-
-  getUser(token).then((res) => {
-    setId(res.data.id);
-    setName(res.data.id);
-    setEmail(res.data.email);
-  }); //    일단 id로
+  useEffect(() => {
+    getUser(token).then((res) => {
+      setImage(res.image_url || defaultProfile);
+      setName(res.profile_nickname);
+      setEmail(res.user_email);
+    });
+  }, []);
 
   const changeHandler = async (e: any) => {
     if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-      const getS3UploadImg = await getPresignedURL(e.target.files[0]);
-      console.log('getS3UploadImg', getS3UploadImg);
-      accessClient(token)
-        .patch(`/profiles/image/${id}`, {
-          ImageUrlId: getS3UploadImg,
+      const getS3UploadImg = await getprofilePresignedURL(e.target.files[0]);
+      console.log('getprofilePresignedURL', getS3UploadImg);
+      const resultId = await client
+        .post(`photos`, {
+          url: getS3UploadImg,
         })
+        .then((res) => res.data.data.id);
+
+      accessClient(token)
+        .put(`profiles/image/${resultId}`)
         .then((res) => console.log('result', res))
         .catch((err) => console.log('err', err));
+      setImage(getS3UploadImg);
     } else {
       setImage(defaultProfile);
-      return;
     }
-    const reader: any = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
   };
 
   return (

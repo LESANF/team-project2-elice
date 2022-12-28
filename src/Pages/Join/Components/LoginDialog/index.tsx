@@ -39,7 +39,7 @@ const Transition = forwardRef(
 );
 
 interface IDialogProps {
-  openFlag: boolean;
+  openFlag: any;
   title: string | JSX.Element;
   content: string | JSX.Element;
   agreeFn(): any;
@@ -163,6 +163,22 @@ const LoginContent = (): JSX.Element => {
       </FormControl>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
       <div>{errorMessage}</div>
+      <div style={{ marginTop: '60px', display: 'flex', gap: '50px' }}>
+        <S.StyledP
+          onClick={() => {
+            navigate('/join');
+          }}
+        >
+          회원가입
+        </S.StyledP>
+        <S.StyledP
+          onClick={() => {
+            navigate('/join');
+          }}
+        >
+          비밀번호 찾기
+        </S.StyledP>
+      </div>
     </div>
   );
 };
@@ -236,31 +252,22 @@ export const DialogTest = (props: IDialogProps) => {
 };
 
 const LoginDialog = () => {
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState(true);
   const disAgreeFn = () => {
     console.log('취소');
     setFlag(false);
     return flag;
   };
   return (
-    <>
-      <button
-        onClick={() => {
-          setFlag(true);
-        }}
-      >
-        testloginDialog
-      </button>
-      <DialogTest
-        openFlag={flag}
-        title="test"
-        content="test"
-        agreeFn={() => {}}
-        disAgreeFn={disAgreeFn}
-        sizeW="600px"
-        sizeH="800px"
-      />
-    </>
+    <DialogTest
+      openFlag={flag}
+      title="test"
+      content="test"
+      agreeFn={() => {}}
+      disAgreeFn={disAgreeFn}
+      sizeW="600px"
+      sizeH="800px"
+    />
   );
 };
 export default LoginDialog;

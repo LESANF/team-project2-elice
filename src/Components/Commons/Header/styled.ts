@@ -31,6 +31,7 @@ export const HeaderContainer = styled.div<IHeaderContainer>`
   display: flex;
   align-items: center;
   position: fixed;
+  top: 0px;
   left: -${(props) => props.scrollX}px;
   z-index: 12;
   background-color: #ffffff;
