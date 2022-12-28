@@ -11,7 +11,7 @@ import defaultProfile from '../../assets/defaultProfile.svg';
 import { warningNickname, state } from '../../../Join/Utils';
 import { TOKEN } from '../../../Join/Atoms';
 import HelperText from '../HelperText';
-import { getUser } from '../../Utils';
+import { getUser, IsEditNameDialog } from '../../Utils';
 
 interface IEditNameProps {
   setMode?: any;
@@ -70,35 +70,6 @@ const EditName = ({ setMode }: IEditNameProps) => {
     return flag;
   };
 
-  const disAgreeFn = () => {
-    console.log('취소');
-    setFlag(false);
-    setMode('DEFAULT');
-    return flag;
-  };
-  const dialog = (): JSX.Element => {
-    let title = '';
-    let content = '';
-    if (nickNamestate === state.SUCCESS) {
-      [title, content] = [
-        `닉네임 수정 성공`,
-        `닉네임이 정상적으로 이루어졌습니다`,
-      ];
-    } else {
-      [title, content] = [`닉네임 수정 오류`, errorMessage];
-    }
-    return (
-      <DialogTest
-        openFlag={flag}
-        title={title}
-        content={content}
-        agreeFn={agreeFn}
-        disAgreeFn={disAgreeFn}
-        sizeW="700px"
-        sizeH="300px"
-      />
-    );
-  };
   return (
     <S.Container>
       {/* <motion.div layoutId="avatar"> */}
@@ -131,7 +102,12 @@ const EditName = ({ setMode }: IEditNameProps) => {
           수정 완료
         </MuiButton>
       </div>
-      {dialog()}
+      <IsEditNameDialog
+        flag={flag}
+        tapstate={nickNamestate}
+        errorMessage={errorMessage}
+        agreeFn={agreeFn}
+      />
     </S.Container>
   );
 };

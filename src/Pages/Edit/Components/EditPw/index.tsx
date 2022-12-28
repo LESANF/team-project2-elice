@@ -10,6 +10,7 @@ import { TOKEN } from '../../../Join/Atoms';
 
 import { validatePw, warningPw, state } from '../../../Join/Utils';
 import { accessClient } from '../../../../axiosInstance';
+import { IsEditPwDialog } from '../../Utils/index';
 
 interface IEditPwProps {
   setMode?: any;
@@ -71,39 +72,6 @@ const EditPw = ({ setMode }: IEditPwProps) => {
     return flag;
   };
 
-  const disAgreeFn = () => {
-    console.log('취소');
-    setFlag(false);
-    setMode('DEFAULT');
-    return flag;
-  };
-  const dialog = (): JSX.Element => {
-    let title = '';
-    let content = '';
-    if (editpwstate === state.SUCCESS) {
-      [title, content] = [
-        `비밀번호 변경`,
-        `비밀번호 변경이 정상적으로 이루어졌습니다`,
-      ];
-    } else {
-      //  일단 이렇게 해둠
-      [title, content] = [
-        `비밀번호 변경 오류`,
-        `비밀번호가 정상적으로 변경되지 않았습니다.`,
-      ];
-    }
-    return (
-      <DialogTest
-        openFlag={flag}
-        title={title}
-        content={content}
-        agreeFn={agreeFn}
-        disAgreeFn={disAgreeFn}
-        sizeW="700px"
-        sizeH="300px"
-      />
-    );
-  };
   return (
     <S.Container>
       <div style={{ height: '3vh' }} />
@@ -162,7 +130,7 @@ const EditPw = ({ setMode }: IEditPwProps) => {
           변경하기
         </MuiButton>
       </div>
-      {dialog()}
+      <IsEditPwDialog flag={flag} tapstate={editpwstate} agreeFn={agreeFn} />
     </S.Container>
   );
 };

@@ -103,13 +103,6 @@ const JoinTap = () => {
     console.log('확인');
     setFlag(false);
     if (joinstate === state.SUCCESS) navigate('/menu/maps');
-    // {
-    //   const result = await client.post(`/auth/login`, {
-    //     email,
-    //     password: pw,
-    //   });
-    //   setToken(result.data.data);
-    // }
     navigate('/menu/maps');
     return flag;
   };
