@@ -20,9 +20,9 @@ interface IEditNameProps {
 const EditName = ({ setMode }: IEditNameProps) => {
   const [token, setToken] = useRecoilState(TOKEN);
   const [nickName, setnickName] = useState('');
+  const [Image, setImage] = useState('');
   const [nickNamestate, setnickNameState] = useState<string>(state.NORMAL);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [Image, setImage] = useState(defaultProfile);
   const [flag, setFlag] = useState<boolean>(false);
   useEffect(() => {
     getUser(token).then((res) => {
