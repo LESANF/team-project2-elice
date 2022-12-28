@@ -144,7 +144,7 @@ const EditPw = ({ setMode }: IEditPwProps) => {
 
       <div>
         <MuiButton
-          style={{ width: '93px', marginTop: '44px' }}
+          style={{ width: '93px' }}
           textcolor="#07B8B8"
           hoverbackgroundcolor="#f9f9f9"
           onClick={() => {

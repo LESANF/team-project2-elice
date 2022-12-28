@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import * as S from './styled';
 import Default from '../Components/Default';
+import Default2 from '../Components/Default2';
 import EditName from '../Components/EditName';
 import EditPw from '../Components/EditPw';
 import { HeaderForPost } from '../../../Components/Commons/Header';
@@ -23,20 +24,26 @@ const Edit = () => {
   return (
     <>
       <HeaderForPost />
-      {mode === 'EDITNAME' ? (
-        <EditName setMode={setMode} />
+      {mode === 'EDITNAME' ? <EditName setMode={setMode} /> : ''}
+      {mode === 'EDITPW' ? (
+        <>
+          <Default2 setMode={setMode} />
+          <EditPw setMode={setMode} />
+        </>
       ) : (
-        <Default setMode={setMode} />
+        ''
       )}
-      {mode === 'EDITPW' ? <EditPw setMode={setMode} /> : ''}
       {mode === 'DEFAULT' ? (
-        <S.PasswordChange
-          onClick={() => {
-            setMode('EDITPW');
-          }}
-        >
-          비밀번호 변경
-        </S.PasswordChange>
+        <>
+          <Default setMode={setMode} />
+          <S.PasswordChange
+            onClick={() => {
+              setMode('EDITPW');
+            }}
+          >
+            비밀번호 변경
+          </S.PasswordChange>
+        </>
       ) : (
         ''
       )}
