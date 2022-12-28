@@ -31,10 +31,11 @@ interface IDialogProps {
   disAgreeFn(): boolean;
   sizeW?: string | undefined;
   sizeH?: string | undefined;
+  agreeOnly?: boolean;
 }
 
-const DialogTest = (props: IDialogProps) => {
-  const { title, content, agreeFn, disAgreeFn, openFlag } = props;
+const DialogComponent = (props: IDialogProps) => {
+  const { title, content, agreeFn, disAgreeFn, openFlag, agreeOnly } = props;
   const setOpen = useState<boolean>(false)[1];
   const [dialogSize, setDialogSize] = useState<{
     sizeW: string | undefined;
@@ -83,7 +84,11 @@ const DialogTest = (props: IDialogProps) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleClose(disAgreeFn())}>취소</Button>
+          {agreeOnly ? (
+            ''
+          ) : (
+            <Button onClick={() => handleClose(disAgreeFn())}>취소</Button>
+          )}
           <Button onClick={() => handleClose(agreeFn())}>확인</Button>
         </DialogActions>
       </Dialog>
@@ -91,4 +96,4 @@ const DialogTest = (props: IDialogProps) => {
   );
 };
 
-export default DialogTest;
+export default DialogComponent;
