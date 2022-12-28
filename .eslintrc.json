@@ -50,7 +50,8 @@
     "prefer-const": "off",
     "no-plusplus": "off",
     "react/no-array-index-key": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "consistent-return": "off"
   },
   "settings": {
     "react": {

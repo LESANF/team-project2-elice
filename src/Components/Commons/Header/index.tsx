@@ -264,6 +264,5 @@ export const HeaderForPost = () => {
 
 export const Header = () => {
   const [token, setToken] = useRecoilState(TOKEN);
-  console.log('token :', token);
   return token ? <HeaderWithProfile /> : <HeaderNonLogin />;
 };
