@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { styled as styledMui } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
@@ -10,7 +9,7 @@ interface IPwInput {
 
 export const Container = styled.div`
   display: flex;
-  height: 93vh;
+  height: 23vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -108,7 +107,7 @@ export const PwInput = styledMui(Input)<IPwInput>`
       color: transparent;
     }
     :focus {
-      border: 0;
+      border: ${(props) => (props.state ? '3px solid #FF9E44' : '0')};
     }
     :focus-visible {
       outline: none;

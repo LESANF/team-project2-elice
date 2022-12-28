@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import { motion, AnimatePresence } from 'framer-motion';
 import * as S from './styled';
 import LoginTap from '../Components/LoginTap';
 import JoinTap from '../Components/JoinTap';
 import FindPwTap from '../Components/FindPwTap';
-import { Header } from '../../../Components/Commons/Header';
+import SelectWrapper from '../../../Components/Commons/SelectBox';
+import InputWrapper from '../../../Components/Commons/Input';
+import { Header, HeaderForPost } from '../../../Components/Commons/Header';
 import { MODE } from '../Atoms';
 
 interface IState {
@@ -35,37 +38,41 @@ const Join = () => {
   const clickHandler = (evt: any) => {
     setMode(evt.target.className);
   };
+  const taps = [
+    { label: '로그인', mode: state.LOGIN },
+    { label: '회원가입', mode: state.JOIN },
+    { label: '비밀번호 찾기', mode: state.FINDPW },
+  ];
   return (
     <>
-      <Header />
+      <HeaderForPost />
       <S.Container>
-        <br />
-        <S.Tap mode={mode}>
-          <span
-            onClick={clickHandler}
-            className={state.LOGIN}
-            role="presentation"
+        <S.TapItems>
+          {taps.map((item) => (
+            <S.TapItem
+              key={item.mode}
+              onClick={() => {
+                setMode(item.mode);
+              }}
+            >
+              {item.label}
+              {mode === item.mode ? (
+                <S.TapUnderline layoutId="underline" />
+              ) : null}
+            </S.TapItem>
+          ))}
+        </S.TapItems>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={mode}
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            로그인
-          </span>
-          |
-          <span
-            onClick={clickHandler}
-            className={state.JOIN}
-            role="presentation"
-          >
-            회원가입
-          </span>
-          |
-          <span
-            onClick={clickHandler}
-            className={state.FINDPW}
-            role="presentation"
-          >
-            비밀번호 찾기
-          </span>
-        </S.Tap>
-        {stateTap[mode]}
+            {stateTap[mode]}
+          </motion.div>
+        </AnimatePresence>
       </S.Container>
     </>
   );

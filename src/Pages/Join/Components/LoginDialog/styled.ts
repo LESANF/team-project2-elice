@@ -117,3 +117,17 @@ color: #5f5f5f;
   }
 }
 `;
+
+export const StyledP = styled.p`
+  font-family: 'Noto Sans KR', 'Noto Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #5f5f5f;
+  cursor: pointer;
+  :hover {
+    font-weight: 600;
+    color: #07b8b8;
+  }
+`;

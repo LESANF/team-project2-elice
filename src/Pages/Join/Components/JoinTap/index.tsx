@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
+import FormControl from '@mui/material/FormControl';
 import { client } from '../../../../axiosInstance';
 import * as S from './styled';
 import {
@@ -14,6 +15,7 @@ import {
   IsJoinDialog,
 } from '../../Utils';
 import { MODE, TOKEN } from '../../Atoms';
+import HelperText from '../HelperText';
 
 const JoinTap = () => {
   const [token, setToken] = useRecoilState(TOKEN);
@@ -44,6 +46,7 @@ const JoinTap = () => {
       setNicknameState(state.SUCCESS);
       setNickname(nickNameInput);
     }
+    if (!nickNameInput) setNicknameState(state.NORMAL);
   };
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +58,7 @@ const JoinTap = () => {
       setEmailState(state.SUCCESS);
       setEmail(emailInput);
     }
+    if (!emailInput) setEmailState(state.NORMAL);
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
@@ -65,6 +69,7 @@ const JoinTap = () => {
       setPwState(state.SUCCESS);
       setpw(pwInput);
     }
+    if (!pwInput) setPwState(state.NORMAL);
   };
 
   //  회원가입 button
@@ -123,6 +128,63 @@ const JoinTap = () => {
           <div>{warningNickname(nicknamestate)}</div>
         </div>
       </S.Form>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.Input
+            margin="normal"
+            label="닉네임"
+            fullWidth
+            className="title"
+            state={warningNickname(nicknamestate)}
+            onChange={changeNickNameHandler}
+          />
+          <HelperText
+            helper={warningNickname(nicknamestate)}
+            content={nickname}
+          />
+        </FormControl>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.Input
+            margin="normal"
+            label="이메일"
+            fullWidth
+            className="title"
+            state={warningEmail(emailstate)}
+            onChange={changeEmailHandler}
+          />
+          <HelperText helper={warningEmail(emailstate)} content={email} />
+        </FormControl>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.Input
+            margin="normal"
+            label="비밀번호"
+            fullWidth
+            className="title"
+            state={warningPw(pwstate)}
+            onChange={changePwHandler}
+          />
+          <HelperText helper={warningPw(pwstate)} content={pw} />
+        </FormControl>
+      </div>
+
       <S.Form>
         <div className="title">이메일</div>
         <div>

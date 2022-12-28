@@ -23,7 +23,6 @@ const EditName = ({ setMode }: IEditNameProps) => {
   const [Image, setImage] = useState('');
   const [nickNamestate, setnickNameState] = useState<string>(state.NORMAL);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
   const [flag, setFlag] = useState<boolean>(false);
   useEffect(() => {
     getUser(token).then((res) => {
@@ -101,9 +100,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
   };
   return (
     <S.Container>
-      {/* <motion.div layoutId="avatar"> */}
-      <Profile src={Image} alt="프로필 사진" />
-      {/* </motion.div> */}
+      <S.Profile src={Image} alt="프로필 사진" />
       <S.NickName
         placeholder="새로운 닉네임을 적어주세요"
         onChange={changenickNameHandler}
@@ -112,7 +109,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
 
       <div>
         <MuiButton
-          style={{ width: '93px', marginTop: '22px' }}
+          style={{ width: '93px' }}
           textcolor="#07B8B8"
           hoverbackgroundcolor="#f9f9f9"
           onClick={() => {
