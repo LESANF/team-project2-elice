@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
+import FormControl from '@mui/material/FormControl';
 import { client } from '../../../../axiosInstance';
 import * as S from './styled';
 import {
@@ -9,6 +10,7 @@ import {
   IsfindpwDialog,
 } from '../../Utils';
 import { MODE } from '../../Atoms';
+import HelperText from '../HelperText';
 
 const FindPwTap = () => {
   const [mode, setMode] = useRecoilState(MODE);
@@ -26,8 +28,9 @@ const FindPwTap = () => {
       setEmailState(state.STRERROR);
     } else {
       setEmailState(state.SUCCESS);
-      setEmail(emailInput);
     }
+    setEmail(emailInput);
+    if (!emailInput) setEmailState(state.NORMAL);
   };
   const clickFindPwHandler = async () => {
     if (!(emailstate === state.SUCCESS)) {
@@ -56,28 +59,49 @@ const FindPwTap = () => {
   };
 
   return (
-    <>
-      <S.InfoTop>가입되어 있는 이메일 주소를 입력해주세요</S.InfoTop>
-      <S.Form>
-        <div
-          placeholder="이메일"
-          className="title"
-          onChange={changeEmailHandler}
+    <div
+      style={{
+        display: 'flex',
+        height: '45vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '440px',
+          justifyContent: 'center',
+          gap: '16px',
+        }}
+      >
+        <S.InfoTop>가입되어 있는 이메일 주소를 입력해주세요</S.InfoTop>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
         >
-          이메일
-        </div>
-        <div>
-          <input placeholder="이메일" onChange={changeEmailHandler} />
-          <div>{warningEmail(emailstate)}</div>
-        </div>
-      </S.Form>
+          <S.Input
+            margin="normal"
+            label="이메일"
+            fullWidth
+            className="title"
+            state={warningEmail(emailstate)}
+            onChange={changeEmailHandler}
+          />
+          <HelperText helper={warningEmail(emailstate)} content={email} />
+        </FormControl>
 
-      <S.InfoBottom>
-        <ul>
-          <li>전송된 메일로 임시 비밀번호가 전송됩니다</li>
-          <li>로그인 후 꼭 비밀번호를 변경해주세요</li>
-        </ul>
-      </S.InfoBottom>
+        <S.InfoBottom>
+          <ul>
+            <li>전송된 메일로 임시 비밀번호가 전송됩니다</li>
+            <li>로그인 후 꼭 비밀번호를 변경해주세요</li>
+          </ul>
+        </S.InfoBottom>
+      </div>
 
       <S.Button onClick={clickFindPwHandler}>임시 비밀번호 전송</S.Button>
       <IsfindpwDialog
@@ -86,7 +110,7 @@ const FindPwTap = () => {
         errorMessage={errorMessage}
         agreeFn={agreeFn}
       />
-    </>
+    </div>
   );
 };
 

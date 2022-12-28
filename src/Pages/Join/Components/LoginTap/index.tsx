@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import FormControl from '@mui/material/FormControl';
 import { client } from '../../../../axiosInstance';
 import { TOKEN } from '../../Atoms';
 import * as S from './styled';
@@ -12,6 +13,7 @@ import {
   state,
   IsLoginDialog,
 } from '../../Utils';
+import HelperText from '../HelperText';
 
 const LoginTap = () => {
   const navigate = useNavigate();
@@ -38,8 +40,9 @@ const LoginTap = () => {
       setEmailState(state.STRERROR);
     } else {
       setEmailState(state.SUCCESS);
-      setEmail(emailInput);
     }
+    setEmail(emailInput);
+    if (!emailInput) setEmailState(state.NORMAL);
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
@@ -50,6 +53,7 @@ const LoginTap = () => {
       setPwState(state.SUCCESS);
       setpw(pwInput);
     }
+    if (!pwInput) setPwState(state.NORMAL);
   };
   //  로그인 button
   const clickLoginHandler = async () => {
@@ -81,31 +85,56 @@ const LoginTap = () => {
   };
 
   return (
-    <>
-      <S.Form>
-        <div
-          placeholder="이메일"
-          className="title"
-          onChange={changeEmailHandler}
+    <div
+      style={{
+        display: 'flex',
+        height: '45vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '300px',
+          justifyContent: 'center',
+        }}
+      >
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
         >
-          이메일
-        </div>
-        <div>
-          <input placeholder="이메일" onChange={changeEmailHandler} />
-          <div>{warningEmail(emailstate)}</div>
-        </div>
-      </S.Form>
-      <S.Form>
-        <div className="title">비밀번호</div>
-        <div>
-          <input
-            type="password"
-            placeholder="비밀번호"
+          <S.Input
+            margin="normal"
+            label="이메일"
+            fullWidth
+            className="title"
+            state={warningEmail(emailstate)}
+            onChange={changeEmailHandler}
+          />
+          <HelperText helper={warningEmail(emailstate)} content={email} />
+        </FormControl>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.PwInput
+            margin="normal"
+            label="비밀번호"
+            fullWidth
+            className="title"
+            state={warningPw(pwstate)}
             onChange={changePwHandler}
           />
-          <div>{warningPw(pwstate)}</div>
-        </div>
-      </S.Form>
+        </FormControl>
+      </div>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
       {flag ? (
         <IsLoginDialog
@@ -115,7 +144,7 @@ const LoginTap = () => {
           agreeFn={agreeFn}
         />
       ) : null}
-    </>
+    </div>
   );
 };
 

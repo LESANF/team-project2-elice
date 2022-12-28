@@ -32,17 +32,17 @@ export const Form = styled.form`
 `;
 
 export const Button = styled.button`
-  margin-top: auto;
-  margin-left: 150px;
-
-  width: 427px;
-  height: 88px;
+  width: 380px;
+  height: 77px;
   border-radius: 6px;
   border: 0px;
   background: #07b8b8;
-  font-size: 35px;
   color: white;
-  font-weight: 400;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 27px;
+  cursor: pointer;
   :hover {
     background-color: #00a8a7;
   }
