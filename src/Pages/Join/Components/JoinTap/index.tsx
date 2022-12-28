@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+
+import FormControl from '@mui/material/FormControl';
 import { client } from '../../../../axiosInstance';
 import * as S from './styled';
 import {
@@ -11,9 +14,12 @@ import {
   state,
   IsJoinDialog,
 } from '../../Utils';
-import { MODE } from '../../Atoms';
+import { MODE, TOKEN } from '../../Atoms';
+import HelperText from '../HelperText';
 
 const JoinTap = () => {
+  const [token, setToken] = useRecoilState(TOKEN);
+  const navigate = useNavigate();
   const [mode, setMode] = useRecoilState(MODE);
   const [nicknamestate, setNicknameState] = useState<string>(state.NORMAL);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
@@ -38,8 +44,9 @@ const JoinTap = () => {
       setNicknameState(state.STRERROR);
     } else {
       setNicknameState(state.SUCCESS);
-      setNickname(nickNameInput);
     }
+    setNickname(nickNameInput);
+    if (!nickNameInput) setNicknameState(state.NORMAL);
   };
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +56,9 @@ const JoinTap = () => {
       setEmailState(state.STRERROR);
     } else {
       setEmailState(state.SUCCESS);
-      setEmail(emailInput);
     }
+    setEmail(emailInput);
+    if (!emailInput) setEmailState(state.NORMAL);
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
@@ -59,8 +67,9 @@ const JoinTap = () => {
       setPwState(state.STRERROR);
     } else {
       setPwState(state.SUCCESS);
-      setpw(pwInput);
     }
+    setpw(pwInput);
+    if (!pwInput) setPwState(state.NORMAL);
   };
 
   //  회원가입 button
@@ -81,6 +90,11 @@ const JoinTap = () => {
         password: pw,
       });
       console.log(result);
+      const loginresult = await client.post(`/auth/login`, {
+        email,
+        password: pw,
+      });
+      setToken(loginresult.data.data);
       setJoinState(state.SUCCESS);
       setFlag(true);
     } catch (err: any) {
@@ -90,48 +104,98 @@ const JoinTap = () => {
     }
   };
 
-  const agreeFn = () => {
+  const agreeFn = async () => {
     console.log('확인');
     setFlag(false);
-    if (joinstate === state.SUCCESS) setMode('login');
+    if (joinstate === state.SUCCESS) navigate('/menu/maps');
+    navigate('/menu/maps');
     return flag;
   };
 
   return (
-    <>
-      <S.Form>
-        <div className="title">닉네임</div>
-        <div>
-          <input placeholder="닉네임" onChange={changeNickNameHandler} />
-          <div>{warningNickname(nicknamestate)}</div>
-        </div>
-      </S.Form>
-      <S.Form>
-        <div className="title">이메일</div>
-        <div>
-          <input placeholder="이메일" onChange={changeEmailHandler} />
-          <div>{warningEmail(emailstate)}</div>
-        </div>
-      </S.Form>
-      <S.Form>
-        <div className="title">비밀번호</div>
-        <div>
-          <input
+    <div
+      style={{
+        display: 'flex',
+        height: '45vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '440px',
+          justifyContent: 'center',
+        }}
+      >
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.Input
+            margin="normal"
+            label="닉네임"
+            fullWidth
+            className="title"
+            state={warningNickname(nicknamestate)}
+            onChange={changeNickNameHandler}
+          />
+          <HelperText
+            helper={warningNickname(nicknamestate)}
+            content={nickname}
+          />
+        </FormControl>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.Input
+            margin="normal"
+            label="이메일"
+            fullWidth
+            className="title"
+            state={warningEmail(emailstate)}
+            onChange={changeEmailHandler}
+          />
+          <HelperText helper={warningEmail(emailstate)} content={email} />
+        </FormControl>
+        <FormControl
+          sx={{
+            width: '42ch',
+            height: '100px',
+          }}
+          style={{ marginTop: '10px' }}
+        >
+          <S.Input
             type="password"
-            placeholder="비밀번호"
+            margin="normal"
+            label="비밀번호"
+            fullWidth
+            className="title"
+            state={warningPw(pwstate)}
             onChange={changePwHandler}
           />
-          <div>{warningPw(pwstate)}</div>
-        </div>
-      </S.Form>
+          <HelperText helper={warningPw(pwstate)} content={pw} />
+        </FormControl>
+      </div>
+
       <S.Button onClick={clickJoinHandler}>회원가입</S.Button>
-      <IsJoinDialog
-        flag={flag}
-        tapstate={joinstate}
-        errorMessage={errorMessage}
-        agreeFn={agreeFn}
-      />
-    </>
+      {flag ? (
+        <IsJoinDialog
+          flag={flag}
+          tapstate={joinstate}
+          errorMessage={errorMessage}
+          agreeFn={agreeFn}
+        />
+      ) : null}
+    </div>
   );
 };
 

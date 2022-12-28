@@ -9,14 +9,12 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import div from '@mui/material/div';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-// import { useNavigate } from 'react-router-dom';
-// import { useRecoilState } from 'recoil';
-// import { client } from '../../../../axiosInstance';
-// import { TOKEN } from '../../Atoms';
+import { useRecoilState } from 'recoil';
+import { TOKEN } from '../Atoms';
+import { getUser } from '../../Edit/Utils';
 
 interface IState {
   NORMAL: string; // 입력 전
@@ -169,11 +167,20 @@ interface IJoinProps {
   agreeFn(): any;
 }
 export const IsLoginDialog = (props: IJoinProps): JSX.Element => {
+  const [token, setToken] = useRecoilState(TOKEN);
+  const [nickname, setNickname] = useState('');
   const { flag, tapstate, errorMessage, agreeFn } = props;
   let title = '';
   let content = '';
+  useEffect(() => {
+    getUser(token).then((res) => setNickname(res.profile_nickname));
+  }, []);
+
   if (tapstate === state.SUCCESS) {
-    [title, content] = [`로그인 성공`, `로그인이 정상적으로 이루어졌습니다`];
+    [title, content] = [
+      `${nickname}님, 안녕하세요`,
+      `로그인이 정상적으로 이루어졌습니다`,
+    ];
   } else {
     [title, content] = [`로그인 오류`, errorMessage];
   }
@@ -190,12 +197,17 @@ export const IsLoginDialog = (props: IJoinProps): JSX.Element => {
 
 // 회원가입시 다이얼로그
 export const IsJoinDialog = (props: IJoinProps): JSX.Element => {
+  const [token, setToken] = useRecoilState(TOKEN);
+  const [nickname, setNickname] = useState('');
   const { flag, tapstate, errorMessage, agreeFn } = props;
   let title = '';
   let content = '';
+  useEffect(() => {
+    getUser(token).then((res) => setNickname(res.profile_nickname));
+  }, []);
   if (tapstate === state.SUCCESS) {
     [title, content] = [
-      `회원가입 완료`,
+      `${nickname}님, 환영합니다`,
       `회원가입이 정상적으로 이루어졌습니다`,
     ];
   } else {
