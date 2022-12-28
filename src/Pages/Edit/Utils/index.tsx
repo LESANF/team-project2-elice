@@ -19,18 +19,32 @@ interface IState {
   SUCCESS: string; //  성공
   STRERROR: string; // 길이 문법 오류
   ERROR: string;
+
+  EDITPW: string;
+  EDITNAME: string;
+  DEFAULT: string;
 }
 export const state: IState = {
   NORMAL: 'NORMAL', // 입력 전
   SUCCESS: 'SUCCESS',
   STRERROR: 'STRERROR',
   ERROR: 'ERROR',
+
+  EDITPW: 'EDITPW',
+  EDITNAME: 'EDITNAME',
+  DEFAULT: 'DEFAULT',
 };
 
 export const getUser = async (token: string) => {
   const result = await accessClient(token).get(`profiles/user`);
   console.log(`UTIL`, result.data.data[0]);
   return result.data.data[0];
+};
+// page 탈퇴하기
+export const deleteUserHandler = async (token: string, setToken: any) => {
+  console.log('탈퇴');
+  const result = await accessClient(token).delete(`users`);
+  setToken(null);
 };
 
 //  Edit 다이얼로그
@@ -101,7 +115,7 @@ export const EditDialog = (props: IDialogProps) => {
 //  IEditProps interface
 interface IEditProps {
   flag: boolean;
-  tapstate: string;
+  tapstate?: string;
   errorMessage?: any;
   agreeFn(): any;
 }
@@ -145,6 +159,23 @@ export const IsEditPwDialog = (props: IEditProps): JSX.Element => {
       `비밀번호가 정상적으로 변경되지 않았습니다.`,
     ];
   }
+
+  return (
+    <EditDialog
+      openFlag={flag}
+      title={title}
+      content={content}
+      agreeFn={agreeFn}
+    />
+  );
+};
+
+// 탈퇴 다이얼로그
+//  회원정보 Edit시 다이얼로그
+export const IsDeleteDialog = (props: IEditProps): JSX.Element => {
+  const { flag, tapstate, errorMessage, agreeFn } = props;
+  const title = '탈퇴하기';
+  const content = '정말 탈퇴하시겠습니까?';
 
   return (
     <EditDialog

@@ -45,3 +45,20 @@ export const PasswordChange = styled.p`
     color: #07b8b8;
   }
 `;
+
+export const UserDelete = styled.p`
+  border: none;
+  padding: 10px 20px;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #5f5f5f;
+  cursor: pointer;
+  :hover {
+    font-weight: 500;
+    color: #07b8b8;
+  }
+`;
