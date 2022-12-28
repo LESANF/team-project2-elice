@@ -111,6 +111,7 @@ export const StyledH1 = styled.h1`
   line-height: 140%;
   text-align: center;
   color: #2a2a2a;
+  cursor: default;
 `;
 export const TextButton = styledMui(Button)`
   padding: 8px 10px;

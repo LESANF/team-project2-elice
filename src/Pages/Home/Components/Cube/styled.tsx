@@ -7,8 +7,8 @@ interface IStyledP {
 }
 
 interface INavigateButton {
-  backgroundColor: string;
-  hoverBackgroundColor: string;
+  backgroundcolor: string;
+  hoverbackgroundcolor: string;
 }
 
 export const StyledP = styled.p<IStyledP>`
@@ -31,9 +31,9 @@ export const NavigateButton = styledMui(Button)<INavigateButton>`
   font-size:calc(3px + 1.5vmin);
   line-height: 140%;
   color: #FFFFFF;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   :hover{
     font-weight: 600;
-    background-color: ${(props) => props.hoverBackgroundColor};
+    background-color: ${(props) => props.hoverbackgroundcolor};
   }
 `;

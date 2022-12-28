@@ -13,7 +13,6 @@ const ErrorPage = () => {
           const vh = window.visualViewport.height;
           const vw = window.visualViewport.width;
           const glass = document.querySelector('.glass');
-          console.log(vw, e.clientX, vh, e.clientY);
           glass?.setAttribute(
             'style',
             `transform:translate(${(vw / 2 - e.clientX) / 20}px,${

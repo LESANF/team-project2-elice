@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import * as S from './styled';
-import { useGetData } from '../hooks/useGetData';
+import { useGetData, useFetchData } from '../hooks/useGetData';
 import { disableScroll, removeDisableScroll } from '../Utils';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import MapDemo from '../assets/map.gif';
@@ -18,7 +18,6 @@ const Intro = () => {
     return flag;
   };
   useEffect(() => {
-    console.log(flag);
     if (flag) {
       removeDisableScroll();
     } else {
@@ -29,7 +28,9 @@ const Intro = () => {
     disableScroll();
     return removeDisableScroll;
   }, []);
-  const objectURL = useGetData('https://picsum.photos/238/349', 7);
+  const data = useFetchData('http://34.64.34.184:5001/posts?quantity=7');
+  const objectURL = data?.map((d: any) => d.images[0].imageUrl.url);
+  // const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
   const motionVariants = {
     hover: {
@@ -109,12 +110,20 @@ const Intro = () => {
                       },
                     }}
                     whileHover="hover"
+                    onClick={(e) => {
+                      if (data) {
+                        navigate(`/posts/${data[idx].id}`);
+                      } else {
+                        console.log(e);
+                      }
+                    }}
                   >
                     <img
                       style={{
                         width: '238px',
                         height: '349.55px',
                         borderRadius: '20px',
+                        cursor: 'pointer',
                       }}
                       key={key}
                       src={objectURL ? objectURL[idx] : ''}
@@ -163,6 +172,7 @@ const Intro = () => {
                 textAlign: 'center',
                 marginBottom: '40px',
                 lineHeight: '140%',
+                cursor: 'default',
               }}
             >
               주변에 멋진 장소를 찾고있나요? 사진 찍기 좋은 장소를 찾고
@@ -229,6 +239,7 @@ const Intro = () => {
                 width: 'fit-content',
                 textAlign: 'center',
                 lineHeight: '140%',
+                cursor: 'default',
               }}
             >
               나중에 다시 볼 수 있도록 좋아하는 사진을
