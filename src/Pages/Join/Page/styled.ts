@@ -5,12 +5,10 @@ export const Container = styled.div`
   position: relative;
   top: 77px;
   width: 1040px;
-  height: 50vh;
+  height: 80vh;
   margin: 0 auto;
-  border: 1px solid #cccccc;
-  border-radius: 25px;
-
-  padding-top: 77px;
+  justify-content: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
 `;
@@ -36,18 +34,24 @@ export const Tap = styled.div<{ mode: string }>`
 `;
 
 export const TapItems = styled.ul`
-  border: 2px solid black;
   display: flex;
   gap: 10px;
 `;
 
 export const TapItem = styled.li`
   position: relative;
-  border: 2px solid #98d273;
-  padding: 13px 50px;
+  padding: 13px 20px;
   cursor: pointer;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  color: #5f5f5f;
+
   :hover {
-    background: ;
+    background: #f9f9f9;
+    font-weight: 600;
   }
 `;
 

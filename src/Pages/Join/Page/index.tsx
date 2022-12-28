@@ -55,10 +55,14 @@ const Join = () => {
                 setMode(item.mode);
               }}
             >
-              {item.label}
               {mode === item.mode ? (
-                <S.TapUnderline layoutId="underline" />
-              ) : null}
+                <>
+                  <p style={{ fontWeight: '600' }}>{item.label}</p>
+                  <S.TapUnderline layoutId="underline" />
+                </>
+              ) : (
+                <p>{item.label}</p>
+              )}
             </S.TapItem>
           ))}
         </S.TapItems>
