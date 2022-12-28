@@ -18,7 +18,7 @@ interface IDefaultProps {
   setMode?: any;
   user?: any;
 }
-const Default2 = ({ setMode }: IDefaultProps) => {
+const Default = ({ setMode }: IDefaultProps) => {
   const [token, setToken] = useRecoilState(TOKEN);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -55,15 +55,7 @@ const Default2 = ({ setMode }: IDefaultProps) => {
 
   return (
     <S.Container>
-      <CustomizedTooltips content="사진 변경">
-        <S.Profile
-          src={Image}
-          alt="프로필 사진"
-          onClick={() => {
-            fileInput.current.click();
-          }}
-        />
-      </CustomizedTooltips>
+      <S.Profile src={Image} alt="프로필 사진" />
       <input
         type="file"
         accept="image/*"
@@ -72,19 +64,11 @@ const Default2 = ({ setMode }: IDefaultProps) => {
         ref={fileInput}
       />
 
-      <CustomizedTooltips content="닉네임 변경">
-        <S.NickName
-          onClick={() => {
-            setMode('EDITNAME');
-          }}
-        >
-          {name}
-        </S.NickName>
-      </CustomizedTooltips>
+      <S.NickName>{name}</S.NickName>
 
       <S.Email>{email}</S.Email>
     </S.Container>
   );
 };
 
-export default Default2;
+export default Default;

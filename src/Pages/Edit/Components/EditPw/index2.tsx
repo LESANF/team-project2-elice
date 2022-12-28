@@ -1,3 +1,4 @@
+// 채현 코드
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
@@ -11,12 +12,14 @@ import { TOKEN } from '../../../Join/Atoms';
 import { validatePw, warningPw, state } from '../../../Join/Utils';
 import { accessClient } from '../../../../axiosInstance';
 import { IsEditPwDialog } from '../../Utils/index';
+import { editMODE } from '../../Atoms';
 
 interface IEditPwProps {
   setMode?: any;
 }
 
-const EditPw = ({ setMode }: IEditPwProps) => {
+const EditPw = () => {
+  const [mode, setMode] = useRecoilState(editMODE);
   const [token, setToken] = useRecoilState(TOKEN);
   const [pw, setPw] = useState('');
   const [pwstate, setPwState] = useState(state.NORMAL);
@@ -30,6 +33,7 @@ const EditPw = ({ setMode }: IEditPwProps) => {
   const changePwHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
     setPw(pwInput);
+    console.log(pwInput, pw);
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
@@ -40,6 +44,8 @@ const EditPw = ({ setMode }: IEditPwProps) => {
   //  새 비번 확인 input onChange
   const changePwConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwconfirmInput = e.target.value;
+    console.log(pwconfirmInput, pwconfirm);
+
     console.log(warningPw(pwconfirmstate));
     setPwConfirm(pwconfirmInput);
     if (pwconfirmInput !== pw) {

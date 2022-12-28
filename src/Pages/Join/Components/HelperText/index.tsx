@@ -1,5 +1,6 @@
 import { useFormControl } from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
+import React from 'react';
 
 interface IHelperText {
   helper: string;
@@ -13,7 +14,7 @@ const HelperText = ({ helper, content }: IHelperText) => {
       style={{
         color: '#FF9E44',
         whiteSpace: 'nowrap',
-        margin: '-7px 0 0 3px',
+        margin: '-9px 0 0 6px',
       }}
     >
       {content ? helper : ''}

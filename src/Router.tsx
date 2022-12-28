@@ -33,14 +33,8 @@ const Router = () => {
         <Route path="/postwrite" element={<PostWrite />} />
         <Route path="/:postId" element={<PhotoPost />} />
         <Route path="/join" element={<Join />} />
-        <Route
-          path="/edit"
-          element={token ? <Edit /> : <Navigate to="/logindialog" />}
-        />
-        <Route
-          path="/mypage"
-          element={token ? <MyPage /> : <Navigate to="/logindialog" />}
-        />
+        <Route path="/edit" element={token ? <Edit /> : <LoginDialog />} />
+        <Route path="/mypage" element={token ? <MyPage /> : <LoginDialog />} />
         <Route path="/test" element={<Test />} />
         <Route path="/logindialog" element={<LoginDialog />} />
         <Route path="*" element={<ErrorPage />} />

@@ -1,5 +1,5 @@
 // 충우님 코드
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import MypostTap from '../Components/MypostTap';
@@ -34,14 +34,16 @@ const MyPage = () => {
   const [token, setToken] = useRecoilState(TOKEN);
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [Image, setImage] = useState('');
 
-  getUser(token).then((res) => {
-    setNickname(res.data.id);
-    setEmail(res.data.email);
-  }); //    일단 id로
-  const [Image, setImage] = useState<string>(
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-  );
+  useEffect(() => {
+    getUser(token).then((res) => {
+      setImage(res.image_url || defaultProfile);
+      setNickname(res.profile_nickname);
+      setEmail(res.user_email);
+    });
+  }, []);
+
   const [mode, setMode] = useState<string>(state.MYPOST);
 
   return (
@@ -49,7 +51,11 @@ const MyPage = () => {
       <Header />
       <S.ProfileContainer>
         <S.Profile>
-          <img width="150px" height="150px" src={defaultProfile} alt="프사" />
+          <img
+            style={{ borderRadius: '75px', width: '150px', height: '150px' }}
+            src={Image}
+            alt="프사"
+          />
           <S.NickName>{nickname}</S.NickName>
           <S.Email>{email}</S.Email>
           <S.ChangeMode
@@ -71,7 +77,7 @@ const MyPage = () => {
 
       <S.PhotoContainer>
         {stateTap[mode]}
-        <Nothing />
+        {/* <Nothing /> */}
       </S.PhotoContainer>
     </>
   );
