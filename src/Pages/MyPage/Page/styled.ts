@@ -117,7 +117,7 @@ export const PhotoContainer = styled.div`
   left: 25vw;
   top: 77px;
   min-width: fit-content;
-  background: #9396f1;
+  /* background: #9396f1; */
   @media screen and (max-width: 1200px) {
     left: 300px;
   }

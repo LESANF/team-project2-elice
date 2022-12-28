@@ -81,7 +81,7 @@ export const warningPw = (s: string) => {
   let warning = '';
   switch (s) {
     case state.STRERROR:
-      warning = `대문자 포함 8자 이상 16자 이하로 작성해주세요`;
+      warning = `대문자,숫자 포함 8자 이상 16자 이하로 작성해주세요`;
       break;
     case state.NONCONFIRMERROR:
       warning = `새 비밀번호와 일치하지 않습니다`;
@@ -158,7 +158,6 @@ export const JoinDialog = (props: IDialogProps) => {
     </div>
   );
 };
-
 //  로그인시 다이얼로그
 interface IJoinProps {
   flag: boolean;
@@ -247,3 +246,5 @@ export const IsfindpwDialog = (props: IJoinProps): JSX.Element => {
     />
   );
 };
+
+// 로그인, 회원가입 SRTERROR 실패시 스타일 다이얼로그
