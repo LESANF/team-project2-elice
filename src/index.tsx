@@ -23,6 +23,10 @@ const GlobalStyles = createGlobalStyle`
   div{
     box-sizing:border-box;
   }
+
+  #root {
+    height: 100%;
+  }
 `;
 
 const root = ReactDOM.createRoot(
