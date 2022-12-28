@@ -1,15 +1,16 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const Container = styled.div`
+  position: relative;
+  top: 77px;
   width: 1040px;
-  height: 700px;
-  margin: 100px auto;
-
-  background: #f9f9f9;
+  height: 50vh;
+  margin: 0 auto;
   border: 1px solid #cccccc;
   border-radius: 25px;
 
-  padding: 50px 110px;
+  padding-top: 77px;
   display: flex;
   flex-direction: column;
 `;
@@ -32,4 +33,29 @@ export const Tap = styled.div<{ mode: string }>`
     width: 120px;
     font-weight: ${(props) => (props.mode === 'findpw' ? 'bold' : 'normal')};
   }
+`;
+
+export const TapItems = styled.ul`
+  border: 2px solid black;
+  display: flex;
+  gap: 10px;
+`;
+
+export const TapItem = styled.li`
+  position: relative;
+  border: 2px solid #98d273;
+  padding: 13px 50px;
+  cursor: pointer;
+  :hover {
+    background: ;
+  }
+`;
+
+export const TapUnderline = styled(motion.div)`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 4px;
+  background-color: black;
 `;

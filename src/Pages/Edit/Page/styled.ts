@@ -17,6 +17,10 @@ export const Container = styled.div`
 `;
 
 export const Copyright = styled.p`
+  position: absolute;
+  width: 100%;
+  margin-left: auto;
+  bottom: 30px;
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 400;

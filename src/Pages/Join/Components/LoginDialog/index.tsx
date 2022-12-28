@@ -173,6 +173,22 @@ const LoginContent = (): JSX.Element => {
       </FormControl>
       <S.Button onClick={clickLoginHandler}>로그인</S.Button>
       <div>{errorMessage}</div>
+      <div style={{ marginTop: '60px', display: 'flex', gap: '50px' }}>
+        <S.StyledP
+          onClick={() => {
+            navigate('/join');
+          }}
+        >
+          회원가입
+        </S.StyledP>
+        <S.StyledP
+          onClick={() => {
+            navigate('/join');
+          }}
+        >
+          비밀번호 찾기
+        </S.StyledP>
+      </div>
     </div>
   );
 };

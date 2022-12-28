@@ -1,13 +1,11 @@
-//  충우님 코드
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 import * as S from './styled';
 import Default from '../Components/Default';
+import Default2 from '../Components/Default2';
 import EditName from '../Components/EditName';
 import EditPw from '../Components/EditPw';
 import { HeaderForPost } from '../../../Components/Commons/Header';
-import { ReactComponent as DefaultProfile } from '../assets/defaultProfile.svg';
 
 interface IState {
   EDITPW: string;
@@ -26,21 +24,28 @@ const Edit = () => {
   return (
     <>
       <HeaderForPost />
-      {mode === 'EDITNAME' ? (
-        <EditName setMode={setMode} />
-      ) : (
-        <Default setMode={setMode} />
-      )}
+      {mode === 'EDITNAME' ? <EditName setMode={setMode} /> : ''}
       {mode === 'EDITPW' ? (
-        <EditPw setMode={setMode} />
+        <>
+          <Default2 setMode={setMode} />
+          <EditPw setMode={setMode} />
+        </>
       ) : (
-        <S.PasswordChange
-          onClick={() => {
-            setMode('EDITPW');
-          }}
-        >
-          비밀번호 변경
-        </S.PasswordChange>
+        ''
+      )}
+      {mode === 'DEFAULT' ? (
+        <>
+          <Default setMode={setMode} />
+          <S.PasswordChange
+            onClick={() => {
+              setMode('EDITPW');
+            }}
+          >
+            비밀번호 변경
+          </S.PasswordChange>
+        </>
+      ) : (
+        ''
       )}
       <S.Copyright>© 2022 photolog, all rights reserved.</S.Copyright>
     </>

@@ -29,22 +29,23 @@ const EditPw = ({ setMode }: IEditPwProps) => {
   //  새 비번 input onChange
   const changePwHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
+    setPw(pwInput);
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
       setPwState(state.SUCCESS);
-      setPw(pwInput);
     }
+    if (pwInput === '') setPwState(state.NORMAL);
   };
   //  새 비번 확인 input onChange
   const changePwConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwconfirmInput = e.target.value;
     console.log(warningPw(pwconfirmstate));
+    setPwConfirm(pwconfirmInput);
     if (pwconfirmInput !== pw) {
       setPwConfirmState(state.NONCONFIRMERROR);
     } else {
       setPwConfirmState(state.SUCCESS);
-      setPwConfirm(pwconfirmInput);
     }
     if (!pwconfirmInput) setPwConfirmState(state.NORMAL);
   };
@@ -111,7 +112,7 @@ const EditPw = ({ setMode }: IEditPwProps) => {
 
       <div>
         <MuiButton
-          style={{ width: '93px', marginTop: '44px' }}
+          style={{ width: '93px' }}
           textcolor="#07B8B8"
           hoverbackgroundcolor="#f9f9f9"
           onClick={() => {
