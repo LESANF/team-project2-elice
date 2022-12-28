@@ -61,9 +61,13 @@ interface IDialogProps {
   title: string | JSX.Element;
   content: string | JSX.Element;
   agreeFn(): any;
+  cancelbtn?: boolean;
+  disagreeFn?: any;
 }
 export const EditDialog = (props: IDialogProps) => {
-  const { title, content, agreeFn, openFlag } = props;
+  const { title, content, agreeFn, openFlag, cancelbtn, disagreeFn } = props;
+  console.log('cancelbtn', cancelbtn);
+  const cancel = cancelbtn || false;
   const setOpen = useState<boolean>(false)[1];
   const [dialogSize, setDialogSize] = useState<{
     sizeW: string | undefined;
@@ -105,6 +109,15 @@ export const EditDialog = (props: IDialogProps) => {
           </div>
         </DialogContent>
         <DialogActions>
+          {cancel ? (
+            <Button
+              onClick={() => {
+                handleClose(disagreeFn());
+              }}
+            >
+              취소
+            </Button>
+          ) : null}
           <Button onClick={() => handleClose(agreeFn())}>확인</Button>
         </DialogActions>
       </Dialog>
@@ -118,6 +131,7 @@ interface IEditProps {
   tapstate?: string;
   errorMessage?: any;
   agreeFn(): any;
+  disagreeFn?: any;
 }
 //  회원정보 Edit시 다이얼로그
 export const IsEditNameDialog = (props: IEditProps): JSX.Element => {
@@ -171,18 +185,19 @@ export const IsEditPwDialog = (props: IEditProps): JSX.Element => {
 };
 
 // 탈퇴 다이얼로그
-//  회원정보 Edit시 다이얼로그
 export const IsDeleteDialog = (props: IEditProps): JSX.Element => {
-  const { flag, tapstate, errorMessage, agreeFn } = props;
+  const { flag, tapstate, errorMessage, agreeFn, disagreeFn } = props;
   const title = '탈퇴하기';
   const content = '정말 탈퇴하시겠습니까?';
-
+  const cancel = true;
   return (
     <EditDialog
       openFlag={flag}
       title={title}
       content={content}
       agreeFn={agreeFn}
+      cancelbtn={cancel}
+      disagreeFn={disagreeFn}
     />
   );
 };

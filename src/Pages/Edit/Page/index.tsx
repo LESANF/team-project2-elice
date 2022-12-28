@@ -22,6 +22,12 @@ const Edit = () => {
     setMode('DEFAULT');
     return flag;
   };
+  const disagreeFn = () => {
+    console.log('취소');
+    setFlag(false);
+    setMode('DEFAULT');
+    return flag;
+  };
 
   return (
     <>
@@ -51,7 +57,7 @@ const Edit = () => {
       )}
       <S.UserDelete onClick={() => setFlag(true)}>탈퇴하기</S.UserDelete>
       <S.Copyright>© 2022 photolog, all rights reserved.</S.Copyright>
-      <IsDeleteDialog flag={flag} agreeFn={agreeFn} />
+      <IsDeleteDialog flag={flag} agreeFn={agreeFn} disagreeFn={disagreeFn} />
     </>
   );
 };
