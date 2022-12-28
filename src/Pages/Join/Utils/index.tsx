@@ -181,7 +181,7 @@ export const IsLoginDialog = (props: IJoinProps): JSX.Element => {
 
   if (tapstate === state.SUCCESS) {
     [title, content] = [
-      `${nickname}님 안녕하세요`,
+      `${nickname}님, 안녕하세요`,
       `로그인이 정상적으로 이루어졌습니다`,
     ];
   } else {
@@ -210,7 +210,7 @@ export const IsJoinDialog = (props: IJoinProps): JSX.Element => {
   }, []);
   if (tapstate === state.SUCCESS) {
     [title, content] = [
-      `${nickname}님 환영합니다`,
+      `${nickname}님, 환영합니다`,
       `회원가입이 정상적으로 이루어졌습니다`,
     ];
   } else {
