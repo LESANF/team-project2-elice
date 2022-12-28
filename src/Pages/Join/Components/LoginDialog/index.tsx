@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import FormControl from '@mui/material/FormControl';
 import { client } from '../../../../axiosInstance';
@@ -55,6 +55,8 @@ const LoginTitle = (): JSX.Element => (
 );
 const LoginContent = (): JSX.Element => {
   const navigate = useNavigate();
+  const url = useParams();
+
   const [token, setToken] = useRecoilState(TOKEN);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
@@ -95,7 +97,8 @@ const LoginContent = (): JSX.Element => {
   };
   //  로그인 button
   const clickLoginHandler = async () => {
-    if (!(emailstate === state.SUCCESS && pwstate === state.SUCCESS)) {
+    console.log('현재', email, pw, emailstate, pwstate);
+    if (!(emailstate === state.SUCCESS && emailstate === state.SUCCESS)) {
       console.log('다시');
       return;
     }
@@ -107,13 +110,18 @@ const LoginContent = (): JSX.Element => {
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
       setFlag(false);
-      navigate('/menu/maps');
+      console.log('url', window.location.pathname);
+      navigate(
+        window.location.pathname === `/`
+          ? '/menu/maps'
+          : window.location.pathname,
+      ); //   인트로만 /menu/maps로 갑니다
     } catch (err: any) {
       console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
       setErrorMessage(err.response.data.message);
-      setEmail('');
-      setpw('');
+      // setEmail('');
+      // setpw('');
       setFlag(true);
     }
   };
@@ -140,6 +148,7 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningEmail(emailstate)}
           onChange={changeEmailHandler}
+          // value={email}
         />
         <HelperText helper={warningEmail(emailstate)} content={email} />
       </FormControl>
@@ -158,6 +167,7 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningPw(pwstate)}
           onChange={changePwHandler}
+          // value={pw}
         />
         <HelperText helper={warningPw(pwstate)} content={pw} />
       </FormControl>

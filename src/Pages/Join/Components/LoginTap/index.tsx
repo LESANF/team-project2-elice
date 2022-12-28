@@ -126,6 +126,7 @@ const LoginTap = () => {
           style={{ marginTop: '10px' }}
         >
           <S.PwInput
+            type="password"
             margin="normal"
             label="비밀번호"
             fullWidth

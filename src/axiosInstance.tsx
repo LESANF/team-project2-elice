@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const URL = 'http://34.64.34.184:5001';
+// export const URL = 'http://34.64.34.184:5001';
+export const URL = `http://localhost:5001`;
 // export const URL = `http://localhost:5001`; // 'http://34.64.34.184:5001';
 
 export const client = axios.create({
@@ -14,6 +15,14 @@ export const accessClient = (token: string) =>
       Authorization: `Bearer ${token}`,
     },
   });
+// accessClient.interceptors.response.use(
+//   (response)=>{
+//     return response;
+//   },
+//   async(error)=>{
+
+//   }
+// )
 
 export const getprofilePresignedURL: any = async (file: any) => {
   const form: any = new FormData();

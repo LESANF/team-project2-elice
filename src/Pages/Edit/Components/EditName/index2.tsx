@@ -1,3 +1,4 @@
+// 채현 코드
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -12,12 +13,14 @@ import { warningNickname, state } from '../../../Join/Utils';
 import { TOKEN } from '../../../Join/Atoms';
 import HelperText from '../HelperText';
 import { getUser, IsEditNameDialog } from '../../Utils';
+import { editMODE } from '../../Atoms';
 
 interface IEditNameProps {
   setMode?: any;
 }
 
-const EditName = ({ setMode }: IEditNameProps) => {
+const EditName = () => {
+  const [mode, setMode] = useRecoilState(editMODE);
   const [token, setToken] = useRecoilState(TOKEN);
   const [nickName, setnickName] = useState('');
   const [Image, setImage] = useState('');
@@ -71,7 +74,7 @@ const EditName = ({ setMode }: IEditNameProps) => {
 
   return (
     <S.Container>
-      <S.Profile src={Image} alt="프로필 사진" />
+      {/* <S.Profile src={Image} alt="프로필 사진" /> */}
       <S.NickName
         placeholder="새로운 닉네임을 적어주세요"
         onChange={changenickNameHandler}
