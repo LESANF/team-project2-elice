@@ -33,7 +33,7 @@ interface IDialogProps {
   sizeH?: string | undefined;
 }
 
-const DialogTest = (props: IDialogProps) => {
+const DialogComponent = (props: IDialogProps) => {
   const { title, content, agreeFn, disAgreeFn, openFlag } = props;
   const setOpen = useState<boolean>(false)[1];
   const [dialogSize, setDialogSize] = useState<{
@@ -91,4 +91,4 @@ const DialogTest = (props: IDialogProps) => {
   );
 };
 
-export default DialogTest;
+export default DialogComponent;

@@ -2,8 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { basicTheme } from './theme';
 import App from './App';
+
+const queryClient = new QueryClient();
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -26,8 +30,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <ThemeProvider theme={basicTheme}>
-    <GlobalStyles />
-    <App />
-  </ThemeProvider>,
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={basicTheme}>
+      <GlobalStyles />
+      <App />
+      <ReactQueryDevtools />
+    </ThemeProvider>
+  </QueryClientProvider>,
 );

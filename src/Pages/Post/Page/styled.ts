@@ -83,6 +83,13 @@ export const CameraModelBox = styled.div`
   /* align-items: flex-start; */
   width: 100%;
 `;
+export const LensModelBox = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: flex-start; */
+  width: 100%;
+`;
 export const CameraIconBox = styled.div`
   margin-right: 10px;
   width: 30px;
@@ -95,16 +102,48 @@ export const CameraIconBox = styled.div`
 export const CameraCompany = styled.select`
   width: 180px;
   height: 30px;
+  padding: 0 30px 0 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  line-height: $height + px;
+  height: $height + px;
+  background: #fff;
+  margin: 0 5px 5px 0;
+`;
+export const LensCompany = styled.select`
+  width: 180px;
+  height: 30px;
+  padding: 0 30px 0 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  line-height: $height + px;
+  height: $height + px;
+  background: #fff;
+  margin: 0 5px 5px 0;
 `;
 export const CameraSelectBox = styled.select`
   margin-left: 10px;
-  width: 180px;
+  width: auto;
   height: 30px;
+  padding: 0 30px 0 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  line-height: $height + px;
+  height: $height + px;
+  background: #fff;
+  margin: 0 5px 5px 0;
 `;
 export const CameraLens = styled.select`
   margin-left: 10px;
-  width: 180px;
+  width: auto;
   height: 30px;
+  padding: 0 30px 0 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  line-height: $height + px;
+  height: $height + px;
+  background: #fff;
+  margin: 0 5px 5px 0;
 `;
 
 export const ContentBox = styled.div``;
