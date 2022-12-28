@@ -95,7 +95,8 @@ const LoginContent = (): JSX.Element => {
   };
   //  로그인 button
   const clickLoginHandler = async () => {
-    if (!(emailstate === state.SUCCESS && pwstate === state.SUCCESS)) {
+    console.log('현재', email, pw, emailstate, pwstate);
+    if (!(emailstate === state.SUCCESS && emailstate === state.SUCCESS)) {
       console.log('다시');
       return;
     }
@@ -112,8 +113,8 @@ const LoginContent = (): JSX.Element => {
       console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
       setErrorMessage(err.response.data.message);
-      setEmail('');
-      setpw('');
+      // setEmail('');
+      // setpw('');
       setFlag(true);
     }
   };
@@ -140,6 +141,7 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningEmail(emailstate)}
           onChange={changeEmailHandler}
+          // value={email}
         />
         <HelperText helper={warningEmail(emailstate)} content={email} />
       </FormControl>
@@ -158,6 +160,7 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningPw(pwstate)}
           onChange={changePwHandler}
+          // value={pw}
         />
         <HelperText helper={warningPw(pwstate)} content={pw} />
       </FormControl>
