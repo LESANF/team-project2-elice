@@ -44,8 +44,8 @@ const JoinTap = () => {
       setNicknameState(state.STRERROR);
     } else {
       setNicknameState(state.SUCCESS);
-      setNickname(nickNameInput);
     }
+    setNickname(nickNameInput);
     if (!nickNameInput) setNicknameState(state.NORMAL);
   };
 
@@ -56,8 +56,8 @@ const JoinTap = () => {
       setEmailState(state.STRERROR);
     } else {
       setEmailState(state.SUCCESS);
-      setEmail(emailInput);
     }
+    setEmail(emailInput);
     if (!emailInput) setEmailState(state.NORMAL);
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,8 +67,8 @@ const JoinTap = () => {
       setPwState(state.STRERROR);
     } else {
       setPwState(state.SUCCESS);
-      setpw(pwInput);
     }
+    setpw(pwInput);
     if (!pwInput) setPwState(state.NORMAL);
   };
 
@@ -120,15 +120,22 @@ const JoinTap = () => {
   };
 
   return (
-    <>
-      <S.Form>
-        <div className="title">닉네임</div>
-        <div>
-          <input placeholder="닉네임" onChange={changeNickNameHandler} />
-          <div>{warningNickname(nicknamestate)}</div>
-        </div>
-      </S.Form>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        display: 'flex',
+        height: '45vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '440px',
+          justifyContent: 'center',
+        }}
+      >
         <FormControl
           sx={{
             width: '42ch',
@@ -185,24 +192,6 @@ const JoinTap = () => {
         </FormControl>
       </div>
 
-      <S.Form>
-        <div className="title">이메일</div>
-        <div>
-          <input placeholder="이메일" onChange={changeEmailHandler} />
-          <div>{warningEmail(emailstate)}</div>
-        </div>
-      </S.Form>
-      <S.Form>
-        <div className="title">비밀번호</div>
-        <div>
-          <input
-            type="password"
-            placeholder="비밀번호"
-            onChange={changePwHandler}
-          />
-          <div>{warningPw(pwstate)}</div>
-        </div>
-      </S.Form>
       <S.Button onClick={clickJoinHandler}>회원가입</S.Button>
       {flag ? (
         <IsJoinDialog
@@ -212,7 +201,7 @@ const JoinTap = () => {
           agreeFn={agreeFn}
         />
       ) : null}
-    </>
+    </div>
   );
 };
 
