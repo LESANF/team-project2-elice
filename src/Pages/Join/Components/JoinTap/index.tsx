@@ -174,6 +174,7 @@ const JoinTap = () => {
           style={{ marginTop: '10px' }}
         >
           <S.Input
+            type="password"
             margin="normal"
             label="비밀번호"
             fullWidth
