@@ -194,35 +194,6 @@ const CustomOverlayContainer = ({
   </CustomOverlayMap>
 );
 
-// 임시 SearchBar 컴포넌트입니다. 추후 헤더에 있는 input으로 대체할 것입니다.
-const SearchBar = ({ hashtag, setHashtag }: IHashTagProps) => {
-  const [searchBarInput, setSearchBarInput] = useState<string>('');
-
-  const handleSearchBarButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setHashtag(`${searchBarInput}`);
-    setSearchBarInput('');
-  };
-
-  return (
-    <>
-      <input
-        type="text"
-        value={searchBarInput}
-        onChange={(e) => setSearchBarInput(e.target.value)}
-      />
-      <button type="button" onClick={handleSearchBarButton}>
-        검색
-      </button>
-      {hashtag && (
-        <S.HashTagStyle>
-          <HashTag hashtag={hashtag} setHashtag={setHashtag} />
-        </S.HashTagStyle>
-      )}
-    </>
-  );
-};
-
 const Maps = () => {
   const [hashtag, setHashtag] = useState<string>('');
   const [myLocation, setMyLocation] = useState<ILatLng>({
@@ -241,7 +212,6 @@ const Maps = () => {
   });
   const enterKey = (e: any) => {
     if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
-      alert(e.target.value);
       setHashtag(e.target.value);
     }
   };
@@ -281,7 +251,11 @@ const Maps = () => {
 
   return (
     <>
-      <SearchBar hashtag={hashtag} setHashtag={setHashtag} />
+      {hashtag && (
+        <S.HashTagStyle>
+          <HashTag hashtag={hashtag} setHashtag={setHashtag} />
+        </S.HashTagStyle>
+      )}
       <Map // 지도를 표시할 Container
         center={{
           // 지도의 중심좌표

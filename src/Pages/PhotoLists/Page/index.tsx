@@ -36,7 +36,7 @@ const PhotoLists = () => {
             `${URL}/posts?quantity=${quantity}&endPostId=${endPostId}`,
           );
         } else {
-          console.log('페이지 끝');
+          // console.log('페이지 끝');
         }
         const dataLength = response?.data.data.length;
         if (dataLength < quantity) {
@@ -52,7 +52,6 @@ const PhotoLists = () => {
         console.error('api요청에러: ', err);
       }
     }
-    console.log('items: ', items);
     setLoading(false);
   }, [page]);
 
@@ -85,7 +84,7 @@ const PhotoLists = () => {
   //   lng: 126.73862053,
   // },
   // 이 사이 위치를 랜덤으로. (테스트용 위치 by 김상현)
-  /*
+
   const handleTempPostButton = async () => {
     const data = {
       title: '자동화제목',
@@ -108,16 +107,10 @@ const PhotoLists = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (response.statusText === 'Created') {
-        console.log('response: ', response);
-      } else {
-        throw new Error('POST API 요청실패');
-      }
     } catch (err) {
       console.error('api요청에러: ', err);
     }
   };
-  */
 
   return (
     <P.Container>
