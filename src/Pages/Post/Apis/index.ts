@@ -6,7 +6,9 @@ export const getPresignedURL: any = async (file: any) => {
   const s3BucketURL = 'https://photolog-bucket.s3.amazonaws.com/';
 
   const fieldsData = await axios
-    .get(`http://34.64.34.184:5001/photos/presigned-url?filetype=${file.name}`)
+    .get(
+      `${process.env.REACT_APP_API_BASE_URL}/photos/presigned-url?filetype=${file.name}`,
+    )
     .then(async ({ data: { data } }) => {
       Object.keys(data.fields).forEach((key) => {
         form.append(key, data.fields[key]);
@@ -17,7 +19,9 @@ export const getPresignedURL: any = async (file: any) => {
         .post(s3BucketURL, form)
         .then((res: any) => res.headers.get('Location'))
         .then(async (locationUrl) =>
-          axios.post(`http://34.64.34.184:5001/photos`, { url: locationUrl }),
+          axios.post(`${process.env.REACT_APP_API_BASE_URL}/photos`, {
+            url: locationUrl,
+          }),
         )
         .then(
           ({
