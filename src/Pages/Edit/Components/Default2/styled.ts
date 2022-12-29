@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: 100vh;
+  height: 53vh;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
-  gap: 50px;
+  gap: 8px;
 `;
 export const Profile = styled.img`
   width: 120px;
@@ -30,39 +30,16 @@ export const PasswordChange = styled.p`
   }
 `;
 
-export const NickName = styled.input`
+export const NickName = styled.p`
   font-family: 'Noto Sans', 'Noto Sans KR';
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
-  border: 0;
-  border-radius: 4px;
-  padding: 8px 10px;
   line-height: 27px;
   text-align: center;
   color: #5f5f5f;
-  margin-top: -20px;
-  ::placeholder {
-    color: #ccc;
-    font-family: 'Noto Sans', 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 27px;
-    text-align: center;
-  }
-  :focus::placeholder {
-    color: transparent;
-  }
-  :focus {
-    border: 0;
-  }
-  :focus-visible {
-    outline: none;
-  }
-  :hover {
-    background: #f9f9f9;
-  }
+  cursor: default;
+  margin-top: 30px;
 `;
 
 export const Email = styled.p`

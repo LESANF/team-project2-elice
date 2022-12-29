@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import Test from './Pages/Test';
 import Menu from './Pages/Menu/Page';
@@ -30,17 +30,14 @@ const Router = () => {
         />
         <Route path="/menu/maps" element={<Menu menuType="map" />} />
         <Route path="/menu/photolists" element={<Menu menuType="photo" />} />
-        <Route path="/postwrite" element={<PostWrite />} />
-        <Route path="/:postId" element={<PhotoPost />} />
+        <Route
+          path="/postwrite"
+          element={token ? <PostWrite /> : <LoginDialog />}
+        />
+        <Route path="/post/:postId" element={<PhotoPost />} />
         <Route path="/join" element={<Join />} />
-        <Route
-          path="/edit"
-          element={token ? <Edit /> : <Navigate to="/logindialog" />}
-        />
-        <Route
-          path="/mypage"
-          element={token ? <MyPage /> : <Navigate to="/logindialog" />}
-        />
+        <Route path="/edit" element={token ? <Edit /> : <LoginDialog />} />
+        <Route path="/mypage" element={token ? <MyPage /> : <LoginDialog />} />
         <Route path="/test" element={<Test />} />
         <Route path="/logindialog" element={<LoginDialog />} />
         <Route path="*" element={<ErrorPage />} />

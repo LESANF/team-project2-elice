@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-// import MapDialogInput from '../../../Components/Commons/Dialog';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { FaCameraRetro, FaMapMarkerAlt } from 'react-icons/fa';
-import { BsPinMapFill } from 'react-icons/bs';
 import { RiCameraLensFill } from 'react-icons/ri';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
@@ -34,24 +32,6 @@ interface IModel {
   id: number | string;
   companyId?: number;
   model: string;
-}
-
-interface IOption {
-  value: number;
-  label: string;
-}
-
-interface IPostFormData {
-  title: string;
-  content: string;
-  imageUrlId: number;
-  lensId: number | null;
-  cameraId: number;
-  latitude: number;
-  longitude: number;
-  locationInfo: string;
-  takenAt: string;
-  hashtags: string[];
 }
 
 const PostPhoto = () => {
@@ -98,7 +78,7 @@ const PostPhoto = () => {
   const [flagLocation, setFlagLocation] = useState(false);
   const [sendCompleteFlag, setSendCompleteFlag] = useState(false);
   const [submitFinalFalg, setSubmitFinalFalg] = useState(false);
-  const [locationExist, setLocationExist] = useState<any>(false);
+  const setLocationExist = useState<any>(false)[1];
 
   const [userLatitude, setUserLatitude] = useState<number>();
   const [userLongitude, setUserLongitude] = useState<number>();
@@ -181,7 +161,7 @@ const PostPhoto = () => {
 
   useQuery<any>(
     'cameraCompnay',
-    () => axios.get(`http://34.64.34.184:5001/cameras/companies`),
+    () => axios.get(`${process.env.REACT_APP_API_BASE_URL}/cameras/companies`),
     {
       onSuccess: ({ data: { data: cameraLists } }) => {
         setCameraComList((prev) => [...prev, ...cameraLists]);
@@ -191,7 +171,7 @@ const PostPhoto = () => {
   );
   useQuery<any>(
     'lensCompnay',
-    () => axios.get(`http://34.64.34.184:5001/lenses/companies`),
+    () => axios.get(`${process.env.REACT_APP_API_BASE_URL}/lenses/companies`),
     {
       onSuccess: ({ data: { data: lensLists } }) => {
         setLensComList((prev) => [...prev, ...lensLists]);
@@ -203,7 +183,9 @@ const PostPhoto = () => {
   useQuery<any>(
     ['cameraModelLists', cameraComId],
     () =>
-      axios.get(`http://34.64.34.184:5001/companies/${cameraComId}/cameras`),
+      axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/companies/${cameraComId}/cameras`,
+      ),
     {
       onSuccess: ({ data: { data: cameraMdLists } }) => {
         setCameraModelLists([{ id: '', model: '카메라 모델을 선택해주세요' }]);
@@ -216,7 +198,10 @@ const PostPhoto = () => {
   );
   useQuery<any>(
     ['lensModelLists', lensComId],
-    () => axios.get(`http://34.64.34.184:5001/companies/${lensComId}/lenses`),
+    () =>
+      axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/companies/${lensComId}/lenses`,
+      ),
     {
       onSuccess: ({ data: { data: lensMdLists } }) => {
         setlensModelLists([{ id: '', model: '렌즈를 선택해주세요' }]);
@@ -260,15 +245,6 @@ const PostPhoto = () => {
   }, [photoMetaData, flagLocation]);
 
   const handleSubmit = async () => {
-    // console.log('title: ', titleRef.current.value);
-    // console.log('imageUrlId', imgUrl);
-    // console.log('lensId', +lensMdRef.current!.value);
-    // console.log('cameraId', +cameraMdRef.current!.value);
-    // console.log('latitude', photoMetaData!.latitude);
-    // console.log('longitude', photoMetaData!.longitude);
-    // console.log('takenAt', photoMetaData!.takenAt);
-    // console.log('locationInfo', mapDesRef.current!.value);
-    // console.log('hashtags: ', tagList);
     // if (quillRef.current) {
     //   // const range = quill.getSelection()?.index;
     //   // console.log(description);

@@ -1,4 +1,5 @@
 import Maps from '../../Maps';
+import PhotoLists from '../../PhotoLists/Page';
 import { Header, HeaderForPost } from '../../../Components/Commons/Header';
 import Footer from '../../../Components/Commons/Footer';
 import * as S from './styled';
@@ -17,7 +18,7 @@ const Menu = ({ menuType }: IMenuTtype) => {
       <S.Container>
         <S.Wrapper>
           <S.ContentsFrame>
-            {menuType === 'photo' ? <h1>PHOTO</h1> : <Maps />}
+            {menuType === 'photo' ? <PhotoLists /> : <Maps />}
           </S.ContentsFrame>
         </S.Wrapper>
       </S.Container>
