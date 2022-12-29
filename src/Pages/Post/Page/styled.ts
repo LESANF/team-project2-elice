@@ -238,6 +238,7 @@ export const DescriptionInput = styled.input.attrs({
   width: 704px;
   height: 30px;
   border: none;
+  background-color: transparent;
 `;
 
 export const PostFooter = styled.div`
