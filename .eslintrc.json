@@ -51,7 +51,9 @@
     "no-plusplus": "off",
     "react/no-array-index-key": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/no-danger": "off"
   },
   "settings": {
     "react": {

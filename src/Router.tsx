@@ -30,7 +30,10 @@ const Router = () => {
         />
         <Route path="/menu/maps" element={<Menu menuType="map" />} />
         <Route path="/menu/photolists" element={<Menu menuType="photo" />} />
-        <Route path="/postwrite" element={<PostWrite />} />
+        <Route
+          path="/postwrite"
+          element={token ? <PostWrite /> : <LoginDialog />}
+        />
         <Route path="/post/:postId" element={<PhotoPost />} />
         <Route path="/join" element={<Join />} />
         <Route path="/edit" element={token ? <Edit /> : <LoginDialog />} />
