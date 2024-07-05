@@ -53,7 +53,8 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "consistent-return": "off",
     "react/jsx-no-useless-fragment": "off",
-    "react/no-danger": "off"
+    "react/no-danger": "off",
+    "no-return-assign": "off"
   },
   "settings": {
     "react": {
